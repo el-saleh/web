@@ -58,12 +58,10 @@ const Header = () => {
 
         <div className={styles.navLinks}>
 
-          <Link href="/">
-            <a className={styles.tab} id="homeHeroSection">{router.locale === "ar" ? "الرئيسية" : "home"}</a>
-          </Link>
+        
 
-          <span id="products" className={`${styles.dropDownTap}`}>
-            <span>{router.locale === "ar" ? "المنتجات" : "Products"}</span>
+          <span tabIndex="0" id="products" className={`${styles.dropDownTap}`}>
+            <span >{router.locale === "ar" ? "المنتجات" : "Products"}</span>
             <div className={styles.dropDownMenu}>
               <ul dir="auto">
                 <li className={styles.tab}><Link href="/category1">{"الفئة الاولى"}</Link></li>
@@ -77,14 +75,14 @@ const Header = () => {
             <a className={styles.tab} id="">{router.locale === "ar" ? "عنا" : "About Us"}</a>
           </Link>
 
-          <span id="" className={`${styles.dropDownTap}`}>
-            <Link href="/cart">
+          <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
+            
               <a className={styles.tab}> 
                 <img className={styles.userAvatar} src={"https://i.pinimg.com/originals/15/4f/df/154fdf2f2759676a96e9aed653082276.png"} />
                 &nbsp;
                 <span>Ahmed</span>
               </a>
-            </Link>
+            
 
             <div className={styles.dropDownMenu}>
               <ul dir="auto">

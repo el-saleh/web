@@ -33,12 +33,13 @@ body {
 }
 
 .container{
-  width: 1270px;
+  max-width: 1270px;
   margin: 0% auto;
-  // overflow: hidden;
+  overflow-x: visible;
   @media (max-width:1400px) {
       width: 90%;
       margin: 0px 5%;
+
   }
 }
 
