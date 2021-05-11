@@ -62,9 +62,9 @@ function Home() {
 
       </Head>
       <Layout>
-        <HeroSection products={productsData?.heroProducts} />
+        {/* <HeroSection products={productsData?.heroProducts} />
         <ProductsSection products={productsData?.products} />
-        <ConatctUs />
+        <ConatctUs /> */}
       </Layout>
     </>
   )
