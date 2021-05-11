@@ -58,7 +58,9 @@ const Header = () => {
 
         <div className={styles.navLinks}>
 
-        
+        <Link href="/">
+            <a className={styles.tab + " hiddenInMobile"} id="">{router.locale === "ar" ? "الرئيسية" : "Home"}</a>
+          </Link>
 
           <span tabIndex="0" id="products" className={`${styles.dropDownTap}`}>
             <span >{router.locale === "ar" ? "المنتجات" : "Products"}</span>
