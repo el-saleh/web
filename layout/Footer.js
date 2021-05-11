@@ -40,7 +40,7 @@ const Footer = () => {
                             <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
                                 <FiMail />
                                 &nbsp;
-                                <span>info@el-saleh.com</span>
+                                <span>info@elsaleh.com</span>
                             </a>
                         </div>
                         <div className={styles.social}>
