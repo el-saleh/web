@@ -1,32 +1,35 @@
 @import "../../styles/varibles.scss";
 
-.hero{
+.hero {
     position: relative;
-    .containerClass{
-        background-image:url("../../public/assets/hero-Slide-bg.jpg");
+    .containerClass {
+        background-image: url("../../public/assets/hero-Slide-bg.jpg");
         background-repeat: no-repeat;
-        background-position: 5vw 0vh; 
+        background-position: 5vw 0vh;
         perspective: 2000;
         backface-visibility: hidden;
-        .sliderClass{
+        .sliderClass {
             align-items: center;
-            .itemClass{
-                padding: 5rem 0rem 5rem 0rem;
-                @media (max-width : 768px) {
-                    padding: 1rem 0rem 5rem 0rem;
-                }             
-            }	
+            .itemClass {
+                
+                background-image: url("https://res.cloudinary.com/yuppiechef/image/upload/f_auto,w_960/v1/pagebuilder/27/cookware-header-banner-1576827754");
+                background-size: cover;
+                @media (max-width: 768px) {
+                    
+                }
+            }
         }
     }
-    .dotListClass{
+    .dotListClass {
         bottom: 1.2rem;
-        li{
-            button{
-                @media (max-width : 768px) {display: none;}
+        li {
+            button {
+                @media (max-width: 768px) {
+                    display: none;
+                }
                 border-color: transparent;
                 filter: brightness(0.85);
             }
-            
         }
     }
 }

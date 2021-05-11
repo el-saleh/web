@@ -50,21 +50,11 @@ const HeroSection = (props) => {
         itemClass={styles.itemClass}
         dotListClass={styles.dotListClass}
       >
-        {
-          productsList.reverse().map((product) => {
-            return (
-              <HeroSlide
-                id={product.productId}
-                key={product.productId}
-                productImage={product.productImage}
-                title={product.title}
-                description={product.description}
-              />
-            )
-          })
-        }
-
-
+        <HeroSlide/>
+        <HeroSlide/>
+        <HeroSlide/>
+        <HeroSlide/>
+        
       </Carousel>
     </section>
   );
