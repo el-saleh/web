@@ -1,0 +1,29 @@
+{
+  "name": "next-idea",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p $PORT",
+    "heroku-postbuild": "npm run build",
+    "export": "npm run build && next export && mv out _static"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "devextreme": "^20.2.6",
+    "devextreme-react": "^20.2.6",
+    "globby": "^11.0.3",
+    "next": "10.0.5",
+    "nprogress": "^0.2.0",
+    "prettier": "^2.2.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-icons": "^4.2.0",
+    "react-image-gallery": "^1.0.9",
+    "react-lottie": "^1.2.3",
+    "react-multi-carousel": "^2.6.2",
+    "react-toastify": "^7.0.3",
+    "sass": "^1.32.2"
+  }
+}
