@@ -20,17 +20,18 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      svg {
-        font-size: 1.35rem;
-        @media (max-width: 768px) {
-          font-size: 1rem;
-        }
-      }
-
       &:hover {
         color: $light;
         path {
           stroke: $light;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        margin: 0 0.25rem;
+        font-size: 0.8rem;
+        svg {
+          font-size: 1.35rem;
         }
       }
     }
@@ -100,7 +101,7 @@
       top: 100%;
       right: 0%;
       width: max-content;
-      min-width: 200px;
+      min-width: 13rem;
       background: $light;
       border: 1px $light-grey solid;
       border-radius: 0.4rem;
