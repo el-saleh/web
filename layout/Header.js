@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import styles from "./layout.module.scss"
-import { GrLanguage } from "react-icons/gr";
+import { FiPhone, FiMail } from "react-icons/fi";
+import { IoLogoWhatsapp } from "react-icons/io5"
 
 const Header = () => {
   const router = useRouter();
@@ -18,25 +19,83 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <div className={`container ${styles.header_wrapper}`} dir="auto">
+      <div className={styles.upperHeaderWrapper}>
+        <div className={`container ${styles.header_wrapper}`} dir="">
+          <div style={{ display: "flex" }}>
+            <span>
+              <a className={""} target="_blank" href="tel:+201099999999" rel="noreferrer">
+                <FiPhone />
+                &nbsp;
+                <span>{router.locale === "ar" ? "01099999999" : "01099999999"}</span>
+              </a>
+            </span>
+            <span>
+              <a className={""} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
+                <FiMail />
+                &nbsp;
+                <span>info@elsaleh.com</span>
+              </a>
+            </span>
+          </div>
+          <div>
+            <a className={""} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
+              <IoLogoWhatsapp />
+              &nbsp;
+              <span>{router.locale === "ar" ? "01099999999" : "01099999999"}</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+      <div className={`container ${styles.header_wrapper}`} dir="">
         <div>
           <Link href="/">
-            <a><img src="/assets/logo2.png" alt="abou" /></a>
+            <a className={styles.tab}>
+              <img className={styles.logoImg} src="/assets/logo2.png" alt="el-saleh" />
+            </a>
           </Link>
         </div>
 
         <div className={styles.navLinks}>
 
-          {router.pathname === "/" ?
-            <>
-              <a id="homeHeroSection" onClick={windowScroll}>{router.locale === "ar" ? "الرئيسية" : "home"}</a>
-              <a id="products" className="hiddenInMobile" onClick={windowScroll}>{router.locale === "ar" ? "المنتجات" : "Products"}</a>
-            </>
-            :
-            <Link href="/"><a>{router.locale === "ar" ? "الرئيسية" : "home"}</a></Link>
-          }
+          <Link href="/">
+            <a className={styles.tab} id="homeHeroSection">{router.locale === "ar" ? "الرئيسية" : "home"}</a>
+          </Link>
 
-          <a id="contactUs" onClick={windowScroll}>{router.locale === "ar" ? "تواصل" : "Contact"}</a>
+          <span id="products" className={`${styles.dropDownTap}`}>
+            <span>{router.locale === "ar" ? "المنتجات" : "Products"}</span>
+            <div className={styles.dropDownMenu}>
+              <ul dir="auto">
+                <li className={styles.tab}><Link href="/category1">{"الفئة الاولى"}</Link></li>
+                <li className={styles.tab}><Link href="/category2">{"الفئة الثانبة"}</Link></li>
+                <li className={styles.tab}><Link href="/category3">{"الفئة الثالثة"}</Link></li>
+              </ul>
+            </div>
+          </span>
+
+          <Link href="/aboutus">
+            <a className={styles.tab} id="">{router.locale === "ar" ? "عنا" : "About Us"}</a>
+          </Link>
+
+          <span id="" className={`${styles.dropDownTap}`}>
+            <Link href="/cart">
+              <a className={styles.tab}> 
+                <img className={styles.userAvatar} src={"https://i.pinimg.com/originals/15/4f/df/154fdf2f2759676a96e9aed653082276.png"} />
+                &nbsp;
+                <span>Ahmed</span>
+              </a>
+            </Link>
+
+            <div className={styles.dropDownMenu}>
+              <ul dir="auto">
+                <li className={styles.tab}><Link href="/cart">{"عربة التسوق"}</Link></li>
+                <li className={styles.tab}><Link href="/orders">{"طبات الشراء"}</Link></li>
+                <li className={styles.tab} onClick={()=>{window.alert("sign out")}}>{"خروج"}</li>
+              </ul>
+            </div>
+
+          </span>
+
         </div>
 
       </div>

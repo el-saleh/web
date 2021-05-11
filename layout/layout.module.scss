@@ -3,25 +3,53 @@
 .header {
   font-family     : $headingFontFamily;
   background-color: $light;
-  padding         : 0.5rem 0;
   box-shadow      : 0 2px 28px 0 rgb(0 0 0 / 9%);
   position        : sticky;
   z-index         : 5;
   top             : 0;
   left            : 0;
 
+  .upperHeaderWrapper{
+    background-color: $primary-dark;
+
+    a {
+      cursor         : pointer;
+      color          : $light;
+      text-decoration: none;
+      margin         : 0 1rem;
+      display        : flex;
+      align-items    : center;
+      justify-content: flex-start;
+      svg{
+        font-size: 1.35rem;
+      }
+      
+      &:hover {
+        color          : $light;
+        path {
+          stroke: $light;
+        }
+      }
+    }
+    
+  }
+
   .header_wrapper {
     display        : flex;
     justify-content: space-between;
     align-items    : center;
+    padding         : 0.5rem 0;
   }
 
   .navLinks {
     display        : flex;
     justify-content: flex-start;
+    .userAvatar{
+      width: 2rem;
+    }
   }
 
-  a {
+  .tab {
     cursor         : pointer;
     color          : $dark;
     text-decoration: none;
@@ -29,17 +57,54 @@
     display        : flex;
     align-items    : center;
     justify-content: flex-start;
-
     &:hover {
       color: $primary;
-
-      path {
-        stroke: $primary;
-      }
     }
 
-    img {
+    .logoImg {
       width: 10rem;
+    }
+  }
+
+  .dropDownTap{
+    cursor         : pointer;
+    color          : $dark;
+    text-decoration: none;
+    margin         : 0 1rem;
+    display        : flex;
+    align-items    : center;
+    justify-content: flex-start;
+    position: relative;
+    &:hover{
+      .dropDownMenu{
+        display: block;
+      }
+    }
+    .dropDownMenu{
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: -25%;
+      width: max-content;
+      min-width: 200px;
+      background: $light;
+      border: 1px $light-grey solid;
+      border-radius: 0.4rem;
+      overflow: hidden;
+      box-shadow: $shadow;
+      ul{
+        margin: 0;
+        padding: 0;
+        li{
+          padding: 0.75rem;
+          margin: 0;
+          transition: $trans-250;
+          &:hover{
+            background-color: $primary;
+            color:$light
+          }
+        }
+      } 
     }
   }
 
