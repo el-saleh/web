@@ -1,29 +1,35 @@
 @import "../../styles/varibles.scss";
 
-$image-hight-lg:30rem;
-$image-hight-sm:20rem;
+$image-hight-lg: 30rem;
+$image-hight-sm: 20rem;
 
-.slide{
-    cursor:grab;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 50vh;
-    padding: 5rem 10rem;
+.slide {
+    cursor: grab;
     background-color: rgba(0, 0, 0, 0.5);
-   h1{
-       color: $light;
-       font-size: 2rem;
-   }
-   p{
-    color: $light;
-    font-size: 1.2rem;
+    .slideWrapper {
+        height: 66vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        h1 {
+            color: $light;
+            font-size: 2rem;
+            max-height: 25%;
+            overflow: hidden;
+            @media (max-width: 768px) {
+                font-size: 1.25rem;
+            }
+        }
+        p {
+            color: $light;
+            max-height: 30%;
+            overflow: hidden;
+        }
 
-   }
-   
-
-    @media (max-width : 768px) {
-        padding: 1rem 0rem 5rem 0rem;
+        @media (max-width: 768px) {
+            padding: 0 20%;
+        }
     }
 }
