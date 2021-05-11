@@ -21,7 +21,7 @@ const Header = () => {
       <div className={`container ${styles.header_wrapper}`} dir="auto">
         <div>
           <Link href="/">
-            <a><img src="/assets/logo-en.png" alt="abou" /></a>
+            <a><img src="/assets/logo2.png" alt="abou" /></a>
           </Link>
         </div>
 
@@ -37,16 +37,6 @@ const Header = () => {
           }
 
           <a id="contactUs" onClick={windowScroll}>{router.locale === "ar" ? "تواصل" : "Contact"}</a>
-
-          <Link href={router.asPath} locale={router.locale === "ar" ? "en" : "ar"}>
-            <a>
-              <span>{router.locale === "ar" ? "English" : "العربية"}</span>
-                  &nbsp;
-                  <GrLanguage />
-            </a>
-          </Link>
-
-
         </div>
 
       </div>
