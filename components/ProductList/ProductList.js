@@ -1,6 +1,6 @@
 import React from 'react'
-import ProductCard from '../productCard/ProductCard';
-import styles from "../ProductList/ProductList.module.scss";
+import ProductCard from '../ProductCard';
+import styles from "./ProductList.module.scss";
 export default function ProductList({ list }) {
     return (
         <div className={styles.ProductList}>
