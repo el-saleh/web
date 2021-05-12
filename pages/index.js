@@ -1,47 +1,43 @@
-import { useState, useEffect, useContext } from "react";
+import react, { useState, useEffect, useContext } from "react";
 import { DisplayLoadingOverlayHandler } from "../utilities/Contexts";
 import Head from 'next/head';
 import requester from "../utilities/requester";
 import Layout from "../layout/Layout";
 import HeroSection from '../components/HeroSection/HeroSection'
-import ConatctUs from '../components/ConatctUs/ConatctUs'
-import ProductsSection from '../components/ProductsSection/ProductsSection'
+import CategpryProductList from "../components/CategpryProductList/CategpryProductList";
+import category from "./category/[id]";
+import HomeCategorySection from "../components/HomeCategorySection/HomeCategorySection";
 
 function Home() {
-  const [productsData, setProductsData] = useState(null);
   const setDisplayLoadingOverlay = useContext(DisplayLoadingOverlayHandler);
-  useEffect(() => {
-    if(!window.localStorage.getItem("productsData")){
-      setDisplayLoadingOverlay(true);
-    }else{
-      setProductsData(JSON.parse(window.localStorage.getItem("productsData")))
-    }
-    fetchProductsData()
-  }, [])
+  const categories = [
+    {
+      name: "اسم الفئة الاولى",
+      id: "Category1",
+      desc : "وصف الفئة 1 وصف الفئة 1 وصف الفئة 1 وصف الفئة 1 وصف الفئة 1 ",
+      image : "/assets/categ1.png"
+    },
+    {
+      name: "اسم الفئة الثانية",
+      id: "Category2",
+      desc : "وصف الفئة 2 وصف الفئة 2 وصف الفئة 2 وصف الفئة 2 وصف الفئة 2 وصف الفئة 2 وصف الفئة 2",
+      image : "/assets/categ2.png"
+    },
+    {
+      name: "اسم الفئة الثالثة",
+      id: "Category3",
+      desc : "وصف الفئة 3 وصف الفئة 3 وصف الفئة 3 وصف الفئة 3 ",
+      image : "/assets/categ3.png"
+    },
+    {
+      name: "اسم الفئة الرابعة",
+      id: "Category4",
+      desc : "وصف الفئة 4 وصف الفئة 4 وصف الفئة 4 وصف الفئة 4 وصف الفئة 4 وصف الفئة 4 وصف الفئة 4 وصف الفئة 4",
+      image : "/assets/categ1.png"
+    },
+  ]
 
-  const fetchProductsData = async () => {
-    console.log("initiate data requests");
-    const product_en = await requester.get(`/products/activeProducts/en`).catch(() => { });
-    const product_ar = await requester.get(`/products/activeProducts/ar`).catch(() => { });
-    const hero_product_ar = await requester.get(`/products/getHeroSecProducts/ar`).catch(() => { });
-    const hero_product_en = await requester.get(`/products/getHeroSecProducts/en`).catch(() => { });
-    setDisplayLoadingOverlay(false);
-    if (product_en && product_ar && hero_product_en && hero_product_ar) {
-      console.log("all data fetched successfully");
-      let productsData = {
-        products: {
-          en: product_en.data,
-          ar: product_ar.data
-        },
-        heroProducts: {
-          en: hero_product_en.data,
-          ar: hero_product_ar.data
-        }
-      };
-      window.localStorage.setItem("productsData", JSON.stringify(productsData));
-      setProductsData(productsData);
-    }
-  }
+  
   return (
     <>
       <Head>
@@ -62,9 +58,12 @@ function Home() {
 
       </Head>
       <Layout>
-        {/* <HeroSection products={productsData?.heroProducts} />
-        <ProductsSection products={productsData?.products} />
-        <ConatctUs /> */}
+        <HeroSection categories={categories}/>
+        {categories.map((category)=>{
+          return(
+            <HomeCategorySection key={category.id} category={category} />
+          )
+        })}
       </Layout>
     </>
   )
