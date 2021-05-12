@@ -5,7 +5,11 @@ $image-hight-sm: 20rem;
 
 .slide {
     cursor: grab;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url("https://res.cloudinary.com/yuppiechef/image/upload/f_auto,w_960/v1/pagebuilder/27/cookware-header-banner-1576827754");
+    background-size: cover;
+    .overLay{
+        background-color: rgba(0, 0, 0, 0.5);
+    }
     .slideWrapper {
         height: 66vh;
         display: flex;

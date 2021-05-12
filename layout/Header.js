@@ -73,7 +73,7 @@ const Header = () => {
           {isSigned ? 
           <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
             <a className={styles.tab}>
-              <img className={styles.userAvatar} src={"https://i.pinimg.com/originals/15/4f/df/154fdf2f2759676a96e9aed653082276.png"} />
+              <img className={styles.userAvatar} src={"/assets/cart.png"} />
                 &nbsp;
                 <span>Ahmed</span>
             </a>
