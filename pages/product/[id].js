@@ -2,8 +2,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import requester from "../../utilities/requester";
 import Layout from "../../layout/Layout";
-import SingleProductSection from '../../components/ProductsSection/SingleProductSection/SingleProductSection'
-import ConatctUs from '../../components/ConatctUs/ConatctUs'
+import SingleProductSection from '../../components/SingleProductSection/SingleProductSection';
+import ConatctUs from '../../components/ConatctUs/ConatctUs';
 
 
 function product(props) {

@@ -1,0 +1,13 @@
+@import "../../styles/varibles.scss";
+.titleWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .viewAll{
+        color: $primary;
+        font-weight: 500;
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+}

@@ -7,21 +7,20 @@ import styles from "./HeroSlide.module.scss";
 const HeroSlide = (props) => {
     const router = useRouter();
     return (
-        <div className={`${styles.slide} container`} >
-            <div className={styles.imgContainer}>
-                <img src={props.productImage} draggable="false" loading="lazey" alt={props.title}/>
-            </div>
-            <div
-                className={styles.info}
-                dir="auto"
-            >
-                <h1 draggable="false" >{props.title}</h1>
-                <p draggable="false" >{props.description}</p>
-                <Link href={`/product/${props.id}`} locale={router.locale === "ar" ? "ar" : "en"}>
-                    <a draggable="false">
-                        <PrimaryButton draggable="false" >{router.locale === "ar" ? "المزيد" : "Check Now"}</PrimaryButton>
-                    </a>
-                </Link>
+        <div className={styles.slide} style={{backgroundImage:`url(${props.image})`}} >
+            <div className={styles.overLay}>
+                <div className={`container`} >
+                    <div className={styles.slideWrapper}>
+                        <h1 draggable="false" >{props.name}</h1>
+                        <p draggable="false" >{props.desc}</p>
+                        <Link href={`/category/${props.id}`}>
+                            <a draggable="false">
+                                <PrimaryButton draggable="false" >{router.locale === "ar" ? "المزيد" : "Check Now"}</PrimaryButton>
+                            </a>
+                        </Link>
+
+                    </div>
+                </div>
             </div>
         </div>
     );
