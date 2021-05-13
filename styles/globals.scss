@@ -1,108 +1,117 @@
 @import "../styles/varibles.scss";
 html {
   font-size: 16px;
-  font-family : $mainFontFamily;
-  
-  @media (max-width : 991px) {
+  font-family: $mainFontFamily;
+
+  @media (max-width: 991px) {
     font-size: 14px;
   }
 
-  @media (max-width : 768px) {
+  @media (max-width: 768px) {
     font-size: 12px;
   }
-  
 }
 
 body {
-   margin: 0rem;
+  margin: 0rem;
 }
 
-.layout{
+.layout {
   position: relative;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
 }
 
-.main{
+.main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.container{
+.container {
   width: 1270px;
   margin: 0% auto;
   overflow-x: visible;
-  @media (max-width:1400px) {
-      width: 90%;
-      margin: 0px 5%;
-
+  @media (max-width: 1400px) {
+    width: 90%;
+    margin: 0px 5%;
   }
 }
 
-.notFoundContainer{
+.notFoundContainer {
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 50vh;
-  p{
+  p {
     font-size: 1.2rem;
   }
 }
 
 // global styling
-h1, h2, h3, h4, h5, h6, button{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
   // font-family:$headingFontFamily ;
 }
-p, input, textarea{ 
+p,
+input,
+textarea {
   // font-family: $mainFontFamily;
-  color:$body-dark
+  color: $body-dark;
 }
 
-input, textarea, button{
-  &:focus{ outline: none; }
-} 
+input,
+textarea,
+button {
+  &:focus {
+    outline: none;
+  }
+}
 
-a{
+a {
   text-decoration: none;
   color: inherit;
 }
 
-.hiddenInMobile{
-  @media (max-width : 768px) {
+.hiddenInMobile {
+  @media (max-width: 768px) {
     display: none !important;
   }
-  
 }
-
-
 
 // react-image-gallery" styles OverRide
 
-.image-gallery-svg{
+.image-gallery-svg {
   // to edit "react-image-gallery" arrow styles
   width: 2rem !important;
   height: auto !important;
 }
 
-.image-gallery-slide{
-  &:focus{
+.image-gallery-slide {
+  &:focus {
     outline: none;
   }
 }
 
 .image-gallery-bullets .image-gallery-bullet {
   // to edit "react-image-gallery" bullet style
-  box-shadow: none!important;
+  box-shadow: none !important;
   background-color: $mid-grey !important;
-  @media (max-width : 768px) {display: none !important;}
+  @media (max-width: 768px) {
+    display: none !important;
+  }
 }
 
-.image-gallery-bullets .image-gallery-bullet.active{
+.image-gallery-bullets .image-gallery-bullet.active {
   // to edit "react-image-gallery" active bullet style
   background-color: $dark !important;
 }

@@ -25,7 +25,7 @@ export default function ProductCard(props) {
                         <h5 className={styles.name}>{"عنوان تفصيلي واضح للمنتج المعروض"}</h5>
                     </a>
                 </Link>
-                <p className={styles.price}>{props.productPrice.toFixed()} جنيه</p>
+                <p className={styles.price}>{(Math.ceil((Math.random()*10))*100).toFixed(2)} جنيه</p>
                 <button className={styles.addButton}>{"أضف إلى العربة "} &nbsp;<IoCartOutline /></button>
             </div>
         </div>

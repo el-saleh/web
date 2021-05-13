@@ -4,24 +4,24 @@ $image-hight-lg:30rem;
 $image-hight-sm:20rem;
 
 .productSection{
-    &:nth-child(odd){
-        background-color: $off-light;
-    };
-    &:nth-child(even){
-        box-shadow: inset 0px 0px 3px 0px rgba(0 ,0 ,0 , 0.15);
-        .productSectionContainer{
-            flex-direction: row-reverse
-        }
-    };
-
+    // &:nth-child(odd){
+    //     background-color: $off-light;
+    // };
+    // &:nth-child(even){
+    //     box-shadow: inset 0px 0px 3px 0px rgba(0 ,0 ,0 , 0.15);
+    //     .productSectionContainer{
+    //         flex-direction: row-reverse
+    //     }
+    // };
     padding: 2rem 0rem;
     display: flex;
     align-items: center;
 }
 .productSectionContainer{
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     
     .imgContainer{
         min-height: $image-hight-lg !important;
@@ -30,7 +30,7 @@ $image-hight-sm:20rem;
         justify-content: center;
         align-items: center;
         margin: 2rem 0rem;
-
+        border: 1px solid $light-grey;
         img{
             // important tp over Right the "react-image-gallery" styiling.
             max-height: $image-hight-lg !important;
@@ -44,17 +44,26 @@ $image-hight-sm:20rem;
         .superTitle{
             margin-bottom: 0rem;
             color: $primary;
-            
         }
         .title{
-            font-size: 2.6rem;
-            margin: 0 0 1rem 0;
+            font-size: 2rem;
+            margin: 0 0 0.5rem 0;
             @media (max-width : 768px) {
                 font-size: 1.8rem;
               }
         }
+        .price{
+            color:$primary;
+            font-family: $secondFontFamily;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0;
+            small{
+                font-size: 1rem;
+            }
+        }
         .description{
-            margin-bottom: 1.5rem;
+            margin: 1rem 0;
             font-weight: 400;
             font-size: 1.1rem;
             line-height: 1.6;
@@ -87,11 +96,17 @@ $image-hight-sm:20rem;
                 margin-bottom: 1.5rem;
               }
         }
+        .qty{
+            display: inline-block;
+            width: 2.5rem;
+            text-align: center;
+        }
 
     }
 
     @media (max-width : 991px) {
         flex-direction: column !important;
+        align-items: center;
         .imgContainer, .info{
             width: 100%;
         }

@@ -60,7 +60,7 @@ const Header = () => {
             <div className={styles.dropDownMenu}>
               <ul dir="auto">
                 <li className={styles.tab}><Link href="/category1">{"الفئة الاولى"}</Link></li>
-                <li className={styles.tab}><Link href="/category2">{"الفئة الثانبة"}</Link></li>
+                <li className={styles.tab}><Link href="/category2">{"الفئة الثانية"}</Link></li>
                 <li className={styles.tab}><Link href="/category3">{"الفئة الثالثة"}</Link></li>
               </ul>
             </div>
@@ -79,8 +79,8 @@ const Header = () => {
             </a>
             <div className={styles.dropDownMenu}>
               <ul dir="auto">
-                <li className={styles.tab}><Link href="/cart">{"عربة الشراء"}</Link></li>
-                <li className={styles.tab}><Link href="/orders">{"طبات الشراء"}</Link></li>
+                <li className={styles.tab}><Link href="/cart">{"عربة التسوق"}</Link></li>
+                <li className={styles.tab}><Link href="/orders">{"طلبات الشراء"}</Link></li>
                 <li className={styles.tab} onClick={() => {setIsSigned(false)}}>{"خروج"}</li>
               </ul>
             </div>

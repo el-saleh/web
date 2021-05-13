@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from "next/router";
 import ImageGallery from 'react-image-gallery';
-import { IoCheckmark } from "react-icons/io5";
+import { IoCartOutline, IoCheckmark } from "react-icons/io5";
 import PrimaryButton from '../Button/PrimaryButton';
 import styles from "./SingleProductSection.module.scss";
 
 const SingleProductSection = (props) => {
     const router = useRouter();
+    const [quantity, setQuantity] = useState(1);
+    const [price, setPrice] = useState((Math.ceil((Math.random() * 10)) * 100).toFixed(2));
 
     const images = props.gallery.map((img) => {
         return (
@@ -18,6 +20,16 @@ const SingleProductSection = (props) => {
             }
         )
     })
+
+    const updateQty = (e) => {
+        const newQty = (parseInt(e.target.id) + quantity);
+        setQuantity(newQty)
+    }
+
+    const addToCart = () => {
+        window.alert("تم اضافة المنتج لعربة التسوق");
+        setQuantity(1);
+    } 
 
     return (
         <section className={styles.productSection}>
@@ -30,10 +42,11 @@ const SingleProductSection = (props) => {
                         :
                         <ImageGallery
                             items={images}
-                            showThumbnails={false}
+                            showThumbnails={true}
+                            thumbnailPosition={"right"}
                             showPlayButton={false}
-                            showNav={true}
-                            showBullets={true}
+                            showNav={false}
+                            showBullets={false}
                             showFullscreenButton={false}
                             useBrowserFullscreen={false}
                             lazyLoad={true}
@@ -45,9 +58,10 @@ const SingleProductSection = (props) => {
                     dir="auto"
                 >
 
-                    <p className={styles.superTitle}>{props.superTitle}</p>
-                    <h1 className={styles.title}>{props.title}</h1>
-                    <p className={styles.description}>{props.description}</p>
+                    <p className={styles.superTitle}>{""}</p>
+                    <h1 className={styles.title}>{"عنوان تفصيلى للمنتج المعروض"}</h1>
+                    <p className={styles.price}>{price} <small>جنيه</small></p>
+                    <p className={styles.description}>{"وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج "}</p>
 
                     <ul>
                         {props.bulletList.map((listItem, idx) => {
@@ -58,15 +72,17 @@ const SingleProductSection = (props) => {
                             }
                         })}
                     </ul>
-
-                    {props.showProdcutLink &&
-                        <Link href={`/product/${props.id}`} locale={router.locale === "ar" ? "ar" : "en"}>
-                            <a>
-                                <PrimaryButton>{router.locale === "ar" ? "المزيد" : "Check Now"}</PrimaryButton>
-                            </a>
-                        </Link>
-                    }
-
+                    <span>
+                        <PrimaryButton id={1} onClick={updateQty}>+</PrimaryButton>
+                        <span className={styles.qty}>{quantity}</span>
+                        <PrimaryButton id={-1} onClick={updateQty} disabled={!(quantity - 1)}>-</PrimaryButton>
+                    </span>
+                    &nbsp;&nbsp;&nbsp;
+                    <PrimaryButton onClick={addToCart}>
+                        {router.locale === "ar" ? "أضف إلى العربة" : "Add To Cart"}
+                        &nbsp;
+                        <IoCartOutline />
+                    </PrimaryButton>
                 </div>
             </div>
         </section>

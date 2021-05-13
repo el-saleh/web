@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styles from "./HomeCategorySection.module.scss";
 import CategpryProductList from '../CategpryProductList/CategpryProductList';
 
-export default function HomeCategorySection({category}) {
+export default function HomeCategorySection({ category }) {
     return (
         <div>
             <div className={"container"} dir="rtl">
