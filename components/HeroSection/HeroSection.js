@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import styles from "./HeroSection.module.scss";
 import HeroSlide from "./HeroSlide";
 import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+
 
 
 const responsive = {

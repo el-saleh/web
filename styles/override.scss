@@ -1,0 +1,51 @@
+@import "../styles/varibles.scss";
+
+// react-image-gallery" styles OverRide
+.image-gallery {
+    width: 100%;
+}
+.image-gallery-slide{
+    opacity: 0;
+}
+.center {
+    opacity: 1;
+}
+.image-gallery-image {
+    height: 49vh;
+    max-width: 98%;
+    // transform: scale(2.5);
+    // &:hover{
+    //     transform: scale(2.5);
+    // }
+
+}
+
+.image-gallery-svg {
+    // to edit "react-image-gallery" arrow styles
+    width: 2rem !important;
+    height: auto !important;
+}
+
+.image-gallery-slide {
+    &:focus {
+        outline: none;
+    }
+}
+
+.image-gallery-bullets .image-gallery-bullet {
+    // to edit "react-image-gallery" bullet style
+    box-shadow: none !important;
+    background-color: $mid-grey !important;
+    @media (max-width: 768px) {
+        display: none !important;
+    }
+}
+
+.image-gallery-bullets .image-gallery-bullet.active {
+    // to edit "react-image-gallery" active bullet style
+    background-color: $dark !important;
+}
+
+.image-gallery-thumbnail.active, .image-gallery-thumbnail:hover, .image-gallery-thumbnail:focus {
+    border: 4px solid $primary !important; 
+}

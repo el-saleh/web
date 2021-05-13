@@ -33,7 +33,6 @@ function product(props) {
           id={product.productId}
           {...product}
         />
-        <ConatctUs />
       </Layout>
     </>
   )

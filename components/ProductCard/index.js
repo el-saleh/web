@@ -4,18 +4,18 @@ import styles from "./ProductCard.module.scss";
 import { IoCartOutline } from "react-icons/io5";
 
 export default function ProductCard(props) {
-    const [src, setSrc] = useState(props.productImage);
+    // const [src, setSrc] = useState(props.productImage);
 
-    const setFallbackImage = () => {
-        setSrc("/assets/fallback.png")
-    }
+    // const setFallbackImage = () => {
+    //     setSrc("/assets/fallback.png")
+    // }
 
     return (
         <div className={styles.ProductCard}>
             <Link href="/product/great_new_product">
                 <a>
                     <div className={styles.imgContainer}>
-                        <img src={`/assets/products/prod${Math.ceil(Math.random() * 5)}.jpg`} onError={setFallbackImage} alt={props.productName} />
+                        <img src={`/assets/products/prod${Math.ceil(Math.random() * 5)}.jpg`} alt={""} />
                     </div>
                 </a>
             </Link>
