@@ -12,7 +12,7 @@ const HeroSlide = (props) => {
                 <div className={`container`} >
                     <div className={styles.slideWrapper}>
                         <h1 draggable="false" >{props.name}</h1>
-                        <p draggable="false" >{props.desc}</p>
+                        <p draggable="false" dir="auto" title={props.desc}>{props.desc}</p>
                         <Link href={`/category/${props.id}`}>
                             <a draggable="false">
                                 <PrimaryButton draggable="false" >{router.locale === "ar" ? "المزيد" : "Check Now"}</PrimaryButton>
