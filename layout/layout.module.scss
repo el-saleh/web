@@ -126,7 +126,7 @@
 
 .footer {
   .mainFooter {
-    background-color: $primary;
+    background-color: $primary-dark;
     color: white;
     padding: 1rem 0;
 
@@ -232,6 +232,7 @@
 
   .miniFooter {
     background-color: $primary-dark;
+    filter: brightness(0.85);
     text-align: center;
     padding: 0.5rem;
 

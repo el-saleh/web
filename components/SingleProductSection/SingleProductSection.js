@@ -160,7 +160,7 @@ const SingleProductSection = (props) => {
                 </div>
             </section>
 
-            <section style={{ textAlign: "center" }} className={styles.videoSection}>
+            <section className={styles.videoSection}>
                 
                 <div className="container">
                     <iframe

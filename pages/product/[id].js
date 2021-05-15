@@ -9,59 +9,29 @@ import ConatctUs from '../../components/ConatctUs/ConatctUs';
 function product(props) {
   const router = useRouter()
   const { id } = router.query
-  const product = useRouter().locale === "en" ? props.product.en : props.product.ar;
   return (
     <>
       <Head>
-        <title>ElSaleh | {product.title}</title>
-        <meta name="description" content={product.description} />
+        <title>ElSaleh | {"اسم المنتج"}</title>
+        <meta name="description" content={"وصف المنتج"}  />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="product" />
         <meta property="og:url" content={`https://el-saleh.com/${id}`} />
-        <meta property="og:description" content={product.description} />
-        <meta property="og:image" content={`${product.productImage}`} />
+        <meta property="og:description" content={"وصف المنتج"} />
+        <meta property="og:image" content={`https://dummyimage.com/400x400/961296/ffffff&text=product_image`} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={`https://el-saleh.com/${id}`} />
-        <meta property="twitter:description" content={product.description} />
-        <meta property="twitter:image" content={`${product.productImage}`} />
+        <meta property="twitter:description" content={"وصف المنتج"} />
+        <meta property="twitter:image" content={`https://dummyimage.com/400x400/961296/ffffff&text=product_image}`} />
       </Head>
       <Layout>
-        <SingleProductSection
-          id={product.productId}
-          {...product}
-        />
+        <SingleProductSection/>
       </Layout>
     </>
   )
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id;
-  
-  const product_en = await requester.get(`/products/productById/en/${id}`).catch(()=>{});
-  const product_ar = await requester.get(`/products/productById/ar/${id}`).catch(()=>{});
-
-  const product = {
-    en : product_en.data[0],
-    ar : product_ar.data[0]
-  }; 
-  
-  if(product.en && product.ar){
-    return {
-      props: {product : product}, // will be passed to the page component as props
-    }
-  }
-  else{
-    return {
-      redirect: {
-        destination: '/404',
-        permanent: false,
-      }
-    }
-  }
 }
 
 export default product;
