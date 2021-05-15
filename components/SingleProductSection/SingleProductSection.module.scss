@@ -1,60 +1,74 @@
 @import "../../styles/varibles.scss";
 
-$image-hight-lg:30rem;
-$image-hight-sm:20rem;
+// $image-hight-lg:30rem;
+// $image-hight-sm:20rem;
 
 .productSection{
-    &:nth-child(odd){
-        background-color: $off-light;
-    };
-    &:nth-child(even){
-        box-shadow: inset 0px 0px 3px 0px rgba(0 ,0 ,0 , 0.15);
-        .productSectionContainer{
-            flex-direction: row-reverse
-        }
-    };
-
+    // &:nth-child(odd){
+    //     background-color: $off-light;
+    // };
+    // &:nth-child(even){
+    //     box-shadow: inset 0px 0px 3px 0px rgba(0 ,0 ,0 , 0.15);
+    //     .productSectionContainer{
+    //         flex-direction: row-reverse
+    //     }
+    // };
     padding: 2rem 0rem;
     display: flex;
     align-items: center;
 }
 .productSectionContainer{
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     
     .imgContainer{
-        min-height: $image-hight-lg !important;
+        // min-height: $image-hight-lg !important;
+        height: 50vh;
         width: 47.5%;
         display: flex;
         justify-content: center;
         align-items: center;
         margin: 2rem 0rem;
-
-        img{
-            // important tp over Right the "react-image-gallery" styiling.
-            max-height: $image-hight-lg !important;
-            max-width: 100%;
-            border-radius: 0.25em;
-        }
+        outline: 1px solid $light-grey;
+        // the slide image element styles in the "override files". 
     }
     .info{
         width: 47.5%;
-        margin: 2rem 0rem;
+        margin: 1rem 0rem 2rem;
         .superTitle{
             margin-bottom: 0rem;
             color: $primary;
-            
+        }
+        .breadCrumb{
+            color: $primary-dark;
+            font-size: 1rem;
+            &:hover{
+                color: $primary-light;
+                text-decoration: underline;
+            }
         }
         .title{
-            font-size: 2.6rem;
-            margin: 0 0 1rem 0;
+            font-size: 2rem;
+            margin: 0 0 0.5rem 0;
             @media (max-width : 768px) {
+                margin: 1rem 0 0.5rem 0;
                 font-size: 1.8rem;
               }
         }
+        .price{
+            color:$primary;
+            font-family: $secondFontFamily;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0;
+            small{
+                font-size: 1rem;
+            }
+        }
         .description{
-            margin-bottom: 1.5rem;
+            margin: 1rem 0;
             font-weight: 400;
             font-size: 1.1rem;
             line-height: 1.6;
@@ -87,11 +101,17 @@ $image-hight-sm:20rem;
                 margin-bottom: 1.5rem;
               }
         }
+        .qty{
+            display: inline-block;
+            width: 2.5rem;
+            text-align: center;
+        }
 
     }
 
     @media (max-width : 991px) {
         flex-direction: column !important;
+        align-items: center;
         .imgContainer, .info{
             width: 100%;
         }
@@ -100,13 +120,10 @@ $image-hight-sm:20rem;
     @media (max-width : 768px) {
         flex-direction: column !important;
         .imgContainer{
-            min-height: $image-hight-sm !important;
+            // min-height: $image-hight-sm !important;
             width: 100%;
             margin: 0rem;
-            img{
-                // important tp over Right the "react-image-gallery" styiling.
-                max-height: $image-hight-sm !important;
-            }
+            // the slide image element styles in the "override files". 
         }
         .info{
             margin: 0rem;
@@ -114,4 +131,19 @@ $image-hight-sm:20rem;
         }
         
       }
+}
+.videoSection{
+    padding: 4rem 0;
+    text-align: center;
+    iframe{
+        width: 100%;
+        height: 60vh;
+            @media (max-width: 1400px) {
+              width: 100%;
+              height: 60vw;
+              max-height: 80vh;
+            }
+         
+    }
+
 }

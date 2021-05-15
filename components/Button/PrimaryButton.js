@@ -3,7 +3,7 @@ import styles from "./PrimaryButton.module.scss"
 const PrimaryButton = (props) => {
     return (
         <button {...props} className={styles.PrimaryButton}>
-            <span>{props.children}</span>
+            {props.children}
         </button>
     );
 };

@@ -30,10 +30,18 @@ $image-hight-sm: 20rem;
             color: $light;
             max-height: 30%;
             overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+            
+            @media (max-width: 768px) {
+                -webkit-line-clamp: 6;
+            }
         }
 
         @media (max-width: 768px) {
-            padding: 0 20%;
+            padding: 0 15%;
         }
     }
 }

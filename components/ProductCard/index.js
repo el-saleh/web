@@ -4,29 +4,31 @@ import styles from "./ProductCard.module.scss";
 import { IoCartOutline } from "react-icons/io5";
 
 export default function ProductCard(props) {
-    const [src, setSrc] = useState(props.productImage);
+    // const [src, setSrc] = useState(props.productImage);
 
-    const setFallbackImage = () => {
-        setSrc("/assets/fallback.png")
-    }
+    // const setFallbackImage = () => {
+    //     setSrc("/assets/fallback.png")
+    // }
 
     return (
-        <div className={styles.ProductCard}>
-            <Link href="/product/great_new_product">
-                <a>
-                    <div className={styles.imgContainer}>
-                        <img src={`/assets/products/prod${Math.ceil(Math.random() * 5)}.jpg`} onError={setFallbackImage} alt={props.productName} />
-                    </div>
-                </a>
-            </Link>
-            <div className={styles.infoContainer}>
-                <Link href="/product/great_new_product">
+        <div className={styles.productCard_Wrapper} title={props.productName}>
+            <div className={styles.ProductCard}>
+                <Link href={`/product/${props.id}`}>
                     <a>
-                        <h5 className={styles.name}>{"عنوان تفصيلي واضح للمنتج المعروض"}</h5>
+                        <div className={styles.imgContainer}>
+                            <img src={props.image} alt={props.productName} />
+                        </div>
                     </a>
                 </Link>
-                <p className={styles.price}>{props.productPrice.toFixed()} جنيه</p>
-                <button className={styles.addButton}>{"أضف إلى العربة "} &nbsp;<IoCartOutline /></button>
+                <div className={styles.infoContainer}>
+                    <Link href={`/product/${props.id}`} >
+                        <a>
+                            <h5 className={styles.name}>{props.productName} {props.id}</h5>
+                        </a>
+                    </Link>
+                    <p className={styles.price}>{props.price} جنيه</p>
+                    <button className={styles.addButton}>{"أضف إلى العربة "} &nbsp;<IoCartOutline /></button>
+                </div>
             </div>
         </div>
     )

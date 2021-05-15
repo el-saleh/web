@@ -6,9 +6,11 @@ import AnimationOverlay from '../components/animationOverlay/AnimationOverlay';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.scss';
+import "../styles/override.scss";
 
-// styling for "react image gallery" package.
+// styling for "react image gallery" & "react multi carousel" package.
 import "react-image-gallery/styles/scss/image-gallery.scss";
+import "react-multi-carousel/lib/styles.css";
 
 // styling for "devextreme" package.
 import 'devextreme/dist/css/dx.common.css';
@@ -16,6 +18,7 @@ import 'devextreme/dist/css/dx.light.css';
 
 //  component and stylign for nprogress bar
 import "nprogress/nprogress.css";
+
 const TopProgressBar = dynamic(
   () => {
     return import("../components/progressBar/TopProgressBar");
@@ -52,7 +55,9 @@ function MyApp({ Component, pageProps }) {
           <meta name="theme-color" content="#ffffff" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet" />
+          <link rel="preconnect" href="https://fonts.gstatic.com"/>
+          <link href={"https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"} rel="stylesheet"/>
+          <link href={"https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"} rel="stylesheet" />
         </Head>
         <TopProgressBar />
         {displayLoadingOverlay && <AnimationOverlay />}

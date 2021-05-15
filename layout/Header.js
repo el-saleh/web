@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from 'next/link';
-import styles from "./layout.module.scss"
+import styles from "./layout.module.scss";
 import { FiPhone, FiMail } from "react-icons/fi";
 import { IoLogoWhatsapp } from "react-icons/io5"
+import dummy from "../utilities/dummy";
 
 const Header = () => {
   const router = useRouter();
@@ -59,9 +60,11 @@ const Header = () => {
             <span >{router.locale === "ar" ? "المنتجات" : "Products"}</span>
             <div className={styles.dropDownMenu}>
               <ul dir="auto">
-                <li className={styles.tab}><Link href="/category1">{"الفئة الاولى"}</Link></li>
-                <li className={styles.tab}><Link href="/category2">{"الفئة الثانبة"}</Link></li>
-                <li className={styles.tab}><Link href="/category3">{"الفئة الثالثة"}</Link></li>
+                {dummy.categories.map((categ)=>{
+                  return(
+                    <li key={categ.id} className={styles.tab}><Link href={`/category/${categ.id}`}>{categ.name}</Link></li>
+                  )
+                })}
               </ul>
             </div>
           </span>
@@ -79,8 +82,8 @@ const Header = () => {
             </a>
             <div className={styles.dropDownMenu}>
               <ul dir="auto">
-                <li className={styles.tab}><Link href="/cart">{"عربة الشراء"}</Link></li>
-                <li className={styles.tab}><Link href="/orders">{"طبات الشراء"}</Link></li>
+                <li className={styles.tab}><Link href="/cart">{"عربة التسوق"}</Link></li>
+                <li className={styles.tab}><Link href="/orders">{"طلبات الشراء"}</Link></li>
                 <li className={styles.tab} onClick={() => {setIsSigned(false)}}>{"خروج"}</li>
               </ul>
             </div>
