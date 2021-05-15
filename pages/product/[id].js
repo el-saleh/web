@@ -3,8 +3,7 @@ import { useRouter } from 'next/router'
 import requester from "../../utilities/requester";
 import Layout from "../../layout/Layout";
 import SingleProductSection from '../../components/SingleProductSection/SingleProductSection';
-import ConatctUs from '../../components/ConatctUs/ConatctUs';
-
+import dummy from "../../utilities/dummy";
 
 function product(props) {
   const router = useRouter()
@@ -12,26 +11,44 @@ function product(props) {
   return (
     <>
       <Head>
-        <title>ElSaleh | {"اسم المنتج"}</title>
-        <meta name="description" content={"وصف المنتج"}  />
+        <title>{`ElSaleh | ${props.productName}  ${props.id}`}</title>
+        <meta name="description" content={props.description} />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="product" />
-        <meta property="og:url" content={`https://el-saleh.com/${id}`} />
-        <meta property="og:description" content={"وصف المنتج"} />
-        <meta property="og:image" content={`https://dummyimage.com/400x400/961296/ffffff&text=product_image`} />
+        <meta property="og:url" content={`https://el-saleh.com/product/${id}`} />
+        <meta property="og:description" content={props.description} />
+        <meta property="og:image" content={props.image} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={`https://el-saleh.com/${id}`} />
-        <meta property="twitter:description" content={"وصف المنتج"} />
-        <meta property="twitter:image" content={`https://dummyimage.com/400x400/961296/ffffff&text=product_image}`} />
+        <meta property="twitter:url" content={`https://el-saleh.com/product/${id}`} />
+        <meta property="twitter:description" content={props.description} />
+        <meta property="twitter:image" content={props.image} />
       </Head>
       <Layout>
-        <SingleProductSection/>
+        <SingleProductSection {...props} />
       </Layout>
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+  console.log(context.params.id);
+  const product =  dummy.productById(context.params.id);
+  if (!product) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    }
+  }
+
+  // console.log(product);
+  return {
+    props: { ...product }, // will be passed to the page component as props
+  }
 }
 
 export default product;

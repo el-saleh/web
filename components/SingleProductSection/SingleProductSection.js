@@ -11,34 +11,17 @@ const SingleProductSection = (props) => {
     const router = useRouter();
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [quantity, setQuantity] = useState(1);
-    const [price, setPrice] = useState((Math.ceil((Math.random() * 10)) * 100).toFixed(2));
 
     useEffect(() => {
         zoom();
     })
+    const gallery = props.gallery.map((img) => {
+        return {
+            original: img,
+            thumbnail: img,
+        }
+    })
 
-    const dummyImage = [
-        {
-            original: "/assets/products/prod1.jpg",
-            thumbnail: "/assets/products/prod1.jpg",
-        },
-        {
-            original: "/assets/products/prod2.jpg",
-            thumbnail: "/assets/products/prod2.jpg",
-        },
-        {
-            original: "/assets/products/prod3.jpg",
-            thumbnail: "/assets/products/prod3.jpg",
-        },
-        {
-            original: "/assets/products/prod4.jpg",
-            thumbnail: "/assets/products/prod4.jpg",
-        },
-        {
-            original: "/assets/products/prod5.jpg",
-            thumbnail: "/assets/products/prod5.jpg",
-        },
-    ]
 
     const updateQty = (e) => {
         const newQty = (parseInt(e.target.id) + quantity);
@@ -100,10 +83,24 @@ const SingleProductSection = (props) => {
         setIsFullscreen(!isFullscreen);
     }
 
+    const parseEmbedLink = (url) => {
+
+        if (url.includes("watch?v=")) {
+            return url.replace("watch?v=", "embed/")
+        }
+
+        if (url.includes(".be/")) {
+            return url.replace(".be/", "be.com/embed/")
+        }
+
+        return url;
+
+    }
+
     return (
         <>
-            <section className={styles.productSection}>
 
+            <section className={styles.productSection}>
                 <div className={`${styles.productSectionContainer} container`}>
                     <div className={styles.imgContainer}>
                         {/* in home page we show one image, but in product page we show all the product iamges in slider */}
@@ -113,7 +110,7 @@ const SingleProductSection = (props) => {
                             </>
                             :
                             <ImageGallery
-                                items={dummyImage}
+                                items={gallery}
                                 showThumbnails={true}
                                 thumbnailPosition={"right"}
                                 showPlayButton={true}
@@ -132,9 +129,22 @@ const SingleProductSection = (props) => {
                     </div>
                     <div className={styles.info} dir="auto">
                         {/* <p className={styles.superTitle}>{""}</p> */}
-                        <h1 className={styles.title}>{"عنوان تفصيلى للمنتج المعروض"}</h1>
-                        <p className={styles.price}>{price} <small>جنيه</small></p>
-                        <p className={styles.description}>{"وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج وصف للمنتج "}</p>
+                        <div>
+                            <Link href={`/`}>
+                                <a>
+                                    <span className={styles.breadCrumb}>{"الرئيسية"}</span>
+                                </a>
+                            </Link>
+                            {" - "}
+                            <Link href={`/category/${props.categoryId}`}>
+                                <a>
+                                    <span className={styles.breadCrumb}>{props.categoryName}</span>
+                                </a>
+                            </Link>
+                        </div>
+                        <h1 className={styles.title}>{`${props.productName}  ${props.id}`}</h1>
+                        <p className={styles.price}>{props.price} <small>جنيه</small></p>
+                        <p className={styles.description}>{props.description}</p>
 
                         <ul>
                             {Array(3).fill({}).map((listItem, idx) => {
@@ -161,10 +171,10 @@ const SingleProductSection = (props) => {
             </section>
 
             <section className={styles.videoSection}>
-                
+
                 <div className="container">
                     <iframe
-                        src="https://www.youtube.com/embed/FSgwA6QFSn0"
+                        src={parseEmbedLink("https://youtu.be/y2D04x9baoM")}
                         title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -172,13 +182,13 @@ const SingleProductSection = (props) => {
                     >
                     </iframe>
                 </div>
-                
+
             </section>
 
             <section>
                 <div className={`container`} dir="auto">
                     <h1 className={styles.title}>{"منتجات ذات صلة"}</h1>
-                    <ProductList />
+                    <ProductList categoryId={props.categoryId} limit={5} />
                 </div>
             </section>
 

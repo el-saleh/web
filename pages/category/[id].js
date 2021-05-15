@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import requester from "../../utilities/requester";
 import Layout from "../../layout/Layout";
-import CategpryProductList from '../../components/CategpryProductList/CategpryProductList';
+import ProductList from '../../components/ProductList/ProductList';
 
 function category() {
     const router = useRouter()
@@ -28,9 +28,9 @@ function category() {
             <Layout>
                 <div className={"container"} dir="rtl">
                     <h1>{"اسم الفئة"}</h1>
+                    <ProductList categoryId={id} />
                 </div>
-                <CategpryProductList />
-            </Layout>
+            </Layout> 
         </>
     )
 }

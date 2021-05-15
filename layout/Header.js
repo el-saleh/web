@@ -62,7 +62,7 @@ const Header = () => {
               <ul dir="auto">
                 {dummy.categories.map((categ)=>{
                   return(
-                    <li key={categ.id} className={styles.tab}><Link href={`/category/category1${categ.id}`}>{categ.name}</Link></li>
+                    <li key={categ.id} className={styles.tab}><Link href={`/category/${categ.id}`}>{categ.name}</Link></li>
                   )
                 })}
               </ul>

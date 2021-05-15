@@ -41,6 +41,14 @@
             margin-bottom: 0rem;
             color: $primary;
         }
+        .breadCrumb{
+            color: $primary-dark;
+            font-size: 1rem;
+            &:hover{
+                color: $primary-light;
+                text-decoration: underline;
+            }
+        }
         .title{
             font-size: 2rem;
             margin: 0 0 0.5rem 0;

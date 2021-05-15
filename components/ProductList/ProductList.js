@@ -1,12 +1,14 @@
 import React from 'react'
 import ProductCard from '../ProductCard';
 import styles from "./ProductList.module.scss";
-export default function ProductList({ list = Array(30).fill(null), limit }) {
+import dummy from "../../utilities/dummy";
+export default function ProductList({ categoryId, limit }) {
+    // console.log(dummy.productsById(categoryId))
     return (
         <div className={`${styles.ProductList} ${limit ? styles.oneRow : ""}`}>
-            {list.slice(0, limit).map((prod, index) => {
+            {dummy.productsById(categoryId).slice(0, limit).map((prod, index) => {
                 return (
-                    <ProductCard key={index} {...prod} />
+                    <ProductCard key={prod.id} {...prod} />
                 )
             })}
         </div>

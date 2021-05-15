@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from "./HomeCategorySection.module.scss";
-import CategpryProductList from '../CategpryProductList/CategpryProductList';
+import ProductList from '../ProductList/ProductList'
 
 export default function HomeCategorySection({ category }) {
     return (
@@ -15,8 +15,8 @@ export default function HomeCategorySection({ category }) {
                         </a>
                     </Link>
                 </div>
+            <ProductList limit={5} categoryId={category.id} />
             </div>
-            <CategpryProductList limit={5}/>
         </div>
     )
 }
