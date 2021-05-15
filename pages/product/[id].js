@@ -36,6 +36,7 @@ function product(props) {
 export async function getServerSideProps(context) {
   console.log(context.params.id);
   const product =  dummy.productById(context.params.id);
+  const related = dummy.productsById(product.categoryId);
   if (!product) {
     return {
       redirect: {
@@ -47,7 +48,7 @@ export async function getServerSideProps(context) {
 
   // console.log(product);
   return {
-    props: { ...product }, // will be passed to the page component as props
+    props: { ...product, related }, // will be passed to the page component as props
   }
 }
 

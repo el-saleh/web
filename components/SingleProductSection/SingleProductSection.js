@@ -188,7 +188,7 @@ const SingleProductSection = (props) => {
             <section>
                 <div className={`container`} dir="auto">
                     <h1 className={styles.title}>{"منتجات ذات صلة"}</h1>
-                    <ProductList categoryId={props.categoryId} limit={5} />
+                    <ProductList products={props.related} limit={5} />
                 </div>
             </section>
 

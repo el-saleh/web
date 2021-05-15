@@ -6,9 +6,9 @@ import HeroSection from '../components/HeroSection/HeroSection'
 import HomeCategorySection from "../components/HomeCategorySection/HomeCategorySection";
 import dummy from "../utilities/dummy";
 
-function Home() {
+function Home(props) {
   const setDisplayLoadingOverlay = useContext(DisplayLoadingOverlayHandler);
-  
+  console.log("home content", props)
   return (
     <>
       <Head>
@@ -30,7 +30,7 @@ function Home() {
       </Head>
       <Layout>
         <HeroSection categories={dummy.categories}/>
-        {dummy.categories.map((category)=>{
+        {props.homeData.map((category)=>{
           return(
             <HomeCategorySection key={category.id} category={category} />
           )
@@ -39,5 +39,23 @@ function Home() {
     </>
   )
 }
+
+export async function getServerSideProps(context) {
+  const homeData = dummy.homeContent();
+  // if (!homeData) {
+  //   return {
+  //     redirect: {
+  //       destination: '/404',
+  //       permanent: false,
+  //     },
+  //   }
+  // }
+
+  // console.log(product);
+  return {
+    props: { homeData }, // will be passed to the page component as props
+  }
+}
+
 
 export default Home;

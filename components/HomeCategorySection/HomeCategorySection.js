@@ -15,7 +15,7 @@ export default function HomeCategorySection({ category }) {
                         </a>
                     </Link>
                 </div>
-            <ProductList limit={5} categoryId={category.id} />
+            <ProductList limit={5} categoryId={category.id} products={category.products} />
             </div>
         </div>
     )

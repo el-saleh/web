@@ -521,6 +521,8 @@ const products = [
     }
 ]
 
+
+
 const productsById = (id) => {
     return products.filter((p) => {
         return p.categoryId === id
@@ -528,13 +530,35 @@ const productsById = (id) => {
 }
 
 const productById = (id) => {
-    return products.find((p) => {
+    const product = products.find((p) => {
         return p.id == id
+    });
+    
+    return product
+}
+
+const categoryById = (id) => {
+    return categories.find((c) => {
+        return c.id == id
     })
 }
+
+const homeContent = () => {
+    return categories.map((item)=>{
+        let category = item;
+        category.products = products.filter((product)=>{
+            return product.categoryId === category.id
+        })
+
+        return category
+    })
+}
+
 export default {
     categories,
+    categoryById,
     products,
     productsById,
-    productById
+    productById,
+    homeContent
 }
