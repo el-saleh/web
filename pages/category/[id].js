@@ -37,7 +37,7 @@ function category(props) {
 }
 
 export async function getServerSideProps(context) {
-    console.log(context.params.id);
+    // console.log(context.params.id);
     const category = dummy.categoryById(context.params.id);
     const products =  dummy.productsById(context.params.id);
     if (!category) {

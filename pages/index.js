@@ -8,7 +8,6 @@ import dummy from "../utilities/dummy";
 
 function Home(props) {
   const setDisplayLoadingOverlay = useContext(DisplayLoadingOverlayHandler);
-  console.log("home content", props)
   return (
     <>
       <Head>
