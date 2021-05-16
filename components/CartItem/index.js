@@ -37,7 +37,7 @@ export default function CartItem({ product, orderItem }) {
                         <span className={styles.qty}>{quantity}</span>
                         <PrimaryButton id={-1} onClick={updateQty} disabled={!(quantity - 1)}>-</PrimaryButton>
                     </div>
-                    <PrimaryButton ><AiFillDelete />{"إزالة"}</PrimaryButton>
+                    <PrimaryButton id="delete" ><AiFillDelete />{"إزالة"}</PrimaryButton>
                 </div>
                 }
 

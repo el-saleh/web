@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./AnimationOverlay.module.scss"
+import styles from "./overlay.module.scss"
 
 
 export default function AnimationOverlay() {

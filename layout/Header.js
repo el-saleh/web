@@ -1,14 +1,25 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import styles from "./layout.module.scss";
 import { FiPhone, FiMail } from "react-icons/fi";
 import { IoLogoWhatsapp } from "react-icons/io5"
+import { Control } from '../utilities/Contexts'
 import dummy from "../utilities/dummy";
 
 const Header = () => {
   const router = useRouter();
-  const [isSigned, setIsSigned] = useState(true);
+  const [isSigned, setIsSigned] = useState(false);
+  const gstate = useContext(Control);
+
+
+  const onSignIn = () => {
+    gstate.setDisplaySignInForm(true);
+  }
+
+  const signOut = () => {
+    gstate.setUser(null)
+  }
 
   return (
     <header className={styles.header}>
@@ -60,8 +71,8 @@ const Header = () => {
             <span >{router.locale === "ar" ? "المنتجات" : "Products"}</span>
             <div className={styles.dropDownMenu}>
               <ul dir="auto">
-                {dummy.categories.map((categ)=>{
-                  return(
+                {dummy.categories.map((categ) => {
+                  return (
                     <li key={categ.id} className={styles.tab}><Link href={`/category/${categ.id}`}>{categ.name}</Link></li>
                   )
                 })}
@@ -73,29 +84,29 @@ const Header = () => {
             <a className={styles.tab} id="">{router.locale === "ar" ? "عنا" : "About Us"}</a>
           </Link>
 
-          {isSigned ? 
-          <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
-            <a className={styles.tab}>
-              <img className={styles.userAvatar} src={"/assets/cart.png"} />
+          {gstate.user ?
+            <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
+              <a className={styles.tab}>
+                <img className={styles.userAvatar} src={"/assets/cart.png"} />
                 &nbsp;
-                <span>Ahmed</span>
-            </a>
-            <div className={styles.dropDownMenu}>
-              <ul dir="auto">
-                <li className={styles.tab}><Link href="/cart">{"عربة التسوق"}</Link></li>
-                <li className={styles.tab}><Link href="/orders">{"طلبات الشراء"}</Link></li>
-                <li className={styles.tab} onClick={() => {setIsSigned(false)}}>{"خروج"}</li>
-              </ul>
-            </div>
-          </span>
-          :
-          <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
-            <a className={styles.tab}>
-              <img className={styles.userAvatar} src={"/assets/userAvatar.png"} />
+                <span>{gstate.user.username}</span>
+              </a>
+              <div className={styles.dropDownMenu}>
+                <ul dir="auto">
+                  <li className={styles.tab}><Link href="/cart">{"عربة التسوق"}</Link></li>
+                  <li className={styles.tab}><Link href="/orders">{"طلبات الشراء"}</Link></li>
+                  <li className={styles.tab} onClick={signOut}>{"خروج"}</li>
+                </ul>
+              </div>
+            </span>
+            :
+            <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
+              <a className={styles.tab}>
+                <span onClick={onSignIn}>تسجيل دخول</span>
                 &nbsp;
-                <span  onClick={() => {setIsSigned(true)}}>تسجيل دخول</span>
-            </a>
-          </span>
+                <img className={styles.userAvatar} src={"/assets/userAvatar.png"} />
+              </a>
+            </span>
           }
 
         </div>
