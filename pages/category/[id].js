@@ -11,7 +11,7 @@ function category(props) {
     return (
         <>
             <Head>
-                <title>ElSaleh | {props.name}</title>
+                <title>El-Saleh | {props.name}</title>
                 <meta name="description" content={props.desc} />
 
                 {/* Open Graph / Facebook */}

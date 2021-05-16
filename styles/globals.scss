@@ -25,6 +25,7 @@ body {
 }
 
 .main {
+  background-color: $off-light;
   flex-grow: 1;
   display: flex;
   flex-direction: column;

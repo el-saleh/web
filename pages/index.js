@@ -11,19 +11,19 @@ function Home(props) {
   return (
     <>
       <Head>
-        <title>ElSaleh | Home</title>
-        <meta name="description" content="ثقة عملاءنا سر نجاحنا على مدار ٥٠ عام منتجات أبو العزم محمد محمد أبو العزم جودة عالمية بأيادي مصرية" />
+        <title>{"El-Saleh | الرئيسية"}</title>
+        <meta name="description" content={"الصالح لاستيراد وتصدير الادوات المنزلية"}/>
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://el-saleh.com" />
-        <meta property="og:description" content="الصالح للتجارة" />
+        <meta property="og:description" content={"الصالح لاستيراد وتصدير الادوات المنزلية"} />
         <meta property="og:image" content="/assets/logo2.png" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://el-saleh.com" />
-        <meta property="twitter:description" content="الصالح للتجارة" />
+        <meta property="twitter:description" content={"الصالح لاستيراد وتصدير الادوات المنزلية"} />
         <meta property="twitter:image" content="/assets/logo2.png" />
 
       </Head>

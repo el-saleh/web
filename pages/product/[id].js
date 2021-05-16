@@ -11,7 +11,7 @@ function product(props) {
   return (
     <>
       <Head>
-        <title>{`ElSaleh | ${props.productName}  ${props.id}`}</title>
+        <title>{`El-Saleh | ${props.productName}  ${props.id}`}</title>
         <meta name="description" content={props.description} />
 
         {/* Open Graph / Facebook */}

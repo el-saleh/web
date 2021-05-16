@@ -37,8 +37,8 @@ const SingleProductSection = (props) => {
         const imageElements = [...document.getElementsByClassName("image-gallery-image")];
         imageElements.forEach((img) => {
             img.onmousemove = function (event) {
+                var e = event.target;
                 if (!isFullscreen) {
-                    var e = event.target;
                     var xh = e.getBoundingClientRect().width;
                     var yh = e.getBoundingClientRect().height;
                     var xc = e.getBoundingClientRect().x;
@@ -49,6 +49,11 @@ const SingleProductSection = (props) => {
                     var yp = ((y / yh) * 100).toFixed();
                     e.style.transformOrigin = `${xp}% ${yp}%`;
                     // console.log(xp, yp)
+                }
+                else {
+                    if(e.style.transform === "scale(2.5)"){
+                        e.style.transform = "scale(1)";
+                    }
                 }
             };
             img.onmouseenter = function (event) {
@@ -77,6 +82,7 @@ const SingleProductSection = (props) => {
                 img.style.height = "98vh";
             }
             else {
+                img.style.transform = `scale(1)`;
                 img.style.height = "49vh";
             }
         })
@@ -176,9 +182,9 @@ const SingleProductSection = (props) => {
                     <iframe
                         src={parseEmbedLink("https://youtu.be/y2D04x9baoM")}
                         title="YouTube video player"
-                        frameborder="0"
+                        frameBorder="0"
                         allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
+                        allowFullScreen
                     >
                     </iframe>
                 </div>
