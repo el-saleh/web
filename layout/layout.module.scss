@@ -71,7 +71,7 @@
     .logoImg {
       width: 10rem;
       @media (max-width: 768px) {
-        width: 8rem;
+        width: 6rem;
       }
     }
   }
@@ -99,9 +99,9 @@
       display: none;
       position: absolute;
       top: 100%;
-      right: 0%;
+      right: -10%;
       width: max-content;
-      min-width: 13rem;
+      min-width: 12rem;
       background: $light;
       border: 1px $light-grey solid;
       border-radius: 0.4rem;

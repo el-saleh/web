@@ -28,10 +28,10 @@ const Header = () => {
         <div className={`container ${styles.header_wrapper}`} dir="">
           <div style={{ display: "flex" }}>
             <span>
-              <a className={""} target="_blank" href="tel:+201099999999" rel="noreferrer">
+              <a className={""} target="_blank" href="tel:+201123796666" rel="noreferrer">
                 <FiPhone />
                 &nbsp;
-                <span>{router.locale === "ar" ? "01099999999" : "01099999999"}</span>
+                <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
               </a>
             </span>
             <span>
@@ -43,10 +43,10 @@ const Header = () => {
             </span>
           </div>
           <div>
-            <a className={""} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
+            <a className={""} target="_blank" href="https://api.whatsapp.com/send?phone=201123796666" rel="noreferrer">
               <IoLogoWhatsapp />
               &nbsp;
-              <span>{router.locale === "ar" ? "01099999999" : "01099999999"}</span>
+              <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
             </a>
           </div>
         </div>
@@ -81,7 +81,7 @@ const Header = () => {
           </span>
 
           <Link href="/aboutus">
-            <a className={styles.tab} id="">{router.locale === "ar" ? "عنا" : "About Us"}</a>
+            <a className={styles.tab} id="">{router.locale === "ar" ? "من نحن" : "About Us"}</a>
           </Link>
 
           {gstate.user ?
