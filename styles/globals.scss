@@ -1,4 +1,13 @@
 @import "../styles/varibles.scss";
+@font-face {
+  font-family: 'segoe';
+  src: url('./segoe.ttf');
+}
+@font-face {
+  font-family: 'times';
+  src: url('./times.ttf');
+}
+
 html {
   font-size: 16px;
   font-family: $mainFontFamily;

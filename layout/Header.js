@@ -2,8 +2,9 @@ import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import styles from "./layout.module.scss";
-import { FiPhone, FiMail } from "react-icons/fi";
-import { IoLogoWhatsapp } from "react-icons/io5"
+import { RiWhatsappFill } from "react-icons/ri/";
+import {FaPhoneAlt} from 'react-icons/fa';
+import { IoMail } from "react-icons/io5"
 import { Control } from '../utilities/Contexts'
 import dummy from "../utilities/dummy";
 
@@ -25,18 +26,18 @@ const Header = () => {
     <header className={styles.header}>
 
       <div className={styles.upperHeaderWrapper}>
-        <div className={`container ${styles.header_wrapper}`} dir="">
+        <div className={` ${styles.header_wrapper}`} dir="">
           <div style={{ display: "flex" }}>
             <span>
               <a className={""} target="_blank" href="tel:+201123796666" rel="noreferrer">
-                <FiPhone />
+                <FaPhoneAlt />
                 &nbsp;
                 <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
               </a>
             </span>
             <span>
               <a className={""} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
-                <FiMail />
+                <IoMail />
                 &nbsp;
                 <span>info@elsaleh.com</span>
               </a>
@@ -44,7 +45,7 @@ const Header = () => {
           </div>
           <div>
             <a className={""} target="_blank" href="https://api.whatsapp.com/send?phone=201123796666" rel="noreferrer">
-              <IoLogoWhatsapp />
+              <RiWhatsappFill />
               &nbsp;
               <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
             </a>
@@ -52,7 +53,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className={`container ${styles.header_wrapper}`} dir="">
+      <div className={` ${styles.header_wrapper}`} dir="">
         <div>
           <Link href="/">
             <a className={styles.tab}>
@@ -63,8 +64,8 @@ const Header = () => {
 
         <div className={styles.navLinks}>
 
-          <Link href="/">
-            <a className={styles.tab + " hiddenInMobile"} id="">{router.locale === "ar" ? "الرئيسية" : "Home"}</a>
+          <Link href="/aboutus">
+            <a className={styles.tab} id="">{router.locale === "ar" ? "من نحن" : "About Us"}</a>
           </Link>
 
           <span tabIndex="0" id="products" className={`${styles.dropDownTap}`}>
@@ -80,8 +81,8 @@ const Header = () => {
             </div>
           </span>
 
-          <Link href="/aboutus">
-            <a className={styles.tab} id="">{router.locale === "ar" ? "من نحن" : "About Us"}</a>
+          <Link href="/">
+            <a className={styles.tab + " hiddenInMobile"} id="">{router.locale === "ar" ? "الرئيسية" : "Home"}</a>
           </Link>
 
           {gstate.user ?

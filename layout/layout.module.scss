@@ -1,7 +1,7 @@
 @import "../styles//varibles.scss";
 
 .header {
-  font-family: $headingFontFamily;
+  font-family: $mainFontFamily;
   background-color: $light;
   box-shadow: 0 2px 28px 0 rgb(0 0 0 / 9%);
   position: sticky;
@@ -26,7 +26,7 @@
           stroke: $light;
         }
       }
-      
+
       @media (max-width: 768px) {
         margin: 0 0.25rem;
         font-size: 0.8rem;
@@ -127,22 +127,35 @@
 .footer {
   .mainFooter {
     background-color: $primary-dark;
-    color: white;
-    padding: 1rem 0;
+    color: $off-light;
+    padding: 2rem 0;
 
     .mainFooterWrapper {
       display: flex;
       justify-content: space-around;
-      align-items: center;
+      align-items: flex-start;
 
       .address,
       .contacts,
+      .we,
       .social {
+        position: relative;
         width: 25%;
+        .logoImg {
+          position: absolute;
+          width: 8rem;
+          top: 38%;
+          left: 90%;
+          transform: rotateZ(90deg);
+          @media (max-width: 768px) {
+            display: none;
+          }
+        }
         h4 {
           font-family: $mainFontFamily;
-          font-weight: 400;
-          margin-bottom: 1rem;
+          font-weight: 700;
+          margin: 0;
+          margin-bottom: 0.5rem;
         }
 
         a {
@@ -154,6 +167,7 @@
         p {
           font-weight: 200;
           color: inherit;
+          color: $off-light;
         }
       }
 
@@ -222,9 +236,11 @@
         flex-direction: column;
         .address,
         .contacts,
+        .we,
         .social {
           width: 100%;
           text-align: center;
+          margin-bottom: 2rem;
         }
       }
     }
@@ -236,7 +252,7 @@
     text-align: center;
     padding: 0.5rem;
 
-    p {
+    span {
       color: $off-light;
       opacity: 90%;
       font-weight: 200;

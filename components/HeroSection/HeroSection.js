@@ -39,7 +39,7 @@ const HeroSection = ({categories}) => {
         // means to render carousel on server-side.
         infinite={true}
         autoPlay
-        autoPlaySpeed={500000}
+        autoPlaySpeed={6000}
         keyBoardControl={true}
         containerClass="carousel__container"
         renderDotsOutside

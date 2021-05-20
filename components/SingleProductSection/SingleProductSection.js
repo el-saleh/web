@@ -125,8 +125,8 @@ const SingleProductSection = (props) => {
                                 showFullscreenButton={true}
                                 useBrowserFullscreen={false}
                                 lazyLoad={true}
-                                slideInterval={3000}
-                                autoPlay={true}
+                                slideInterval={6000}
+                                autoPlay={false}
                                 infinite={true}
                                 onBeforeSlide={zoom}
                                 onScreenChange={toggleFullscreen}
