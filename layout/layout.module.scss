@@ -44,9 +44,49 @@
     padding: 0.5rem 0;
   }
 
+  .searchBox {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    direction: rtl;
+    border: 1px solid $primary;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    margin: 0rem 10%;
+    transition: all 0.5s ease;
+    @media (min-width: 768px) and (max-width: 1200px) {
+      margin: 0rem 2%;
+    }
+    
+    @media (max-width: 600px) {
+      position: absolute;
+      top: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0rem 0%;
+      width: 90vw;
+    }
+
+    input {
+      padding: 0.5rem;
+      border: none;
+      font-size: 1rem;
+      flex-grow: 1;
+      @media (min-width: 601px) and  (max-width: 900px) {
+          max-width: 8rem;
+      }
+    }
+
+    button {
+      border-radius: 0;
+    }
+  }
+
   .navLinks {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     .userAvatar {
       width: 1.25rem;
     }
@@ -75,16 +115,18 @@
       }
     }
   }
-
   .dropDownTap {
     cursor: pointer;
     color: $dark;
     text-decoration: none;
-    margin: 0 1rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     position: relative;
+    margin: 0rem 1rem;
+    @media (max-width: 768px) {
+      margin: 0rem 0.66rem;
+    }
     &:hover {
       .dropDownMenu {
         display: block;
@@ -121,6 +163,19 @@
         }
       }
     }
+  }
+
+  .searchIcon{
+    display: none;
+    cursor: pointer;
+    padding: 0.5rem 0.5rem 0px 0px;
+    @media (max-width: 600px) {
+      display: inline-block;
+    }
+    &:hover{
+      color : $primary-light;
+    }
+
   }
 }
 

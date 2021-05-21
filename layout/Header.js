@@ -2,8 +2,9 @@ import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import styles from "./layout.module.scss";
+import PrimaryButton from '../components/Button/PrimaryButton';
 import { RiWhatsappFill } from "react-icons/ri/";
-import {FaPhoneAlt} from 'react-icons/fa';
+import { FaPhoneAlt, FaSearch } from 'react-icons/fa';
 import { IoMail } from "react-icons/io5"
 import { Control } from '../utilities/Contexts'
 import dummy from "../utilities/dummy";
@@ -11,6 +12,7 @@ import dummy from "../utilities/dummy";
 const Header = () => {
   const router = useRouter();
   const [isSigned, setIsSigned] = useState(false);
+  const [showSearchbox, setShowSearchbox] = useState(false)
   const gstate = useContext(Control);
 
 
@@ -22,6 +24,9 @@ const Header = () => {
     gstate.setUser(null)
   }
 
+  const toggleSearchBox = () => {
+    setShowSearchbox(!showSearchbox);
+  }
   return (
     <header className={styles.header}>
 
@@ -62,8 +67,22 @@ const Header = () => {
           </Link>
         </div>
 
+        <div className={styles.searchBox} style={{
+          left : showSearchbox ? "" : "-50%",
+        }}>
+          <input
+            type="text"
+            placeholder={"بتدور على ايه؟"}
+          />
+          <PrimaryButton><FaSearch/></PrimaryButton>
+        </div>
+
         <div className={styles.navLinks}>
 
+          <span className={`${styles.dropDownTap} ${styles.searchIcon}`} onClick={toggleSearchBox}>
+            <FaSearch/>
+          </span>
+          
           <Link href="/aboutus">
             <a className={styles.tab} id="">{router.locale === "ar" ? "من نحن" : "About Us"}</a>
           </Link>
