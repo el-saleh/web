@@ -35,7 +35,7 @@ const Footer = () => {
 
                         </div>
                         <div className={styles.contacts}>
-
+                            <h4>{"تواصل معنا"}</h4>
                             <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
                                 <RiWhatsappFill />
                                 &nbsp;
