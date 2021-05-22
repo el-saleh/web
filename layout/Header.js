@@ -21,12 +21,22 @@ const Header = () => {
   }
 
   const signOut = () => {
-    gstate.setUser(null)
+    gstate.setUser(null);
+    window.localStorage.removeItem("userData");
   }
 
   const toggleSearchBox = () => {
     setShowSearchbox(!showSearchbox);
   }
+
+  const parseUserName = (str) => {
+    let firstName = str.split(" ")[0];
+    if(firstName.length > 10) {
+      return firstName.slice(0,7).concat("...");
+    }
+    return str.split(" ")[0].slice(0, 10);
+  }
+
   return (
     <header className={styles.header}>
 
@@ -109,7 +119,7 @@ const Header = () => {
               <a className={styles.tab}>
                 <img className={styles.userAvatar} src={"/assets/cart.png"} />
                 &nbsp;
-                <span>{gstate.user.username}</span>
+                <span title={gstate.user.name} dir="auto">{parseUserName(gstate.user.name)}</span>
               </a>
               <div className={styles.dropDownMenu}>
                 <ul dir="auto">

@@ -36,25 +36,25 @@ const Footer = () => {
                         </div>
                         <div className={styles.contacts}>
                             <h4>{"تواصل معنا"}</h4>
-                            <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
-                                <RiWhatsappFill />
-                                &nbsp;
-                                <span>{router.locale === "ar" ? "راسلنا على واتساب" : "Chat on WhatsApp"}</span>
-                            </a>
                             <a className={styles.contactLink} target="_blank" href="tel:+201123796666" rel="noreferrer">
                                 <FaPhoneAlt />
                                 &nbsp;
                                 <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
                             </a>
-                            <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
-                                <IoMail />
+                            <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
+                                <RiWhatsappFill />
                                 &nbsp;
-                                <span>info@elsaleh.com</span>
+                                <span>{router.locale === "ar" ? "WhatsApp" : "WhatsApp"}</span>
                             </a>
                             <a className={styles.contactLink} target="_blank" href="https://www.facebook.com" rel="noreferrer">
                                 <FaFacebookSquare />
                                 &nbsp;
                                 <span>{"Facebook"}</span>
+                            </a>
+                            <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
+                                <IoMail />
+                                &nbsp;
+                                <span>info@elsaleh.com</span>
                             </a>
                         </div>
                         <div className={styles.we}>

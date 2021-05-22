@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DisplayLoadingOverlayHandler, Control } from "../utilities/Contexts";
 import AnimationOverlay from '../components/overlay/AnimationOverlay';
 import SignInForm from '../components/overlay/SignInForm';
@@ -20,6 +20,7 @@ import 'devextreme/dist/css/dx.light.css';
 
 //  component and stylign for nprogress bar
 import "nprogress/nprogress.css";
+import { Button } from 'devextreme-react/autocomplete';
 
 const TopProgressBar = dynamic(
   () => {
@@ -41,6 +42,13 @@ function MyApp({ Component, pageProps }) {
     user,
     setUser
   }
+
+  useEffect(()=>{
+    let userData = window.localStorage.getItem("userData");
+    if(userData){
+      setUser(JSON.parse(userData));
+    }
+  }, [])
 
   return (
     <DisplayLoadingOverlayHandler.Provider value={setDisplayLoadingOverlay}>
