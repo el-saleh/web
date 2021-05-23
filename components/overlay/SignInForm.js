@@ -37,7 +37,7 @@ export default function SignInForm() {
         }).catch((err) => {
             console.log(err.message);
             setIsButtondisabled(false);
-            setErrors([...errors, { message: "بيانات غير صحيحة" }]);
+            setErrors([{ message: "بيانات غير صحيحة" }]);
         });
 
     }

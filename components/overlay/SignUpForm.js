@@ -76,53 +76,46 @@ export default function SignUpForm() {
         setIsButtondisabled(true);
         let recaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
         let number = `+2${phone}`;
-        // firebase.auth().signInWithPhoneNumber(number, recaptcha).then((e) => {
-        //     console.log(e)
-        //     let code = prompt("تم إرسال كود تحقق عبر SMS, ادخل كود التحقق ", "");
-        //     if (code) {
-        //         e.confirm(code).then((res) => {
-        //             console.log(res);
-        //             alert("تم التحقق بنجاح من رقم الموبايل");
-        //             gstate.setDisplaySignUpForm(false);
-        //             // to do : send post reuest with the user data and retrieve the jwt,
-        //             // then decode it and get the user info from it the store it using [gstate.user]
-        //             requester.post("/auth/allUsers", formInfo).then(res => console.log(res)).catch(err => console.log(err));
-        //             gstate.setUser({
-        //                 name: formInfo.name,
-        //                 phoneNumber: formInfo.phoneNumber
-        //             });
+        firebase.auth().signInWithPhoneNumber(number, recaptcha).then((e) => {
+            console.log(e)
+            let code = prompt("تم إرسال كود تحقق عبر SMS, ادخل كود التحقق ", "");
+            if (code) {
+                e.confirm(code).then((res) => {
+                    console.log(res);
+                    alert("تم التحقق بنجاح من رقم الموبايل");
+                    requester.post("/auth/register", formInfo).then((res) => {
+                        let {userData} = jwt.decode(res.data.token);
+                        console.log(res.data);
+                        console.log(userData);
+                        gstate.setUser(userData);
+                        userData.token =  res.data.token;
+                        window.localStorage.setItem("userData", JSON.stringify(userData));
+                        setIsButtondisabled(false);
+                        gstate.setDisplaySignUpForm(false);
+                    }).catch((err) => {
+                        console.log(err.message);
+                        setIsButtondisabled(false);
+                    });
 
-        //         }).catch((err) => {
-        //             console.log(err);
-        //             setErrors([...errors, { message: "كود التأكيد غير صحيح" }])
-        //             clearRecaptchaContainer();
-        //             setIsButtondisabled(false);
-        //         });
-        //     }
-        // }).catch((err) => {
-        //     console.log(err);
-        //     setErrors([...errors, { message: "حدث خطأ ما خلال التحقق من الرقم" }]);
-        //     clearRecaptchaContainer();
-        //     setIsButtondisabled(false);
-        // })
-        requester.post("/auth/register", formInfo).then((res) => {
-            let {userData} = jwt.decode(res.data.token);
-            console.log(res.data);
-            console.log(userData);
-            gstate.setUser(userData);
-            userData.token =  res.data.token;
-            window.localStorage.setItem("userData", JSON.stringify(userData));
-            setIsButtondisabled(false);
-            gstate.setDisplaySignUpForm(false);
+                }).catch((err) => {
+                    console.log(err);
+                    setErrors([...errors, { message: "كود التأكيد غير صحيح" }])
+                    clearRecaptchaContainer();
+                    setIsButtondisabled(false);
+                });
+            }
         }).catch((err) => {
-            console.log(err.message);
+            console.log(err);
+            setErrors([...errors, { message: "حدث خطأ ما خلال التحقق من الرقم" }]);
+            clearRecaptchaContainer();
             setIsButtondisabled(false);
-        });
+        })
+        
     }
 
     return (
         <div id="overLay" className={styles.bodyOverlay} onClick={close}>
-            <form className={styles.form} onSubmit={submitHandler} dir="auto">
+            <div className={styles.form}  dir="auto">
                 <h1>{"إنشاء حساب"}</h1>
                 <label htmlFor="name">{"اسم المستخدم"}</label>
                 <input id="name" type="text" required onChange={updateFormInfo} value={formInfo.name} placeholder="" />
@@ -140,11 +133,11 @@ export default function SignUpForm() {
                 <br />
                 <div id={"recaptcha"}></div>
                 <br />
-                <PrimaryButton id="submit" disabled={isButtondisabled} type="submit">{"إنشاء حساب"}</PrimaryButton>
+                <PrimaryButton id="submit" onClick={submitHandler} disabled={isButtondisabled} type="submit">{"إنشاء حساب"}</PrimaryButton>
                 <p className={styles.alternative}>
                     {"لديك حساب بالفعل؟"} <span onClick={showSignInForm}>{"تسجيل دخول"}</span>
                 </p>
-            </form>
+            </div>
         </div>
     )
 }
