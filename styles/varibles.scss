@@ -1,4 +1,5 @@
-$mainFontFamily: 'Tajawal', sans-serif;
+$mainFontFamily: 'segoe';
+$numFontFamily : "times";
 $secondFontFamily: 'Cairo', sans-serif;
 $headingFontFamily: 'Tajawal', sans-serif;
 
@@ -12,7 +13,8 @@ $body-dark:#6b6b84;
 $light-grey:#eee;
 $mid-grey:#d0d0d0;
 
-$error : rgb(255, 0, 0);
+$error : #d80000;
+$success : #1e7e34;
 
 $trans-250: 0.25s all ease;
 $shadow: 0 0 10px 0 #8d8d8d;

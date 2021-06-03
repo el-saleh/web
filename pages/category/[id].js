@@ -11,7 +11,7 @@ function category(props) {
     return (
         <>
             <Head>
-                <title>ElSaleh | {props.name}</title>
+                <title>El-Saleh | {props.name}</title>
                 <meta name="description" content={props.desc} />
 
                 {/* Open Graph / Facebook */}
@@ -37,7 +37,7 @@ function category(props) {
 }
 
 export async function getServerSideProps(context) {
-    console.log(context.params.id);
+    // console.log(context.params.id);
     const category = dummy.categoryById(context.params.id);
     const products =  dummy.productsById(context.params.id);
     if (!category) {

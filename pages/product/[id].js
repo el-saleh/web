@@ -11,7 +11,7 @@ function product(props) {
   return (
     <>
       <Head>
-        <title>{`ElSaleh | ${props.productName}  ${props.id}`}</title>
+        <title>{`El-Saleh | ${props.productName}  ${props.id}`}</title>
         <meta name="description" content={props.description} />
 
         {/* Open Graph / Facebook */}
@@ -34,7 +34,7 @@ function product(props) {
 }
 
 export async function getServerSideProps(context) {
-  console.log(context.params.id);
+  // console.log(context.params.id);
   const product =  dummy.productById(context.params.id);
   const related = dummy.productsById(product.categoryId);
   if (!product) {

@@ -1,4 +1,13 @@
 @import "../styles/varibles.scss";
+@font-face {
+  font-family: 'segoe';
+  src: url('./segoe.ttf');
+}
+@font-face {
+  font-family: 'times';
+  src: url('./times.ttf');
+}
+
 html {
   font-size: 16px;
   font-family: $mainFontFamily;
@@ -25,6 +34,7 @@ body {
 }
 
 .main {
+  background-color: $off-light;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -86,4 +96,16 @@ a {
   @media (max-width: 768px) {
     display: none !important;
   }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

@@ -1,47 +1,74 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import styles from "./layout.module.scss";
-import { FiPhone, FiMail } from "react-icons/fi";
-import { IoLogoWhatsapp } from "react-icons/io5"
+import PrimaryButton from '../components/Button/PrimaryButton';
+import { RiWhatsappFill } from "react-icons/ri/";
+import { FaPhoneAlt, FaSearch } from 'react-icons/fa';
+import { IoMail } from "react-icons/io5"
+import { Control } from '../utilities/Contexts'
 import dummy from "../utilities/dummy";
 
 const Header = () => {
   const router = useRouter();
-  const [isSigned, setIsSigned] = useState(true);
+  const [isSigned, setIsSigned] = useState(false);
+  const [showSearchbox, setShowSearchbox] = useState(false)
+  const gstate = useContext(Control);
+
+
+  const onSignIn = () => {
+    gstate.setDisplaySignInForm(true);
+  }
+
+  const signOut = () => {
+    gstate.setUser(null);
+    window.localStorage.removeItem("userData");
+  }
+
+  const toggleSearchBox = () => {
+    setShowSearchbox(!showSearchbox);
+  }
+
+  const parseUserName = (str) => {
+    let firstName = str.split(" ")[0];
+    if(firstName.length > 10) {
+      return firstName.slice(0,7).concat("...");
+    }
+    return str.split(" ")[0].slice(0, 10);
+  }
 
   return (
     <header className={styles.header}>
 
       <div className={styles.upperHeaderWrapper}>
-        <div className={`container ${styles.header_wrapper}`} dir="">
+        <div className={` ${styles.header_wrapper}`} dir="">
           <div style={{ display: "flex" }}>
             <span>
-              <a className={""} target="_blank" href="tel:+201099999999" rel="noreferrer">
-                <FiPhone />
+              <a className={""} target="_blank" href="tel:+201123796666" rel="noreferrer">
+                <FaPhoneAlt />
                 &nbsp;
-                <span>{router.locale === "ar" ? "01099999999" : "01099999999"}</span>
+                <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
               </a>
             </span>
             <span>
               <a className={""} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
-                <FiMail />
+                <IoMail />
                 &nbsp;
                 <span>info@elsaleh.com</span>
               </a>
             </span>
           </div>
           <div>
-            <a className={""} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
-              <IoLogoWhatsapp />
+            <a className={""} target="_blank" href="https://api.whatsapp.com/send?phone=201123796666" rel="noreferrer">
+              <RiWhatsappFill />
               &nbsp;
-              <span>{router.locale === "ar" ? "01099999999" : "01099999999"}</span>
+              <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
             </a>
           </div>
         </div>
       </div>
 
-      <div className={`container ${styles.header_wrapper}`} dir="">
+      <div className={` ${styles.header_wrapper}`} dir="">
         <div>
           <Link href="/">
             <a className={styles.tab}>
@@ -50,18 +77,32 @@ const Header = () => {
           </Link>
         </div>
 
+        <div className={styles.searchBox} style={{
+          left : showSearchbox ? "" : "-50%",
+        }}>
+          <input
+            type="text"
+            placeholder={"بتدور على ايه؟"}
+          />
+          <PrimaryButton><FaSearch/></PrimaryButton>
+        </div>
+
         <div className={styles.navLinks}>
 
-          <Link href="/">
-            <a className={styles.tab + " hiddenInMobile"} id="">{router.locale === "ar" ? "الرئيسية" : "Home"}</a>
+          <span className={`${styles.dropDownTap} ${styles.searchIcon}`} onClick={toggleSearchBox}>
+            <FaSearch/>
+          </span>
+          
+          <Link href="/aboutus">
+            <a className={styles.tab} id="">{router.locale === "ar" ? "من نحن" : "About Us"}</a>
           </Link>
 
           <span tabIndex="0" id="products" className={`${styles.dropDownTap}`}>
             <span >{router.locale === "ar" ? "المنتجات" : "Products"}</span>
             <div className={styles.dropDownMenu}>
               <ul dir="auto">
-                {dummy.categories.map((categ)=>{
-                  return(
+                {dummy.categories.map((categ) => {
+                  return (
                     <li key={categ.id} className={styles.tab}><Link href={`/category/${categ.id}`}>{categ.name}</Link></li>
                   )
                 })}
@@ -69,33 +110,33 @@ const Header = () => {
             </div>
           </span>
 
-          <Link href="/aboutus">
-            <a className={styles.tab} id="">{router.locale === "ar" ? "عنا" : "About Us"}</a>
+          <Link href="/">
+            <a className={styles.tab + " hiddenInMobile"} id="">{router.locale === "ar" ? "الرئيسية" : "Home"}</a>
           </Link>
 
-          {isSigned ? 
-          <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
-            <a className={styles.tab}>
-              <img className={styles.userAvatar} src={"/assets/cart.png"} />
+          {gstate.user ?
+            <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
+              <a className={styles.tab}>
+                <img className={styles.userAvatar} src={"/assets/cart.png"} />
                 &nbsp;
-                <span>Ahmed</span>
-            </a>
-            <div className={styles.dropDownMenu}>
-              <ul dir="auto">
-                <li className={styles.tab}><Link href="/cart">{"عربة التسوق"}</Link></li>
-                <li className={styles.tab}><Link href="/orders">{"طلبات الشراء"}</Link></li>
-                <li className={styles.tab} onClick={() => {setIsSigned(false)}}>{"خروج"}</li>
-              </ul>
-            </div>
-          </span>
-          :
-          <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
-            <a className={styles.tab}>
-              <img className={styles.userAvatar} src={"/assets/userAvatar.png"} />
+                <span title={gstate.user.name} dir="auto">{parseUserName(gstate.user.name)}</span>
+              </a>
+              <div className={styles.dropDownMenu}>
+                <ul dir="auto">
+                  <li className={styles.tab}><Link href="/cart">{"عربة التسوق"}</Link></li>
+                  <li className={styles.tab}><Link href="/orders">{"طلبات الشراء"}</Link></li>
+                  <li className={styles.tab} onClick={signOut}>{"خروج"}</li>
+                </ul>
+              </div>
+            </span>
+            :
+            <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
+              <a className={styles.tab}>
+                <span onClick={onSignIn}>تسجيل دخول</span>
                 &nbsp;
-                <span  onClick={() => {setIsSigned(true)}}>تسجيل دخول</span>
-            </a>
-          </span>
+                <img className={styles.userAvatar} src={"/assets/userAvatar.png"} />
+              </a>
+            </span>
           }
 
         </div>
