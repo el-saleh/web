@@ -14,7 +14,7 @@ const index = () => {
     return (
         <>
             <Head>
-                <title>Abou | Admin</title>
+                <title>Admin</title>
             </Head>
             <Layout >
                 <div>

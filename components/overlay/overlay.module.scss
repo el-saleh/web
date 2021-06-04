@@ -11,6 +11,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
 }
 
 .loader {
@@ -24,12 +27,12 @@
   animation: spin 0.75s linear infinite;
 }
 
-@-webkit-keyframes spin {
+@keyframes fadeIn {
   0% {
-    -webkit-transform: rotate(0deg);
+    opacity: 0;
   }
   100% {
-    -webkit-transform: rotate(360deg);
+    opacity: 1;
   }
 }
 
@@ -51,10 +54,11 @@
   padding: 30px;
   margin: 25px auto;
   background-color: $light;
+
   // box-shadow: 0 0px 20px 0px #eae8e8;
-  h1 {
+  h3 {
     font-weight: 200;
-    color: $primary;
+    // color: $primary;
     margin-top: 0;
   }
   label {
@@ -74,17 +78,31 @@
       background-color: $off-light;
     }
   }
-  .error{
+  .eyeIcon {
+    position: absolute;
+    left: 0.75rem;
+    top: 25%;
+    cursor: pointer;
+    color: $mid-grey;
+    &:hover {
+      filter: brightness(0.5);
+    }
+  }
+  .error {
     color: $error;
   }
-  .alternative{
-    span{
+  .alternative {
+    span {
       color: $primary;
       font-weight: 500;
       cursor: pointer;
-      &:hover{
+      &:hover {
         color: $primary-light;
       }
     }
+  }
+
+  button{
+    width: 100%;
   }
 }

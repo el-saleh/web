@@ -39,25 +39,25 @@ const Footer = () => {
                             <a className={styles.contactLink} target="_blank" href="tel:+201123796666" rel="noreferrer">
                                 <FaPhoneAlt />
                                 &nbsp;
-                                <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
+                                <span className={"hiddenInMobile"}>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
                             </a>
                             <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
                                 <RiWhatsappFill />
                                 &nbsp;
-                                <span>{router.locale === "ar" ? "WhatsApp" : "WhatsApp"}</span>
+                                <span className={"hiddenInMobile"}>{router.locale === "ar" ? "WhatsApp" : "WhatsApp"}</span>
                             </a>
                             <a className={styles.contactLink} target="_blank" href="https://www.facebook.com" rel="noreferrer">
                                 <FaFacebookSquare />
                                 &nbsp;
-                                <span>{"Facebook"}</span>
+                                <span className={"hiddenInMobile"}>{"Facebook"}</span>
                             </a>
                             <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
                                 <IoMail />
                                 &nbsp;
-                                <span>info@elsaleh.com</span>
+                                <span className={"hiddenInMobile"}>info@elsaleh.com</span>
                             </a>
                         </div>
-                        <div className={styles.we}>
+                        <div className={styles.we + " hiddenInMobile"}>
                             <h4>{"من نحن"}</h4>
                             <p>{"لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو لابورأس"}</p>
 

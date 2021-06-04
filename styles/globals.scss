@@ -34,7 +34,7 @@ body {
 }
 
 .main {
-  background-color: $off-light;
+  background-color: $main-bg;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -94,6 +94,12 @@ a {
 
 .hiddenInMobile {
   @media (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+.hiddenInDesktop {
+  @media (min-width: 767px) {
     display: none !important;
   }
 }

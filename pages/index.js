@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Layout from "../layout/Layout";
 import HeroSection from '../components/HeroSection/HeroSection'
 import HomeCategorySection from "../components/HomeCategorySection/HomeCategorySection";
+import Clients from "../components/Clients/Clients";
 import dummy from "../utilities/dummy";
 
 function Home(props) {
@@ -12,7 +13,7 @@ function Home(props) {
     <>
       <Head>
         <title>{"El-Saleh | الرئيسية"}</title>
-        <meta name="description" content={"الصالح لاستيراد وتصدير الادوات المنزلية"}/>
+        <meta name="description" content={"الصالح لاستيراد وتصدير الادوات المنزلية"} />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -28,12 +29,13 @@ function Home(props) {
 
       </Head>
       <Layout>
-        <HeroSection categories={dummy.categories}/>
-        {props.homeData.map((category)=>{
-          return(
+        <HeroSection categories={dummy.categories} />
+        {props.homeData.map((category) => {
+          return (
             <HomeCategorySection key={category.id} category={category} />
           )
         })}
+        <Clients />
       </Layout>
     </>
   )

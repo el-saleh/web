@@ -1,12 +1,16 @@
 @import "../../styles/varibles.scss";
-.titleWrapper{
+.HomeCategorySection {
+    border-bottom: 0.5rem solid $light;
+    padding-bottom: 1rem;
+}
+.titleWrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .viewAll{
+    .viewAll {
         color: $primary;
         font-weight: 500;
-        &:hover{
+        &:hover {
             text-decoration: underline;
         }
     }

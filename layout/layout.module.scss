@@ -41,9 +41,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: row-reverse;
     padding: 0.5rem 0;
   }
 
+  .logoWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    svg {
+      margin: 0 0.5rem 0 0.75rem;
+      font-size: 2rem;
+      color: $primary-light;
+      cursor: pointer;
+    }
+  }
   .searchBox {
     flex-grow: 1;
     display: flex;
@@ -53,19 +65,19 @@
     border: 1px solid $primary;
     border-radius: 0.25rem;
     overflow: hidden;
-    margin: 0rem 10%;
+    margin: 0rem 5%;
     transition: all 0.5s ease;
     @media (min-width: 768px) and (max-width: 1200px) {
       margin: 0rem 2%;
     }
-    
+
     @media (max-width: 600px) {
-      position: absolute;
-      top: 110%;
-      left: 50%;
-      transform: translateX(-50%);
-      margin: 0rem 0%;
-      width: 90vw;
+      // position: absolute;
+      // top: 110%;
+      // left: 50%;
+      // transform: translateX(-50%);
+      // margin: 0rem 0%;
+      // width: 90vw;
     }
 
     input {
@@ -73,13 +85,16 @@
       border: none;
       font-size: 1rem;
       flex-grow: 1;
-      @media (min-width: 601px) and  (max-width: 900px) {
-          max-width: 8rem;
+      @media (min-width: 601px) and (max-width: 900px) {
+        max-width: 8rem;
       }
     }
 
     button {
       border-radius: 0;
+      @media (max-width: 900px) {
+        // display: none;
+      }
     }
   }
 
@@ -89,6 +104,12 @@
     align-items: center;
     .userAvatar {
       width: 1.25rem;
+    }
+    svg {
+      margin: 0 0 0 1rem;
+      font-size: 1.5rem;
+      color: $primary-light;
+      cursor: pointer;
     }
   }
 
@@ -141,7 +162,6 @@
       display: none;
       position: absolute;
       top: 100%;
-      right: -10%;
       width: max-content;
       min-width: 12rem;
       background: $light;
@@ -165,17 +185,16 @@
     }
   }
 
-  .searchIcon{
+  .searchIcon {
     display: none;
     cursor: pointer;
     padding: 0.5rem 0.5rem 0px 0px;
     @media (max-width: 600px) {
       display: inline-block;
     }
-    &:hover{
-      color : $primary-light;
+    &:hover {
+      color: $primary-light;
     }
-
   }
 }
 
@@ -217,13 +236,18 @@
           font-weight: 300;
           width: 100%;
           margin-bottom: 0.66rem;
+          @media (max-width: 768px) {
+            justify-content: center;
+            width: auto;
+            margin-inline: 1rem;
+          }
         }
 
         p {
           font-weight: 200;
           color: inherit;
           color: $off-light;
-          margin:0rem;
+          margin: 0rem;
         }
       }
 
@@ -232,6 +256,7 @@
         align-items: center;
         @media (max-width: 768px) {
           justify-content: center;
+          display: inline-flex;
         }
         span {
           &:hover {
@@ -243,6 +268,9 @@
           color: $light;
           font-size: 1.4rem;
           transition: $trans-250;
+          @media (max-width: 768px) {
+            font-size: 2.2rem;
+          }
         }
       }
 
@@ -260,6 +288,7 @@
           display: flex;
           align-items: center;
           @media (max-width: 768px) {
+            display: inline-flex;
             justify-content: center;
           }
 
@@ -267,6 +296,9 @@
             color: $light;
             font-size: 1.6rem;
             transition: $trans-250;
+            @media (max-width: 768px) {
+              font-size: 2.2rem;
+            }
           }
 
           &:hover {
@@ -314,4 +346,69 @@
       font-weight: 200;
     }
   }
+}
+
+.sideMenu_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  direction: rtl;
+  overflow: hidden;
+  .sidemenu {
+    width: 85%;
+    height: 100%;
+    background-color: $light;
+    overflow: auto;
+    animation-name: slideFromRight;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    & > div {
+      padding: 1rem;
+      border-bottom: 1px $light-grey solid;
+    }
+
+    .sidemenu_header {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      svg {
+        font-size: 2.5rem;
+        cursor: pointer;
+      }
+      .sidemenu_logo {
+        width: 9rem;
+        margin: 0 1rem 0 0px;
+      }
+    }
+
+    .sidemenu_section {
+      h3 {
+        margin-top: 0;
+      }
+      a {
+        display: block;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+        &:hover{
+          color: $primary;
+        }
+      }
+    }
+  }
+}
+
+
+
+@keyframes slideFromRight {
+  0% {transform: translateX(100%)}
+  100% {transform: translateX(0%)}
 }

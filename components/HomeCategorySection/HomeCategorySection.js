@@ -5,7 +5,7 @@ import ProductList from '../ProductList/ProductList'
 
 export default function HomeCategorySection({ category }) {
     return (
-        <div>
+        <div className={styles.HomeCategorySection}>
             <div className={"container"} dir="rtl">
                 <div className={styles.titleWrapper}>
                     <h1>{category.name}</h1>
