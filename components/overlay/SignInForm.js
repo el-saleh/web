@@ -26,21 +26,40 @@ export default function SignInForm() {
     const submitHandler = (e) => {
         e.preventDefault();
         setErrors([]);
-        setIsButtondisabled(true);
-        requester.post("/auth/login", formInfo).then((res) => {
-            let { userData } = jwt.decode(res.data.token);
-            console.log(res.data);
-            console.log(userData);
-            userData.token = res.data.token;
-            gstate.setUser(userData);
-            window.localStorage.setItem("userData", JSON.stringify(userData));
-            gstate.setDisplaySignInForm(false);
-        }).catch((err) => {
-            console.log(err.message);
-            setIsButtondisabled(false);
-            setErrors([{ message: "بيانات غير صحيحة" }]);
-        });
+        if (vaildateForm()) {
+            setIsButtondisabled(true);
+            requester.post("/auth/login", formInfo)
+            .then((res) => {
+                let { userData } = jwt.decode(res.data.token);
+                console.log(res.data);
+                console.log(userData);
+                userData.token = res.data.token;
+                gstate.setUser(userData);
+                window.localStorage.setItem("userData", JSON.stringify(userData));
+                gstate.setDisplaySignInForm(false);
+            }).catch((err) => {
+                console.log(err.message);
+                setIsButtondisabled(false);
+                setErrors([{ message: "بيانات غير صحيحة" }]);
+            });
+        }
 
+    }
+
+    const vaildateForm = () => {
+        let errorsList = [];
+
+        if (formInfo.password.trim().length < 4) {
+            errorsList.push({ message: "كلمة السر غير صحيحة" })
+        }
+
+        if (formInfo.phoneNumber.slice(0, 2) !== "01" || formInfo.phoneNumber.length < 11) {
+            errorsList.push({ message: "رقم الموبايل غير صحيح" })
+        }
+
+        setErrors([...errorsList]);
+
+        return !errorsList.length
     }
 
     const close = (e) => {
@@ -62,19 +81,17 @@ export default function SignInForm() {
         <div id="overLay" className={styles.bodyOverlay} onClick={close}>
             <form className={styles.form} onSubmit={submitHandler} dir="auto">
                 <h3>{"تسجيل دخول"}</h3>
-                {/* <label htmlFor="phone">{"رقم التليفون"}</label> */}
                 <input id="phoneNumber" type="number" placeholder="رقم الموبايل" required onChange={updateFormInfo} value={formInfo.phoneNumber} />
-                {/* <label htmlFor="password">{"كلمة السر"}</label> */}
-                <div style={{width:"100%", position:"relative"}}>
-                    <input 
-                        id="password" 
-                        type={passwordInputType?"password" : "text"} 
-                        placeholder="كلمة السر" 
-                        required 
-                        onChange={updateFormInfo} 
-                        value={formInfo.password} 
+                <div style={{ width: "100%", position: "relative" }}>
+                    <input
+                        id="password"
+                        type={passwordInputType ? "password" : "text"}
+                        placeholder="كلمة السر"
+                        required
+                        onChange={updateFormInfo}
+                        value={formInfo.password}
                     />
-                    <FaEye className={styles.eyeIcon} onClick={togglePaswwordInputtType}/>
+                    <FaEye className={styles.eyeIcon} onClick={togglePaswwordInputtType} />
                 </div>
 
                 <PrimaryButton disabled={isButtondisabled} id="submit" type="submit">{"تسجيل دخول"}</PrimaryButton>

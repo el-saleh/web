@@ -52,8 +52,8 @@ export default function SignUpForm() {
 
     const vaildateForm = () => {
         let errorsList = [];
-        if (formInfo.name.trim().length < 3) {
-            errorsList.push({ message: "اسم المستخدم على الاقل 3 أحرف" })
+        if (formInfo.name.trim().length < 6) {
+            errorsList.push({ message: "اسم المستخدم على الاقل 6 أحرف" })
         }
 
         if (formInfo.password.trim().length < 4) {
@@ -122,12 +122,8 @@ export default function SignUpForm() {
         <div id="overLay" className={styles.bodyOverlay} onClick={close}>
             <div className={styles.form}  dir="auto">
                 <h3>{"إنشاء حساب"}</h3>
-                {/* <label htmlFor="name">{"اسم المستخدم"}</label> */}
                 <input id="name" type="text" required onChange={updateFormInfo} value={formInfo.name} placeholder="الاسم" />
-                {/* <label htmlFor="phone">{"رقم الموبايل"}</label> */}
-                <input id="phoneNumber" type="number" required onChange={updateFormInfo} value={formInfo.phoneNumber} placeholder="01XXXXXXXXX" />
-                {/* <label htmlFor="password">{"كلمة السر"}</label> */}
-                {/* <input id="password" type="password" required onChange={updateFormInfo} value={formInfo.password} placeholder="" /> */}
+                <input id="phoneNumber" type="number" required onChange={updateFormInfo} value={formInfo.phoneNumber} placeholder="رقم الموبايل" />
                 <div style={{width:"100%", position:"relative"}}>
                     <input 
                         id="password" 
