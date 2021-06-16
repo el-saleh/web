@@ -1,20 +1,40 @@
+import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import requester from "../utilities/requester";
 import Layout from "../layout/Layout";
 import CartItem from "../components/CartItem/index";
-import dummy from "../utilities/dummy";
-import { useEffect, useState } from 'react';
 import CartTotalItem from '../components/CartItem/CartTotalItem';
-function Cart({ products }) {
-    const [totalPrice, setTotalPrice] = useState(null)
+import { removeFromUserCart, changeCartItemQuantity } from "../utilities/shoppingCard";
+import requester from "../utilities/requester";
+import { Control } from '../utilities/Contexts';
+
+function Cart() {
+    const gstate = useContext(Control);
+    const [cart, setCart] = useState(null)
     const router = useRouter()
+
+    const fetchUserCart = () => {
+        let userData = window.localStorage.getItem("userData");
+        if (userData) {
+            requester.get(`/cart?id=${JSON.parse(userData)._id}`).then((res) => {
+                setCart(res.data.model.cart)
+            })
+        }
+        else {
+            router.push("/");
+        }
+    }
+
+    const removeProduct = (productId) => {
+        return () => { removeFromUserCart(gstate.user._id, productId, fetchUserCart) }
+    }
+
+    
+
     useEffect(() => {
-        let totalPrice = products.slice(0, 4).reduce((acc, product) => {
-            return acc + product.price
-        }, 0);
-        setTotalPrice(totalPrice);
-    })
+        fetchUserCart();
+    }, [])
+
     return (
         <>
             <Head>
@@ -23,37 +43,36 @@ function Cart({ products }) {
             <Layout>
                 <div className={"container"} dir="auto">
                     <h3>{"عربة التسوق"}</h3>
-                    <div>
-                        {products.slice(0, 4).map((product) => {
-                            return (
-                                <CartItem key={product.id} product={product} />
-                            )
-                        })}
-                    </div>
-                    <CartTotalItem totalPrice={totalPrice} />
-                   
+                    {cart ?
+                        <>
+                            {cart.length ?
+                                <div>
+                                    {cart.map((item) => {
+                                        return (
+                                            <CartItem
+                                                key={item.product._id}
+                                                data={item}
+                                                removeProduct={removeProduct(item.product._id)}
+                                                fetchUserCart={fetchUserCart}
+                                            />
+                                        )
+                                    })}
+                                    <CartTotalItem totalPrice={500} />
+                                </div>
+                                :
+                                <div><p>{"لا يوجد اى منتجات فى عربة التسوق"}</p></div>
+                            }
+                        </>
+                        :
+                        <div className={"loader"}></div>
+                    }
+
+
 
                 </div>
             </Layout>
         </>
     )
-}
-
-export async function getServerSideProps(context) {
-    const products = dummy.products;
-    if (!products) {
-        return {
-            redirect: {
-                destination: '/404',
-                permanent: false,
-            },
-        }
-    }
-
-    // console.log(product);
-    return {
-        props: { products }, // will be passed to the page component as props
-    }
 }
 
 

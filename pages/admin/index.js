@@ -1,32 +1,34 @@
 import Head from 'next/head'
-import { useState } from "react";
+import { useRouter } from "next/router"
 import Layout from "../../layout/Layout";
-import AdminForm from "../../components/Admin/AdminForm";
 import AdminTables from "../../components/Admin/AdminTables";
+import { useEffect, useState } from 'react';
 
 const index = () => {
-    const [isAdminFlag, setIsAdminFlag] = useState(false)
-    const [formData, setFormData] = useState({
-        username: "",
-        password: ""
-    })
+    const router = useRouter();
+    const [showTables, setShowTables] = useState(false)
+    useEffect(() => {
+        if (JSON.parse(window.localStorage.getItem("userData"))?.role === "admin") {
+            setShowTables(true);
+        }
+        else {
+            router.push("/404");
+        };
+    }, [])
 
     return (
         <>
             <Head>
-                <title>Abou | Admin</title>
+                <title>Admin</title>
             </Head>
             <Layout >
                 <div>
-                    {isAdminFlag ?
-                        <AdminTables />
-                        :
-                        <AdminForm formData={formData} setFormData={setFormData} setIsAdminFlag={setIsAdminFlag} />
-                    }
+                    {showTables && <AdminTables />}
                 </div>
             </Layout>
         </>
     );
+
 };
 
 export default index;

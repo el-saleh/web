@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import firebase from "../../utilities/firebase";
 import PrimaryButton from "../Button/PrimaryButton";
+import { FaEye } from 'react-icons/fa';
 import styles from "./overlay.module.scss";
 import { Control } from '../../utilities/Contexts';
 import requester from '../../utilities/requester';
@@ -17,7 +18,7 @@ export default function SignUpForm() {
     const [formInfo, setFromInfo] = useState(initFormInfo);
     const [errors, setErrors] = useState([]);
     const [isButtondisabled, setIsButtondisabled] = useState(false);
-
+    const [passwordInputType, setPasswordInputType] = useState(true);
     const updateFormInfo = (e) => {
         const newFormInfo = formInfo;
         newFormInfo[e.target.id] = e.target.value;
@@ -51,8 +52,8 @@ export default function SignUpForm() {
 
     const vaildateForm = () => {
         let errorsList = [];
-        if (formInfo.name.trim().length < 3) {
-            errorsList.push({ message: "اسم المستخدم على الاقل 3 أحرف" })
+        if (formInfo.name.trim().length < 6) {
+            errorsList.push({ message: "اسم المستخدم على الاقل 6 أحرف" })
         }
 
         if (formInfo.password.trim().length < 4) {
@@ -113,16 +114,27 @@ export default function SignUpForm() {
         
     }
 
+    const togglePaswwordInputtType = () => {
+        setPasswordInputType(!passwordInputType);
+    }
+
     return (
         <div id="overLay" className={styles.bodyOverlay} onClick={close}>
             <div className={styles.form}  dir="auto">
-                <h1>{"إنشاء حساب"}</h1>
-                <label htmlFor="name">{"اسم المستخدم"}</label>
-                <input id="name" type="text" required onChange={updateFormInfo} value={formInfo.name} placeholder="" />
-                <label htmlFor="phone">{"رقم الموبايل"}</label>
-                <input id="phoneNumber" type="number" required onChange={updateFormInfo} value={formInfo.phoneNumber} placeholder="01XXXXXXXXX" />
-                <label htmlFor="password">{"كلمة السر"}</label>
-                <input id="password" type="password" required onChange={updateFormInfo} value={formInfo.password} placeholder="" />
+                <h3>{"إنشاء حساب"}</h3>
+                <input id="name" type="text" required onChange={updateFormInfo} value={formInfo.name} placeholder="الاسم" />
+                <input id="phoneNumber" type="number" required onChange={updateFormInfo} value={formInfo.phoneNumber} placeholder="رقم الموبايل" />
+                <div style={{width:"100%", position:"relative"}}>
+                    <input 
+                        id="password" 
+                        type={passwordInputType?"password" : "text"} 
+                        placeholder="كلمة السر" 
+                        required 
+                        onChange={updateFormInfo} 
+                        value={formInfo.password} 
+                    />
+                    <FaEye className={styles.eyeIcon} onClick={togglePaswwordInputtType}/>
+                </div>
                 <div>
                     {errors.map((err, index) => {
                         return <React.Fragment key={index}>

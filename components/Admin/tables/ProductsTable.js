@@ -55,8 +55,8 @@ const ProductsTable = () => {
         requester.get("/products/allProducts").then((res) => {
             setDisplayLoadingOverlay(false);
             console.table("All products", res.data);
-            setActiveProducts(res.data.filter(record => record.active));
-            setInactiveProducts(res.data.filter(record => !record.active));
+            setActiveProducts(res.data.model);
+
         }).catch(errorHandler)
     }
 
@@ -209,6 +209,7 @@ const ProductsTable = () => {
         <div>
             Products Table
             <DataGrid
+                rtlEnabled
                 dataSource={active ? activeProducts : inactiveProducts}
                 allowColumnReordering={true}
                 allowColumnResizing={true}
@@ -256,22 +257,22 @@ const ProductsTable = () => {
                     </Form>
                 </Editing>
 
-                <Column dataField="title"           alignment={"center"} />
-                <Column dataField="title_ar"        alignment={"center"} />
-                <Column dataField="active"          alignment={"center"} dataType='boolean' />
-                <Column dataField="productId"       alignment={"center"} />
-                <Column dataField="heroSectionItem" alignment={"center"} caption="Hero Product" cellRender={renderHeroProductColumn}/>
-                <Column dataField="superTitle"      alignment={"center"} visible={false} />
-                <Column dataField="superTitle_ar"   alignment={"center"} visible={false} />
+                <Column dataField="title" alignment={"center"} />
+                <Column dataField="title_ar" alignment={"center"} />
+                <Column dataField="active" alignment={"center"} dataType='boolean' />
+                <Column dataField="productId" alignment={"center"} />
+                <Column dataField="heroSectionItem" alignment={"center"} caption="Hero Product" cellRender={renderHeroProductColumn} />
+                <Column dataField="superTitle" alignment={"center"} visible={false} />
+                <Column dataField="superTitle_ar" alignment={"center"} visible={false} />
                 {/* <Column dataField="subtitle"        alignment={"center"} visible={false} /> */}
                 {/* <Column dataField="subtitle_ar"     alignment={"center"} visible={false} /> */}
-                <Column dataField="description"     alignment={"center"} visible={false} />
-                <Column dataField="description_ar"  alignment={"center"} visible={false} />
-                <Column dataField="_id"             alignment={"center"} visible={false} />
-                <Column dataField="bulletList"      alignment={"center"} visible={false} editCellComponent={BulletListEditor} />
-                <Column dataField="bulletList_ar"   alignment={"center"} visible={false} editCellComponent={BulletListEditor} />
-                <Column dataField="productImage"    alignment={"center"} visible={false} editCellComponent={ProductImageEditor} />
-                <Column dataField="gallery"         alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} />
+                <Column dataField="description" alignment={"center"} visible={false} />
+                <Column dataField="description_ar" alignment={"center"} visible={false} />
+                <Column dataField="_id" alignment={"center"} visible={false} />
+                <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} />
+                <Column dataField="bulletList_ar" alignment={"center"} visible={false} editCellComponent={BulletListEditor} />
+                <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} />
+                <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} />
                 <Column type="buttons" width={110} buttons={['edit', 'delete']} />
 
                 <Export enabled={true} />

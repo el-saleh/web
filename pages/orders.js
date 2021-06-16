@@ -8,13 +8,8 @@ import { useEffect, useState } from 'react';
 import CartTotalItem from '../components/CartItem/CartTotalItem';
 function orders({ products }) {
     const [totalPrice, setTotalPrice] = useState(null)
-    const router = useRouter()
-    useEffect(() => {
-        let totalPrice = products.slice(0, 4).reduce((acc, product) => {
-            return acc + product.price
-        }, 0);
-        setTotalPrice(totalPrice);
-    })
+    const router = useRouter();
+    useEffect(() => { });
     return (
         <>
             <Head>
@@ -23,37 +18,15 @@ function orders({ products }) {
             <Layout>
                 <div className={"container"} dir="auto">
                     <h3>{"طلبات الشراء"}</h3>
-                    <br/>
+                    <br />
                     <h5>{"طلب رقم 1  - تاريخ الطلب : "} <span>{new Date().toLocaleDateString()}</span></h5>
-                    <div>
-                        {products.slice(0, 2).map((product) => {
-                            return (
-                                <CartItem key={product.id} product={product} orderItem />
-                            )
-                        })}
-                    </div>
-                    <CartTotalItem totalPrice={1600} orderItem/>
-                    <br/>
-                    <h5>{"طلب رقم 2  - تاريخ الطلب : "} <span>{new Date().toLocaleDateString()}</span></h5>
-                    <div>
-                        {products.slice(0, 3).map((product) => {
-                            return (
-                                <CartItem key={product.id} product={product} orderItem />
-                            )
-                        })}
-                    </div>
-                    <CartTotalItem totalPrice={2500} orderItem/>
-                    <br/>
-                    <h5>{"طلب رقم 3  - تاريخ الطلب : "} <span>{new Date().toLocaleDateString()}</span></h5>
-                    <div>
-                        {products.slice(0, 1).map((product) => {
-                            return (
-                                <CartItem key={product.id} product={product} orderItem />
-                            )
-                        })}
-                    </div>
-                    <CartTotalItem totalPrice={800} orderItem/>
 
+                    <div>
+                        <CartItem key={1} data={{ _id: "1", product: { productImage: {} }, quantity: 4 }} orderItem />
+                        <CartItem key={2} data={{ _id: "1", product: { productImage: {} }, quantity: 4 }} orderItem />
+                        <CartItem key={3} data={{ _id: "1", product: { productImage: {} }, quantity: 4 }} orderItem />
+                    </div>
+                    <CartTotalItem totalPrice={1600} orderItem />
                 </div>
             </Layout>
         </>

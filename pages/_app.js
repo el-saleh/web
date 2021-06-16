@@ -43,9 +43,9 @@ function MyApp({ Component, pageProps }) {
     setUser
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     let userData = window.localStorage.getItem("userData");
-    if(userData){
+    if (userData) {
       setUser(JSON.parse(userData));
     }
   }, [])
@@ -65,12 +65,22 @@ function MyApp({ Component, pageProps }) {
             <link href={"https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"} rel="stylesheet" />
             <link href={"https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"} rel="stylesheet" />
           </Head>
-          {displaySignInForm && <SignInForm/>}
-          {displaySignUpForm && <SignUpForm/>}
+          {displaySignInForm && <SignInForm />}
+          {displaySignUpForm && <SignUpForm />}
           {displayLoadingOverlay && <AnimationOverlay />}
           <TopProgressBar />
-          <ToastContainer />
-          <Component {...pageProps}/>
+          <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <Component {...pageProps} />
         </div>
       </Control.Provider>
     </DisplayLoadingOverlayHandler.Provider>
