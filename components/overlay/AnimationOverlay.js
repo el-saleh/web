@@ -5,7 +5,7 @@ import styles from "./overlay.module.scss"
 export default function AnimationOverlay() {
     return (
         <div className={styles.bodyOverlay}>
-          <div className={styles.loader}></div>
+          <div className={"loader"}></div>
         </div>
     )
 }

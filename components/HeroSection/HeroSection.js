@@ -28,7 +28,7 @@ const responsive = {
 
 
 
-const HeroSection = ({categories}) => {
+const HeroSection = ({homeData}) => {
   return (
     <section id={"#homeHeroSection"} className={styles.hero}>
       <Carousel
@@ -49,8 +49,8 @@ const HeroSection = ({categories}) => {
         itemClass={styles.itemClass}
         dotListClass={styles.dotListClass}
       >
-        {categories.map((category)=>{
-          return <HeroSlide key={category.id} {...category} />
+        {homeData.map((item)=>{
+          return <HeroSlide key={item.category._id} {...item.category} />
         })}
         
       </Carousel>

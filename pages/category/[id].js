@@ -5,55 +5,49 @@ import Layout from "../../layout/Layout";
 import ProductList from '../../components/ProductList/ProductList';
 import dummy from "../../utilities/dummy";
 function category(props) {
-    const router = useRouter()
-    const { id } = router.query;
-    
-    return (
-        <>
-            <Head>
-                <title>El-Saleh | {props.name}</title>
-                <meta name="description" content={props.desc} />
+  return (
+    <>
+      <Head>
+        <title>El-Saleh | {props.category.categoryName}</title>
+        <meta name="description" content={props.category.description} />
 
-                {/* Open Graph / Facebook */}
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={`https://el-saleh.com/category/${props.id}`} />
-                <meta property="og:description" content={props.desc} />
-                <meta property="og:image" content={`${props.image}`} />
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://el-saleh.com/category/${props.category._id}`} />
+        <meta property="og:description" content={props.category.description} />
+        <meta property="og:image" content={`${props.category.categoryImage.imageUrl}`} />
 
-                {/* Twitter */}
-                <meta property="twitter:card" content="summary_large_image" />
-                <meta property="twitter:url" content={`https://el-saleh.com/category/${props.id}`} />
-                <meta property="twitter:description" content={props.desc} />
-                <meta property="twitter:image" content={`${props.image}`} />
-            </Head>
-            <Layout>
-                <div className={"container"} dir="rtl">
-                    <h1>{props.name}</h1>
-                    <ProductList categoryId={props.id} products={props.products} />
-                </div>
-            </Layout> 
-        </>
-    )
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={`https://el-saleh.com/category/${props.category._id}`} />
+        <meta property="twitter:description" ontent={props.category.description} />
+        <meta property="twitter:image" content={`${props.category.categoryImage.imageUrl}`} />
+      </Head>
+      <Layout>
+        <div className={"container"} dir="rtl">
+          <h1>{props.category.categoryName}</h1>
+          <ProductList  products={props.products} />
+        </div>
+      </Layout>
+    </>
+  )
 }
 
 export async function getServerSideProps(context) {
-    // console.log(context.params.id);
-    const category = dummy.categoryById(context.params.id);
-    const products =  dummy.productsById(context.params.id);
-    if (!category) {
-      return {
-        redirect: {
-          destination: '/404',
-          permanent: false,
-        },
-      }
-    }
-  
-    // console.log(product);
+  const data = (await requester.get(`/products/productByCategoryId?CategoryId=${context.params.id}&usePaging=true&pageNumber=1&pageSize=15`)).data;
+
+  if (!data) {
     return {
-      props: { ...category, products }, // will be passed to the page component as props
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
     }
   }
-  
+
+  return {
+    props: { ...data.model }, // will be passed to the page component as props
+  }
+}
 
 export default category;

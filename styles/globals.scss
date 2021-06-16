@@ -25,6 +25,27 @@ body {
   margin: 0rem;
 }
 
+.loader {
+  margin: 1rem auto;
+  
+  border-radius: 50%;
+  border: 0.5rem solid #ffffff00;
+  border-top: 0.5rem solid $primary;
+  border-right: 0.5rem solid $primary;
+  width: 4rem;
+  height: 4rem;
+  -webkit-animation: spin 0.75s linear infinite; /* Safari */
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .layout {
   position: relative;
   display: flex;

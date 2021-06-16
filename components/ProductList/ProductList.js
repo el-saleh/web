@@ -7,9 +7,9 @@ export default function ProductList({ products, limit }) {
     // console.log(dummy.productsById(categoryId))
     return (
         <div className={`${styles.ProductList} ${limit ? styles.oneRow : ""}`}>
-            {products.slice(0, limit).map((prod, index) => {
+            {products.slice(0, limit).map((prod) => {
                 return (
-                    <ProductCard key={prod.id} {...prod} />
+                    <ProductCard key={prod._id} {...prod} />
                 )
             })}
         </div>

@@ -1,4 +1,5 @@
 import react, { useState, useEffect, useContext } from "react";
+import requester from "../utilities/requester";
 import { DisplayLoadingOverlayHandler } from "../utilities/Contexts";
 import Head from 'next/head';
 import Layout from "../layout/Layout";
@@ -6,6 +7,7 @@ import HeroSection from '../components/HeroSection/HeroSection'
 import HomeCategorySection from "../components/HomeCategorySection/HomeCategorySection";
 import Clients from "../components/Clients/Clients";
 import dummy from "../utilities/dummy";
+import axios from "axios";
 
 function Home(props) {
   const setDisplayLoadingOverlay = useContext(DisplayLoadingOverlayHandler);
@@ -29,10 +31,10 @@ function Home(props) {
 
       </Head>
       <Layout>
-        <HeroSection categories={dummy.categories} />
-        {props.homeData.map((category) => {
+        <HeroSection homeData={props.homeData} />
+        {props.homeData.map((item) => {
           return (
-            <HomeCategorySection key={category.id} category={category} />
+            <HomeCategorySection key={item.category._id} products={item.data} category={item.category} />
           )
         })}
         <Clients />
@@ -42,21 +44,20 @@ function Home(props) {
 }
 
 export async function getServerSideProps(context) {
-  const homeData = dummy.homeContent();
-  // if (!homeData) {
-  //   return {
-  //     redirect: {
-  //       destination: '/404',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
+  const homeData = (await requester.get("/home")).data;
 
-  // console.log(product);
+  if (!homeData) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    }
+  }
+
   return {
-    props: { homeData }, // will be passed to the page component as props
+    props: {homeData : homeData.model}, // will be passed to the page component as props
   }
 }
-
-
 export default Home;
+

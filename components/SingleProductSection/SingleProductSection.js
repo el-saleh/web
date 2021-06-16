@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from "next/router";
 import ImageGallery from 'react-image-gallery';
@@ -6,12 +6,16 @@ import { IoCartOutline, IoCheckmark } from "react-icons/io5";
 import PrimaryButton from '../Button/PrimaryButton';
 import styles from "./SingleProductSection.module.scss";
 import ProductList from '../ProductList/ProductList';
+import requester from '../../utilities/requester';
+import { Control } from '../../utilities/Contexts';
+import { updatdeUserCart } from '../../utilities/shoppingCard';
 
 const SingleProductSection = (props) => {
     const router = useRouter();
+    const gstate = useContext(Control);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [quantity, setQuantity] = useState(1);
-
+    const [relatedProducts, setRelatedProducts] = useState([]);
     useEffect(() => {
         zoom();
     })
@@ -29,8 +33,13 @@ const SingleProductSection = (props) => {
     }
 
     const addToCart = () => {
-        window.alert("تم اضافة المنتج لعربة التسوق");
-        setQuantity(1);
+        if (gstate.user) {
+            updatdeUserCart(gstate.user._id, props._id, quantity)
+            setQuantity(1);
+        }
+        else{
+            window.alert("ٌقم بتسجيل الدخول أولا")
+        }
     }
 
     const zoom = () => {
@@ -51,7 +60,7 @@ const SingleProductSection = (props) => {
                     // console.log(xp, yp)
                 }
                 else {
-                    if(e.style.transform === "scale(2.5)"){
+                    if (e.style.transform === "scale(2.5)") {
                         e.style.transform = "scale(1)";
                     }
                 }
@@ -103,38 +112,44 @@ const SingleProductSection = (props) => {
 
     }
 
+    useEffect(() => {
+        requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=1&pageSize=5`)
+            .then((res) => {
+                setRelatedProducts(res.data.model.products)
+            })
+    }, [])
+
     return (
         <>
 
             <section className={styles.productSection}>
                 <div className={`${styles.productSectionContainer} container`}>
                     <div className={styles.imgContainer}>
-                        {/* in home page we show one image, but in product page we show all the product iamges in slider */}
-                        {router.pathname === "/" ?
-                            <>
-                                {/* <img src={props.productImage} alt={props.title} loading="lazy" alt={props.title} /> */}
-                            </>
-                            :
-                            <ImageGallery
-                                items={gallery}
-                                showThumbnails={true}
-                                thumbnailPosition={"right"}
-                                showPlayButton={true}
-                                showNav={false}
-                                showBullets={false}
-                                showFullscreenButton={true}
-                                useBrowserFullscreen={false}
-                                lazyLoad={true}
-                                slideInterval={6000}
-                                autoPlay={false}
-                                infinite={true}
-                                onBeforeSlide={zoom}
-                                onScreenChange={toggleFullscreen}
-                            />
-                        }
+                        <ImageGallery
+                            items={[
+                                {
+                                    original: props.productImage.imageUrl,
+                                    thumbnail: props.productImage.imageUrl
+                                },
+                                ...gallery
+                            ]}
+                            showThumbnails={true}
+                            thumbnailPosition={"right"}
+                            showPlayButton={true}
+                            showNav={false}
+                            showBullets={false}
+                            showFullscreenButton={true}
+                            useBrowserFullscreen={false}
+                            lazyLoad={true}
+                            slideInterval={6000}
+                            autoPlay={false}
+                            infinite={true}
+                            onBeforeSlide={zoom}
+                            onScreenChange={toggleFullscreen}
+                        />
+
                     </div>
                     <div className={styles.info} dir="auto">
-                        {/* <p className={styles.superTitle}>{""}</p> */}
                         <div>
                             <Link href={`/`}>
                                 <a>
@@ -142,18 +157,18 @@ const SingleProductSection = (props) => {
                                 </a>
                             </Link>
                             {" - "}
-                            <Link href={`/category/${props.categoryId}`}>
+                            <Link href={`/category/${props.category._id}`}>
                                 <a>
-                                    <span className={styles.breadCrumb}>{props.categoryName}</span>
+                                    <span className={styles.breadCrumb}>{props.category.categoryName}</span>
                                 </a>
                             </Link>
                         </div>
-                        <h1 className={styles.title}>{`${props.productName}  ${props.id}`}</h1>
+                        <h1 className={styles.title}>{`${props.title}`}</h1>
                         <p className={styles.price}>{props.price} <small>جنيه</small></p>
                         <p className={styles.description}>{props.description}</p>
 
                         <ul>
-                            {Array(3).fill({}).map((listItem, idx) => {
+                            {props.bulletList.map((listItem, idx) => {
                                 if (!!listItem) {
                                     return (
                                         <li key={idx}><IoCheckmark />&nbsp;{"مميزات المنتج"}</li>
@@ -166,11 +181,11 @@ const SingleProductSection = (props) => {
                             <span className={styles.qty}>{quantity}</span>
                             <PrimaryButton id={-1} onClick={updateQty} disabled={!(quantity - 1)}>-</PrimaryButton>
                         </span>
-                    &nbsp;&nbsp;&nbsp;
-                    <PrimaryButton onClick={addToCart}>
+                        &nbsp;&nbsp;&nbsp;
+                        <PrimaryButton onClick={addToCart}>
                             {router.locale === "ar" ? "أضف إلى العربة" : "Add To Cart"}
-                        &nbsp;
-                        <IoCartOutline />
+                            &nbsp;
+                            <IoCartOutline />
                         </PrimaryButton>
                     </div>
                 </div>
@@ -180,7 +195,7 @@ const SingleProductSection = (props) => {
 
                 <div className="container">
                     <iframe
-                        src={parseEmbedLink("https://youtu.be/y2D04x9baoM")}
+                        src={parseEmbedLink(props.videoUrl)}
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -194,7 +209,7 @@ const SingleProductSection = (props) => {
             <section>
                 <div className={`container`} dir="auto">
                     <h1 className={styles.title}>{"منتجات ذات صلة"}</h1>
-                    <ProductList products={props.related} limit={5} />
+                    <ProductList products={relatedProducts} limit={5} />
                 </div>
             </section>
 
