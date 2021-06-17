@@ -26,7 +26,7 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
             <div className={styles.imgBox}>
                 <Link href={`/product/${data.product._id}`}>
                     <a>
-                        <img src={data.product.productImage.imageUrl} alt={data.product.title} />
+                        <img src={data.product.productImage?.imageUrl} alt={data.product.title} />
                     </a>
                 </Link>
             </div>
@@ -39,7 +39,16 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
                             </a>
                         </Link>
                     </h4>
-                    <p className={styles.price}>{data.product.price} <small>جنيه</small></p>
+
+                    {data.product.sale ?
+                        <p className={styles.price}>
+                            <del>{data.product.price} جنيه</del>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>{data.product.price - (data.product.price * (0.01 * data.product.sale))} جنيه</span></p>
+                        :
+                        <p className={styles.price}><span>{data.product.price} جنيه</span></p>
+                    }
+
                 </div>
 
                 {!orderItem && <div className={styles.buttons}>
@@ -53,7 +62,7 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
                 }
 
                 {orderItem && <div>
-                    <h4>{"عدد : "} {3}</h4>
+                    <h4>{"عدد : "} {data.quantity}</h4>
                 </div>
                 }
             </div>

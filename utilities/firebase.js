@@ -8,8 +8,7 @@ const config = {
     storageBucket: "elsaleh-258d4.appspot.com",
     messagingSenderId: "1053167466968",
     appId: "1:1053167466968:web:01c2bdda5b99a414a95aad"
-}
-220
+};
 
 if (!firebase.apps.length) {
     firebase.initializeApp(config);

@@ -7,7 +7,7 @@ import styles from "./HeroSlide.module.scss";
 const HeroSlide = (props) => {
     const router = useRouter();
     return (
-        <div className={styles.slide} style={{backgroundImage:`url(${props.categoryImage.imageUrl})`}} >
+        <div className={styles.slide} style={{backgroundImage:`url(${props.categoryImage?.imageUrl})`}} >
             <div className={styles.overLay}>
                 <div className={`container`} >
                     <div className={styles.slideWrapper}>

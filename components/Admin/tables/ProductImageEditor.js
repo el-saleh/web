@@ -3,7 +3,7 @@ import styles from "./ProductImageEditor.module.scss";
 
 export default function ProductImageEditor(props) {
 
-    const [imgSrc, setImgSrc] = useState(props.data.value);
+    const [imgSrc, setImgSrc] = useState(props?.data?.value?.imageUrl);
 
     useEffect(()=>{
         console.log("ProductImageEditor", props);

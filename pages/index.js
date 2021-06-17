@@ -44,20 +44,19 @@ function Home(props) {
 }
 
 export async function getServerSideProps(context) {
-  const homeData = (await requester.get("/home")).data;
-
-  if (!homeData) {
+  return await requester.get("/home").then((res) => {
+    return {
+      props: {homeData : res.data.model}, // will be passed to the page component as props
+    }
+  }).catch(() => {
     return {
       redirect: {
         destination: '/404',
         permanent: false,
       },
     }
-  }
+  });
 
-  return {
-    props: {homeData : homeData.model}, // will be passed to the page component as props
-  }
 }
 export default Home;
 
