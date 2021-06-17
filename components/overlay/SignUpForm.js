@@ -5,6 +5,7 @@ import { FaEye } from 'react-icons/fa';
 import styles from "./overlay.module.scss";
 import { Control } from '../../utilities/Contexts';
 import requester from '../../utilities/requester';
+import { toast } from "react-toastify";
 var jwt = require('jsonwebtoken');
 
 export default function SignUpForm() {
@@ -83,13 +84,13 @@ export default function SignUpForm() {
             if (code) {
                 e.confirm(code).then((res) => {
                     console.log(res);
-                    alert("تم التحقق بنجاح من رقم الموبايل");
+                    toast("تم التحقق بنجاح من رقم الموبايل");
                     requester.post("/auth/register", formInfo).then((res) => {
-                        let {userData} = jwt.decode(res.data.token);
+                        let { userData } = jwt.decode(res.data.token);
                         console.log(res.data);
                         console.log(userData);
                         gstate.setUser(userData);
-                        userData.token =  res.data.token;
+                        userData.token = res.data.token;
                         window.localStorage.setItem("userData", JSON.stringify(userData));
                         setIsButtondisabled(false);
                         gstate.setDisplaySignUpForm(false);
@@ -111,7 +112,7 @@ export default function SignUpForm() {
             clearRecaptchaContainer();
             setIsButtondisabled(false);
         })
-        
+
     }
 
     const togglePaswwordInputtType = () => {
@@ -120,20 +121,20 @@ export default function SignUpForm() {
 
     return (
         <div id="overLay" className={styles.bodyOverlay} onClick={close}>
-            <div className={styles.form}  dir="auto">
+            <div className={styles.form} dir="auto">
                 <h3>{"إنشاء حساب"}</h3>
                 <input id="name" type="text" required onChange={updateFormInfo} value={formInfo.name} placeholder="الاسم" />
                 <input id="phoneNumber" type="number" required onChange={updateFormInfo} value={formInfo.phoneNumber} placeholder="رقم الموبايل" />
-                <div style={{width:"100%", position:"relative"}}>
-                    <input 
-                        id="password" 
-                        type={passwordInputType?"password" : "text"} 
-                        placeholder="كلمة السر" 
-                        required 
-                        onChange={updateFormInfo} 
-                        value={formInfo.password} 
+                <div style={{ width: "100%", position: "relative" }}>
+                    <input
+                        id="password"
+                        type={passwordInputType ? "password" : "text"}
+                        placeholder="كلمة السر"
+                        required
+                        onChange={updateFormInfo}
+                        value={formInfo.password}
                     />
-                    <FaEye className={styles.eyeIcon} onClick={togglePaswwordInputtType}/>
+                    <FaEye className={styles.eyeIcon} onClick={togglePaswwordInputtType} />
                 </div>
                 <div>
                     {errors.map((err, index) => {

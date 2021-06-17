@@ -1,8 +1,27 @@
-import React from 'react';
 import PrimaryButton from '../Button/PrimaryButton';
 import styles from "./CartTotalItem.module.scss";
+import requester from '../../utilities/requester';
+import { toast } from "react-toastify"
 
-export default function CartTotalItem({ totalPrice, orderItem }) {
+export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetchUserCart }) {
+
+    const placeOrder = () => {
+        let userData = window.localStorage.getItem("userData");
+        if (userData) {
+            requester.post(`/orders/placeOrder?userId=${JSON.parse(userData)._id}`).then((res) => {
+                toast("تم نسجيل طلب الشراء بنجاح");
+                fetchUserCart()
+            }).catch(()=>{
+                toast("خطأ : فشل تسجيل طلب الشراء ")
+            })
+        }
+
+    }
+
+    const statuses = {
+        1: "طلبك تم تسجيله, سيتم التواصل قريبا",
+        2: "تم التواصل, سيتم شحن الطلب قريبا"
+    }
     return (
         <div className={styles.totalBox}>
             <div>
@@ -10,12 +29,12 @@ export default function CartTotalItem({ totalPrice, orderItem }) {
                 <p className={styles.price}>{totalPrice} <small>{"جنيه"}</small></p>
             </div>
             {!orderItem && <div>
-                <PrimaryButton>{"إتمام عملية الشراء"}</PrimaryButton>
+                <PrimaryButton onClick={placeOrder}>{"إتمام عملية الشراء"}</PrimaryButton>
             </div>}
             <br />
             {orderItem && <div>
                 <h4>{"حاله الطلب"}</h4>
-                <p className={styles.price}><small>{"طلبك تم تسجيله, سيتم التواصل قريبا"}</small></p>
+                <p className={styles.price}><small>{statuses[orderStatus]}</small></p>
             </div>}
 
         </div>

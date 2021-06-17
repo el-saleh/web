@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from "next/router";
 import ImageGallery from 'react-image-gallery';
+import { toast } from 'react-toastify';
 import { IoCartOutline, IoCheckmark } from "react-icons/io5";
 import PrimaryButton from '../Button/PrimaryButton';
 import styles from "./SingleProductSection.module.scss";
@@ -38,7 +39,7 @@ const SingleProductSection = (props) => {
             setQuantity(1);
         }
         else{
-            window.alert("ٌقم بتسجيل الدخول أولا")
+            toast("ٌقم بتسجيل الدخول أولا")
         }
     }
 
@@ -128,8 +129,8 @@ const SingleProductSection = (props) => {
                         <ImageGallery
                             items={[
                                 {
-                                    original: props.productImage.imageUrl,
-                                    thumbnail: props.productImage.imageUrl
+                                    original: props.productImage?.imageUrl,
+                                    thumbnail: props.productImage?.imageUrl
                                 },
                                 ...gallery
                             ]}

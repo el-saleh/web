@@ -15,18 +15,18 @@ function category(props) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://el-saleh.com/category/${props.category._id}`} />
         <meta property="og:description" content={props.category.description} />
-        <meta property="og:image" content={`${props.category.categoryImage.imageUrl}`} />
+        <meta property="og:image" content={`${props.category.categoryImage?.imageUrl}`} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={`https://el-saleh.com/category/${props.category._id}`} />
-        <meta property="twitter:description" ontent={props.category.description} />
-        <meta property="twitter:image" content={`${props.category.categoryImage.imageUrl}`} />
+        <meta property="twitter:description" content={props.category.description} />
+        <meta property="twitter:image" content={`${props.category.categoryImage?.imageUrl}`} />
       </Head>
       <Layout>
         <div className={"container"} dir="rtl">
           <h1>{props.category.categoryName}</h1>
-          <ProductList  products={props.products} />
+          <ProductList products={props.products} />
         </div>
       </Layout>
     </>
@@ -34,20 +34,18 @@ function category(props) {
 }
 
 export async function getServerSideProps(context) {
-  const data = (await requester.get(`/products/productByCategoryId?CategoryId=${context.params.id}&usePaging=true&pageNumber=1&pageSize=15`)).data;
-
-  if (!data) {
+  return await requester.get(`/products/productByCategoryId?CategoryId=${context.params.id}&usePaging=true&pageNumber=1&pageSize=15`).then((res) => {
+    return {
+      props: { ...res.data.model }, // will be passed to the page component as props
+    }
+  }).catch(() => {
     return {
       redirect: {
         destination: '/404',
         permanent: false,
       },
     }
-  }
-
-  return {
-    props: { ...data.model }, // will be passed to the page component as props
-  }
+  });
 }
 
 export default category;

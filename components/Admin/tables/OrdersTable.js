@@ -25,7 +25,7 @@ import 'devextreme-react/text-area';
 
 
 
-const ProductsTable = () => {
+const OrdersTable = () => {
 
     useEffect(() => {
         setDisplayLoadingOverlay(true);
@@ -207,7 +207,7 @@ const ProductsTable = () => {
 
     return (
         <div>
-            Products Table
+            Orders Table
             <DataGrid
                 rtlEnabled
                 dataSource={active ? activeProducts : inactiveProducts}
@@ -282,4 +282,4 @@ const ProductsTable = () => {
     );
 };
 
-export default ProductsTable;
+export default OrdersTable;

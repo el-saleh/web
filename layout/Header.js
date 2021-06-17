@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import styles from "./layout.module.scss";
@@ -7,12 +7,23 @@ import { RiWhatsappFill, RiCloseLine } from "react-icons/ri/";
 import { FaPhoneAlt, FaSearch, FaUserCircle, FaShoppingCart, FaFacebookSquare } from 'react-icons/fa';
 import { IoMail, IoMenu } from "react-icons/io5"
 import { Control } from '../utilities/Contexts'
+import requester from "../utilities/requester";
 import dummy from "../utilities/dummy";
 
 const Header = () => {
   const router = useRouter();
   const gstate = useContext(Control);
+  const [categoriesList, setCategoriesList] = useState([]);
   const [showSidemenu, setShowSidemenu] = useState(false);
+
+  useEffect(() => {
+    requester.get("/categories/allCategories").then((res) => {
+      // console.log(res);
+      setCategoriesList(res.data.model);
+    }).catch((err) => {
+      console.log("Header.js : failed to fetch categories", err);
+    });
+  }, [])
 
   const onSignIn = () => {
     gstate.setDisplaySignInForm(true);
@@ -95,9 +106,9 @@ const Header = () => {
             <span >{router.locale === "ar" ? "المنتجات" : "Products"}</span>
             <div className={styles.dropDownMenu} style={{ right: "10%" }}>
               <ul dir="auto">
-                {dummy.categories.map((categ) => {
+                {categoriesList.map((category) => {
                   return (
-                    <li key={categ.id} className={styles.tab}><Link href={`/category/${categ.id}`}>{categ.name}</Link></li>
+                    <li key={category._id} className={styles.tab}><Link href={`/category/${category._id}`}>{category.categoryName}</Link></li>
                   )
                 })}
               </ul>
@@ -112,7 +123,7 @@ const Header = () => {
 
         {/* normal tap form in desktop screen only */}
         <form
-          onSubmit={(e) => {e.preventDefault(); console.log("search submit") }}
+          onSubmit={(e) => { e.preventDefault(); console.log("search submit") }}
           className={styles.searchBox + " hiddenInMobile"}
         >
           <input
@@ -205,15 +216,13 @@ const Header = () => {
 
           <div className={styles.sidemenu_section}>
             <h3>منتجاتنا</h3>
-            <Link href="/category/category1">
-              <a onClick={() => { sidemenuHandler("category", false) }} id="">أواني الطهي</a>
-            </Link>
-            <Link href="/category/category2">
-              <a onClick={() => { sidemenuHandler("category", false) }} id="">الديكور</a>
-            </Link>
-            <Link href="/category/category3">
-              <a onClick={() => { sidemenuHandler("category", false) }} id="">البلاستيك</a>
-            </Link>
+            {categoriesList.map((category) => {
+              return (
+                <Link key={category._id} href={`/category/${category._id}`}>
+                  <a onClick={() => { sidemenuHandler("category", false) }}>{category.categoryName}</a>
+                </Link>
+              )
+            })}
           </div>
           <div className={styles.sidemenu_section}>
             <h4>{"تواصل معنا"}</h4>

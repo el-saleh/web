@@ -10,14 +10,16 @@ import { Control } from '../utilities/Contexts';
 
 function Cart() {
     const gstate = useContext(Control);
-    const [cart, setCart] = useState(null)
+    const [cart, setCart] = useState(null);
+    const [totalPrice, setTotalPrice] = useState(null)
     const router = useRouter()
 
     const fetchUserCart = () => {
         let userData = window.localStorage.getItem("userData");
         if (userData) {
             requester.get(`/cart?id=${JSON.parse(userData)._id}`).then((res) => {
-                setCart(res.data.model.cart)
+                setCart(res.data.model.cart);
+                setTotalPrice(res.data.model.total)
             })
         }
         else {
@@ -29,7 +31,7 @@ function Cart() {
         return () => { removeFromUserCart(gstate.user._id, productId, fetchUserCart) }
     }
 
-    
+
 
     useEffect(() => {
         fetchUserCart();
@@ -57,7 +59,7 @@ function Cart() {
                                             />
                                         )
                                     })}
-                                    <CartTotalItem totalPrice={500} />
+                                    <CartTotalItem totalPrice={totalPrice} fetchUserCart={fetchUserCart} />
                                 </div>
                                 :
                                 <div><p>{"لا يوجد اى منتجات فى عربة التسوق"}</p></div>
