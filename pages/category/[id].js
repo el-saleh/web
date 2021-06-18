@@ -11,7 +11,7 @@ function category(props) {
   const [lastPage, setLastPage] = useState(props.products.length < 15 ? 0 : 1);
   const [nextPage, setNextPage] = useState(props.products.length < 15 ? 1 : 2);
   const [showLoader, setShowLoader] = useState(false);
-  const buttonRef = React.useRef(null);
+  const buttonRef = React.createRef();
 
   const loadMore = useCallback(() => {
     // make sure not to fetch next page in case of last page
@@ -20,7 +20,7 @@ function category(props) {
     if (nextPage && nextPage !== lastPage) {
       setLastPage(nextPage);
       requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=${nextPage}&pageSize=15`).then((res) => {
-        
+
         setShowLoader(false)
         setNewProducts([...newProducts, ...res.data.model.products]);
 
