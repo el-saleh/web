@@ -8,8 +8,8 @@ import PrimaryButton from '../../components/Button/PrimaryButton';
 function category(props) {
   const [ssrProducts, setSsrProducts] = useState(props.products);
   const [newProducts, setNewProducts] = useState([]);
-  const [lastPage, setLastPage] = useState(1);
-  const [nextPage, setNextPage] = useState(2);
+  const [lastPage, setLastPage] = useState(props.products.length < 15 ? 0 : 1);
+  const [nextPage, setNextPage] = useState(props.products.length < 15 ? 1 : 2);
   const [showLoader, setShowLoader] = useState(false);
   const buttonRef = React.useRef(null);
 
@@ -20,13 +20,19 @@ function category(props) {
     if (nextPage && nextPage !== lastPage) {
       setLastPage(nextPage);
       requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=${nextPage}&pageSize=15`).then((res) => {
-        setNewProducts([...newProducts, ...res.data.model.products]);
+        
         setShowLoader(false)
+        setNewProducts([...newProducts, ...res.data.model.products]);
+
+        if (nextPage == 1) {
+          setSsrProducts([]);
+        }
+
         if (res?.data?.model?.next?.page) {
           setNextPage(res.data.model.next.page)
         }
+
       })
-      // show the loader to indicate fetching new 12 jobs
 
     }
     else {
@@ -49,6 +55,9 @@ function category(props) {
   // to be fired ecah time the route change.
   useEffect(() => {
     setSsrProducts(props.products)
+    setNewProducts([]);
+    setLastPage(props.products.length < 15 ? 0 : 1)
+    setNextPage(props.products.length < 15 ? 1 : 2)
   }, [props])
 
   return (
