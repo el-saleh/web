@@ -11,7 +11,7 @@ const BulletListEditor = (props) => {
     const [input, setInput] = useState('');
 
     const addButton = {
-        text: 'Add',
+        text: 'اضف',
         onClick: () => {
             if (input.length) {
                 setList([...list, input]);
@@ -32,6 +32,7 @@ const BulletListEditor = (props) => {
                 />
             </TextBox>
             <List
+                rtlEnabled
                 noDataText={'No Data'}
                 className='mt-2'
                 items={list}
