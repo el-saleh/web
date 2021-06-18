@@ -1,10 +1,56 @@
-import { useRouter } from 'next/router'
+import React, { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head'
 import requester from "../../utilities/requester";
 import Layout from "../../layout/Layout";
 import ProductList from '../../components/ProductList/ProductList';
-import dummy from "../../utilities/dummy";
+import PrimaryButton from '../../components/Button/PrimaryButton';
 function category(props) {
+  const [ssrProducts, setSsrProducts] = useState(props.products);
+  const [newProducts, setNewProducts] = useState([]);
+  const [lastPage, setLastPage] = useState(1);
+  const [nextPage, setNextPage] = useState(2);
+  const [showLoader, setShowLoader] = useState(false);
+  const buttonRef = React.useRef(null);
+
+  const loadMore = useCallback(() => {
+    // make sure not to fetch next page in case of last page
+    // and also not to fetch the same page multiple times
+    setShowLoader(true)
+    if (nextPage && nextPage !== lastPage) {
+      setLastPage(nextPage);
+      requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=${nextPage}&pageSize=15`).then((res) => {
+        setNewProducts([...newProducts, ...res.data.model.products]);
+        setShowLoader(false)
+        if (res?.data?.model?.next?.page) {
+          setNextPage(res.data.model.next.page)
+        }
+      })
+      // show the loader to indicate fetching new 12 jobs
+
+    }
+    else {
+      setTimeout(() => {
+        setShowLoader(false)
+      }, 750)
+    }
+
+  }, [lastPage, nextPage, props.category._id])
+
+  useEffect(() => {
+    // window.addEventListener("scroll", () => {
+    //   // fire the "load more" function just a little bit before reaching the page bottom
+    //   if (window.document.body.getBoundingClientRect().bottom - window.innerHeight < 100) {
+    //     buttonRef.current?.click();
+    //   }
+    // });
+  }, [])
+
+  // to be fired ecah time the route change.
+  useEffect(() => {
+    setSsrProducts(props.products)
+  }, [props])
+
   return (
     <>
       <Head>
@@ -25,8 +71,30 @@ function category(props) {
       </Head>
       <Layout>
         <div className={"container"} dir="rtl">
+
           <h1>{props.category.categoryName}</h1>
-          <ProductList products={props.products} />
+          <img src={props.category.categoryImage.imageUrl} alt={props.category.categoryName} style={{ width: "100%" }} />
+
+          <br /> <br />
+
+          <ProductList products={[...ssrProducts, ...newProducts]} />
+
+          {showLoader &&
+            <div className={"loader"}></div>
+          }
+
+          <br />
+
+          <PrimaryButton
+            ref={buttonRef}
+            onClick={loadMore}
+            style={{ display: "", width: "100%" }}
+          >
+            {"عرض المزيد"}
+          </PrimaryButton>
+
+          <br /><br />
+
         </div>
       </Layout>
     </>
