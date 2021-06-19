@@ -4,6 +4,7 @@
     justify-content: space-between;
     grid-gap: 0.5rem;
     margin: 0 0 1rem 0;
+    
     @media (max-width: 991px) {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -26,5 +27,15 @@
 }
 
 .oneRow{
-    // grid-template-rows: auto 0 0 0 0;
+    grid-template-rows: repeat(1, 1fr);
+    grid-auto-rows: 0;
+    overflow-y: hidden;
+
+    @media (max-width: 576px) {
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    @media (max-width: 380px) {
+        grid-template-rows: repeat(2, 1fr);
+    }
 }

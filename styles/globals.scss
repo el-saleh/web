@@ -1,11 +1,30 @@
 @import "../styles/varibles.scss";
 @font-face {
-  font-family: 'segoe';
-  src: url('./segoe.ttf');
+  font-family: "segoe";
+  src: url("./segoe.ttf");
 }
 @font-face {
-  font-family: 'times';
-  src: url('./times.ttf');
+  font-family: "times";
+  src: url("./times.ttf");
+}
+
+::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $mid-grey; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary-dark; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary; 
 }
 
 html {
@@ -27,7 +46,6 @@ body {
 
 .loader {
   margin: 1rem auto;
-  
   border-radius: 50%;
   border: 0.5rem solid #ffffff00;
   border-top: 0.5rem solid $primary;
@@ -38,6 +56,7 @@ body {
   animation: spin 0.75s linear infinite;
 }
 
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -46,6 +65,8 @@ body {
     transform: rotate(360deg);
   }
 }
+
+
 .layout {
   position: relative;
   display: flex;
@@ -84,15 +105,7 @@ body {
 }
 
 // global styling
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button {
-  // font-family:$headingFontFamily ;
-}
+
 p,
 input,
 textarea {
@@ -133,6 +146,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }

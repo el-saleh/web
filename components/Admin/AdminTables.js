@@ -7,7 +7,7 @@ import OrdersTable from "./tables/OrdersTable";
 import styles from "./adminTables.module.scss";
 
 const AdminTables = () => {
-    const [currentTable, setCurrentTable] = useState('Dashborad Home')
+    const [currentTable, setCurrentTable] = useState('Dashboard Home')
 
     const tableRenderer = () => {
         switch (currentTable) {
@@ -23,7 +23,7 @@ const AdminTables = () => {
             case 'ordersTable':
                 return <OrdersTable />
                 break;
-            case 'Dashborad Home':
+            case 'Dashboard Home':
                 return <p>Choose Table</p>
                 break;
             default:
@@ -39,7 +39,7 @@ const AdminTables = () => {
         <div className={`${styles.adminTables}`}>
             <div className={`container`}>
                 <div className={styles.tableButtons}>
-                    <PrimaryButton id="Dashborad Home" onClick={tableSelector} >Dashborad Home</PrimaryButton>
+                    <PrimaryButton id="Dashboard Home" onClick={tableSelector} >Dashborad Home</PrimaryButton>
                     <PrimaryButton id="UsersTable" onClick={tableSelector} >Users Table</PrimaryButton>
                     <PrimaryButton id="CategoriesTable" onClick={tableSelector} >Categories Table</PrimaryButton>
                     <PrimaryButton id="ProductsTable" onClick={tableSelector} >Products Table</PrimaryButton>

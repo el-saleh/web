@@ -22,8 +22,8 @@ const SingleProductSection = (props) => {
     })
     const gallery = props.gallery.map((img) => {
         return {
-            original: img,
-            thumbnail: img,
+            original: img?.imageUrl,
+            thumbnail: img?.imageUrl
         }
     })
 
@@ -38,7 +38,7 @@ const SingleProductSection = (props) => {
             updatdeUserCart(gstate.user._id, props._id, quantity)
             setQuantity(1);
         }
-        else{
+        else {
             toast("ٌقم بتسجيل الدخول أولا")
         }
     }
@@ -165,7 +165,17 @@ const SingleProductSection = (props) => {
                             </Link>
                         </div>
                         <h1 className={styles.title}>{`${props.title}`}</h1>
-                        <p className={styles.price}>{props.price} <small>جنيه</small></p>
+                        <br />
+                        {props.sale ? <small className={styles.salePatch} >{`خصم ${props.sale}%`}</small> : null}
+                        {props.sale ?
+                            <p className={styles.price}>
+                                <del>{props.price} جنيه</del>
+                                &nbsp;&nbsp;
+                                {props.price - (props.price * (0.01 * props.sale))} <small>جنيه</small>
+                            </p>
+                            :
+                            <p className={styles.price}>{props.price} <small>جنيه</small></p>
+                        }
                         <p className={styles.description}>{props.description}</p>
 
                         <ul>
@@ -192,11 +202,11 @@ const SingleProductSection = (props) => {
                 </div>
             </section>
 
-            <section className={styles.videoSection}>
+            {props?.videoUrl && <section className={styles.videoSection}>
 
                 <div className="container">
                     <iframe
-                        src={parseEmbedLink(props.videoUrl)}
+                        src={parseEmbedLink(props?.videoUrl)}
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -206,7 +216,7 @@ const SingleProductSection = (props) => {
                 </div>
 
             </section>
-
+            }
             <section>
                 <div className={`container`} dir="auto">
                     <h1 className={styles.title}>{"منتجات ذات صلة"}</h1>

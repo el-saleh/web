@@ -1,0 +1,45 @@
+@import "../styles/varibles.scss";
+.CartItem {
+    background-color: $light;
+    min-height: 4rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-block: 0.5rem;
+    padding: 0.5rem;
+    .imgBox {
+            width: 4rem;
+            height: 100%;
+            max-height: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            img {
+                max-height: 100%;
+                max-width: 100%;
+            }
+    }
+    .infoBox {
+        flex-grow: 1;
+        padding-inline: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+        h4 {
+            margin: 0rem;
+            font-weight: 500;
+        }
+        .price {
+            color: $primary;
+            font-family: $secondFontFamily;
+            font-size: 0.85rem;
+            margin: 0;
+            small {
+                font-size: 0.75rem;
+            }
+        }
+      
+    }
+}

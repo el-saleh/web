@@ -1,0 +1,14 @@
+.orderInfo {
+    max-width: 991px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > button {
+        background-color: transparent;
+        color: #d80000;
+        &:hover{
+            background-color: transparent;
+        }
+    }
+}

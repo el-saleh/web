@@ -4,7 +4,7 @@ import requester from "../../../utilities/requester";
 import styles from "./ProductGalleryEditor.module.scss";
 
 export default function ProductGalleryEditor(props) {
-    
+
     const [imgSrcList, setImgSrcList] = useState(props.data.value || []);
     const [localImgSrcList, setLocalImgSrcList] = useState([]);
     const inputRef = React.createRef();
@@ -14,7 +14,7 @@ export default function ProductGalleryEditor(props) {
         props.data.setValue(null);
     }, [])
 
-    const errorHandler = (e, str="Error Occurred") => {
+    const errorHandler = (e, str = "Error Occurred") => {
         toast.error(str);
         console.log(e)
     }
@@ -45,10 +45,10 @@ export default function ProductGalleryEditor(props) {
 
     const galleryImageDeleteHandler = (imageId) => {
         console.log("delete gallery image from database, image Id : ", imageId, "and productId : ", props.data.data.productId);
-        requester.delete(`/products/deleteImageProductGallery/${imageId}/${props.data.data.productId}`).then(()=>{
-            setImgSrcList(imgSrcList.filter(item=>item.imageId!==imageId))
+        requester.delete(`/products/deleteImageProductGallery?imageId=${imageId}&productId=${props.data.data._id}`).then(() => {
+            setImgSrcList(imgSrcList.filter(item => item.imageId !== imageId))
             toast.success("Image Deleted Successfully")
-        }).catch((e)=>{
+        }).catch((e) => {
             errorHandler(e, "Error Occurred, deleting failed")
         })
     }
@@ -56,7 +56,7 @@ export default function ProductGalleryEditor(props) {
     return (
         <>
             <input type="file" multiple ref={inputRef} className={styles.hiddenInput} onChange={uploadHandler} />
-            
+
             {!!imgSrcList.length &&
                 <>
                     {imgSrcList.map((item) => {
@@ -73,14 +73,14 @@ export default function ProductGalleryEditor(props) {
                     })}
                 </>
             }
-            
+
             {!!localImgSrcList.length &&
                 <>
                     {localImgSrcList.map((item) => {
                         if (item.imageId && item.imageUrl) {
                             return (
                                 <div key={item.imageId} className={styles.imageContainer}>
-                                    <img src={item.imageUrl || "/assets/placeholder-image.png"}/>
+                                    <img src={item.imageUrl || "/assets/placeholder-image.png"} />
                                 </div>
                             )
                         }

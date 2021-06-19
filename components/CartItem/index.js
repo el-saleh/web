@@ -9,17 +9,23 @@ import { changeCartItemQuantity } from "../../utilities/shoppingCard";
 export default function CartItem({ orderItem, data, fetchUserCart, removeProduct }) {
     const gstate = useContext(Control);
     const [quantity, setQuantity] = useState(data?.quantity || 1);
+    const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
 
     useEffect(() => {
         if (data?.quantity) {
             setQuantity(data.quantity)
         }
+        setIsButtonsDisabled(false)
+        
     }, [data])
 
     const updateQty = (e) => {
+        setIsButtonsDisabled(true);
         const newQty = (parseInt(e.target.id) + quantity);
         changeCartItemQuantity(gstate.user._id, data.product._id, newQty, fetchUserCart)
     }
+
+    
 
     return (
         <div className={styles.CartItem}>
@@ -44,20 +50,20 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
                         <p className={styles.price}>
                             <del>{data.product.price} جنيه</del>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>{data.product.price - (data.product.price * (0.01 * data.product.sale))} جنيه</span></p>
+                            <span>{data.product.price - (data.product.price * (0.01 * data.product.sale))}  <small>جنيه</small></span></p>
                         :
-                        <p className={styles.price}><span>{data.product.price} جنيه</span></p>
+                        <p className={styles.price}><span>{data.product.price}  <small>جنيه</small></span></p>
                     }
 
                 </div>
 
                 {!orderItem && <div className={styles.buttons}>
                     <div>
-                        <PrimaryButton id={1} onClick={updateQty}>+</PrimaryButton>
+                        <PrimaryButton disabled={isButtonsDisabled} id={1} onClick={updateQty}>+</PrimaryButton>
                         <span className={styles.qty}>{quantity}</span>
-                        <PrimaryButton id={-1} onClick={updateQty} disabled={!(quantity - 1)}>-</PrimaryButton>
+                        <PrimaryButton id={-1} onClick={updateQty} disabled={!(quantity - 1) || isButtonsDisabled}>-</PrimaryButton>
                     </div>
-                    <PrimaryButton id="delete" onClick={removeProduct} ><AiFillDelete />{"إزالة"}</PrimaryButton>
+                    <PrimaryButton id="delete" onClick={removeProduct} ><AiFillDelete />&nbsp;{"إزالة"}</PrimaryButton>
                 </div>
                 }
 
