@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import PrimaryButton from '../Button/PrimaryButton';
 import { ImCancelCircle } from "react-icons/im";
-import { toast } from "react-toastify";
 import styles from "./OrderInfo.module.scss";
 
 export default function OrderInfo({ order, index, cancelOrderCallback }) {
