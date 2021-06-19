@@ -8,6 +8,7 @@ import DataGrid, {
     Column,
     MasterDetail,
     Editing,
+    RequiredRule,
     Pager,
     Paging,
     Grouping,
@@ -153,9 +154,17 @@ const CategoriesTable = () => {
 
                 <Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} />
 
-                <Column dataField="categoryName" alignment={"center"} />
-                <Column dataField="description" alignment={"center"} />
-                <Column dataField="categoryImage" alignment={"center"} dataType="object" editCellComponent={ProductImageEditor} cellRender={categoryImageCellRenderer} />
+                <Column dataField="categoryName" alignment={"center"} ><RequiredRule /></Column>
+                <Column dataField="description" alignment={"center"} ><RequiredRule /></Column>
+                <Column
+                    dataField="categoryImage"
+                    alignment={"center"}
+                    dataType="object"
+                    editCellComponent={ProductImageEditor}
+                    cellRender={categoryImageCellRenderer}
+                >
+                    <RequiredRule />
+                </Column>
 
 
                 <Paging defaultPageSize={10} />
