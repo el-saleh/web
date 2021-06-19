@@ -1,15 +1,17 @@
+import { useRouter } from 'next/router';
 import PrimaryButton from '../Button/PrimaryButton';
 import styles from "./CartTotalItem.module.scss";
 import requester from '../../utilities/requester';
 import { toast } from "react-toastify"
 
 export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetchUserCart }) {
-
+    const router = useRouter();
     const placeOrder = () => {
         let userData = window.localStorage.getItem("userData");
         if (userData) {
             requester.post(`/orders/placeOrder?userId=${JSON.parse(userData)._id}`).then((res) => {
                 toast("تم نسجيل طلب الشراء بنجاح");
+                router.push("/orders");
                 fetchUserCart()
             }).catch(()=>{
                 toast("خطأ : فشل تسجيل طلب الشراء ")

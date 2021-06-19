@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import styles from "./layout.module.scss";
@@ -15,6 +15,9 @@ const Header = () => {
   const gstate = useContext(Control);
   const [categoriesList, setCategoriesList] = useState([]);
   const [showSidemenu, setShowSidemenu] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  let timeId = useRef(0);
 
   useEffect(() => {
     requester.get("/categories/allCategories").then((res) => {
@@ -41,6 +44,7 @@ const Header = () => {
     console.log(icon, " icon clicked")
   }
 
+
   const parseUserName = (str) => {
     let firstName = str.split(" ")[0];
     if (firstName.length > 10) {
@@ -49,6 +53,41 @@ const Header = () => {
     return str.split(" ")[0].slice(0, 10);
   }
 
+
+  const searchTermHandler = (e) => {
+    setSearchQuery(e.target.value)
+  }
+
+
+  const searchInputFoucusHandler = () =>{
+    console.log("search input focused")
+  }
+
+  useEffect(() => {
+    const query = searchQuery.trim();
+    if (query.length > 2) {
+
+      if (timeId.current) {
+        // to debounce the timed out [suggestions and jobs results] fetching function (if any)
+        // console.log("clearing timeout function : new timeout function");
+        window.clearTimeout(timeId.current);
+      }
+
+      // set a new timed out [suggestions and jobs results] fetching function with the new "searcQuery"
+      timeId.current = window.setTimeout(() => {
+       requester.get(`/products/search?searchQuery=${query}`).then((res)=>{
+         console.log(res.data.model);
+         setSearchResults(res.data.model);
+       })
+      }, 1000)
+    }
+    else if (query.length <= 2 && query.length > 0 && timeId.current) {
+      // to debounce the timed out [suggestions and jobs results] fetching function (if any)
+      // console.log("clearing time out : search query length < 3");
+      window.clearTimeout(timeId.current);
+      timeId.current = 0;
+    }
+  }, [searchQuery]);
 
   return (
     <header className={styles.header}>
@@ -129,7 +168,9 @@ const Header = () => {
           <input
             type="text"
             placeholder={"بتدور على ايه؟"}
-
+            value={searchQuery}
+            onChange={searchTermHandler}
+            onFocus={searchInputFoucusHandler}
           />
           <PrimaryButton><FaSearch /></PrimaryButton>
         </form>
@@ -177,7 +218,9 @@ const Header = () => {
         <input
           type="text"
           placeholder={"بتدور على ايه؟"}
-
+          value={searchQuery}
+          onChange={searchTermHandler}
+          onFocus={searchInputFoucusHandler}
         />
         <PrimaryButton><FaSearch /></PrimaryButton>
       </form>
