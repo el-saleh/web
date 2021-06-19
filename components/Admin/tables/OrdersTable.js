@@ -51,7 +51,7 @@ const OrdersTable = () => {
                     fetchRecords();
                 }
             },
-            location: 'after'
+            location: 'before'
         });
     }
 
@@ -64,9 +64,9 @@ const OrdersTable = () => {
         }).catch(errorHandler)
     }
 
-    const errorHandler = (e, str = "Error Occurred") => {
+    const errorHandler = (e, str = "خطأ : لم تتم العملية بنجاح") => {
         setDisplayLoadingOverlay(false);
-        toast.error(str);
+        toast(str);
         console.log(e)
     }
 
@@ -76,22 +76,22 @@ const OrdersTable = () => {
         requester.delete(`/orders/deleteOrder?orderId=${e.data._id}`).then((res) => {
             fetchRecords();
             setDisplayLoadingOverlay(false);
-            toast.success('تم حذف طلب الشراء بنجاح')
+            toast('تم حذف طلب الشراء بنجاح')
         }).catch((e) => {
             fetchRecords();
             errorHandler(e);
         })
     }
 
- 
+
     const onRowUpdated = (e) => {
         console.log('edit order', e);
         setDisplayLoadingOverlay(true);
 
         requester.patch("/orders/updateOrder", {
-            orderId :  e.data._id,
-            orderStatus : e.data.orderStatus
-        }).then((res)=>{
+            orderId: e.data._id,
+            orderStatus: e.data.orderStatus
+        }).then((res) => {
             setDisplayLoadingOverlay(false);
             fetchRecords();
             toast("تم تحديث طلب الشراء بنجاح");
@@ -105,15 +105,15 @@ const OrdersTable = () => {
 
     const renderMasterDetail = (e) => {
         console.log(e);
-        return(
+        return (
             <>
-            {e.data.products.map((item)=>{
-                return(
-                    <div key={item.product._id}>
-                       <CartItem data={item} orderItem />
-                    </div>
-                )
-            })}
+                {e.data.products.map((item) => {
+                    return (
+                        <div key={item.product._id}>
+                            <CartItem data={item} orderItem />
+                        </div>
+                    )
+                })}
             </>
         )
     }
@@ -121,7 +121,7 @@ const OrdersTable = () => {
 
     return (
         <div>
-            Orders Table
+            <p>جدول طلبات الشراء</p>
             <DataGrid
                 rtlEnabled
                 dataSource={records}
@@ -137,33 +137,46 @@ const OrdersTable = () => {
                 onRowUpdated={onRowUpdated}
             >
                 <HeaderFilter visible={true} />
-                <GroupPanel visible={true} />
-                <SearchPanel visible={true} all />
-                <Grouping autoExpandAll={true} />
-                <Paging defaultPageSize={25} />
+                <GroupPanel visible={true} emptyPanelText='اسحب عنوان لهنا' />
+                <SearchPanel visible={true} all placeholder='بحث...' width="100%" />
+                <Paging defaultPageSize={20} />
                 <Pager
                     showPageSizeSelector={true}
-                    allowedPageSizes={[10, 25, 50]}
+                    allowedPageSizes={[5, 10, 20]}
                     showInfo={true}
                     showNavigationButtons={true}
                 />
+                <Grouping autoExpandAll={true} />
+                <Editing
+                    mode="popup"
+                    allowUpdating={true}
+                    allowDeleting={true}
+                    useIcons={true}
+                    texts={{
+                        confirmDeleteMessage: 'هل انت متاكد انك تريد المسح ؟',
+                        saveRowChanges: "حفظ",
+                        cancelRowChanges: "إلغاء",
+                        deleteRow: "مسح",
+                        editRow: "تعديل",
+                        addRow: 'اضف جديد',
 
-                <Editing mode="popup" allowUpdating={true} allowDeleting={true} useIcons={true}>
+                    }}
+                >
                     <Form>
                         <Item dataField="orderStatus" />
                     </Form>
                 </Editing>
 
-                <Column dataField="user.name" alignment={"center"} />
-                <Column dataField="user.phoneNumber" alignment={"center"} />
-                <Column dataField="createdAt" alignment={"center"} dataType='datetime' />
-                <Column dataField="total" alignment={"center"} />
-                <Column dataField="orderStatus" alignment={"center"}>
+                <Column dataField="user.name" caption="اسم المستخدم" alignment={"center"} />
+                <Column dataField="user.phoneNumber" caption="رقم الموبايل" alignment={"center"} />
+                <Column dataField="createdAt" caption="تاريخ ووقت الطلب" alignment={"center"} dataType='datetime' />
+                <Column dataField="total" caption="المجموع" alignment={"center"} />
+                <Column dataField="orderStatus" caption="حالة الطلب" alignment={"center"}>
                     <Lookup dataSource={orderStatuses} valueExpr="id" displayExpr="name" />
                 </Column>
                 <MasterDetail enabled={true} render={renderMasterDetail} />
 
-                <Export enabled={true} />
+                <Export enabled={true} texts={{ exportAll: 'تنزيل الجدول فى ملف excel' }} />
 
             </DataGrid>
         </div>

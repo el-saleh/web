@@ -6,7 +6,6 @@ import ProductImageEditor from './ProductImageEditor';
 import styles from "./dashboard.module.scss";
 import DataGrid, {
     Column,
-    MasterDetail,
     Editing,
     RequiredRule,
     Pager,
@@ -36,14 +35,14 @@ const CategoriesTable = () => {
         toolbarItems.unshift({
             widget: 'dxButton',
             options: {
-                icon: 'pulldown',
+                icon: 'refresh',
                 text: "Refresh",
                 onClick: () => {
                     setDisplayLoadingOverlay(true);
                     fetchCategories();
                 }
             },
-            location: 'after'
+            location: 'before'
         });
     }
 
@@ -124,14 +123,15 @@ const CategoriesTable = () => {
 
     const errorHandler = (e) => {
         setDisplayLoadingOverlay(false);
-        toast.error("Error Occurred");
+        toast("خطأ : لم تتم العملية بنجاح");
         console.log(e)
     }
 
     return (
         <div>
-            Categories Table
+            <p>جدول الفئات</p>
             <DataGrid
+                rtlEnabled
                 dataSource={newrRecords}
                 allowColumnReordering={true}
                 allowColumnResizing={true}
@@ -147,17 +147,40 @@ const CategoriesTable = () => {
                 onRowRemoved={onRowRemoved}
             >
                 <HeaderFilter visible={true} />
-                <GroupPanel visible={true} />
-                <SearchPanel visible={true} all />
+                <GroupPanel visible={true} emptyPanelText='اسحب عنوان لهنا' />
+                <SearchPanel visible={true} all placeholder='بحث...' width="100%" />
+                <Paging defaultPageSize={20} />
+                <Pager
+                    showPageSizeSelector={true}
+                    allowedPageSizes={[5, 10, 20]}
+                    showInfo={true}
+                    showNavigationButtons={true}
+                />
                 <Grouping autoExpandAll={true} />
 
 
-                <Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} />
+                <Editing
+                    mode="popup"
+                    allowUpdating={true}
+                    allowDeleting={true}
+                    allowAdding={true}
+                    useIcons={true}
+                    texts={{
+                        confirmDeleteMessage: 'هل انت متاكد انك تريد المسح ؟',
+                        saveRowChanges: "حفظ",
+                        cancelRowChanges: "إلغاء",
+                        deleteRow: "مسح",
+                        editRow: "تعديل",
+                        addRow: 'اضف جديد',
 
-                <Column dataField="categoryName" alignment={"center"} ><RequiredRule /></Column>
-                <Column dataField="description" alignment={"center"} ><RequiredRule /></Column>
+                    }}
+                />
+
+                <Column dataField="categoryName" caption="اسم الفئة" alignment={"center"} ><RequiredRule /></Column>
+                <Column dataField="description" caption="وصف الفئة" alignment={"center"} ><RequiredRule /></Column>
                 <Column
                     dataField="categoryImage"
+                    caption="صورة الفئة"
                     alignment={"center"}
                     dataType="object"
                     editCellComponent={ProductImageEditor}
@@ -166,16 +189,7 @@ const CategoriesTable = () => {
                     <RequiredRule />
                 </Column>
 
-
-                <Paging defaultPageSize={10} />
-                <Pager
-                    showPageSizeSelector={true}
-                    allowedPageSizes={[5, 10, 20]}
-                    showInfo={true}
-                    showNavigationButtons={true}
-                />
-
-                <Export enabled={true} />
+                <Export enabled={true} texts={{ exportAll: 'تنزيل الجدول فى ملف excel' }} />
             </DataGrid>
         </div>
     );

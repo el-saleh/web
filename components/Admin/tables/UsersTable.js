@@ -2,11 +2,9 @@ import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { DisplayLoadingOverlayHandler } from "../../../utilities/Contexts";
 import { toast } from 'react-toastify';
 import requester from "../../../utilities/requester";
-import ProductImageEditor from './ProductImageEditor';
 import styles from "./dashboard.module.scss";
 import DataGrid, {
     Column,
-    MasterDetail,
     Editing,
     Pager,
     Paging,
@@ -35,14 +33,14 @@ const UsersTable = () => {
         toolbarItems.unshift({
             widget: 'dxButton',
             options: {
-                icon: 'pulldown',
+                icon: 'refresh',
                 text: "Refresh",
                 onClick: () => {
                     setDisplayLoadingOverlay(true);
                     fetchRecords();
                 }
             },
-            location: 'after'
+            location: 'before'
         });
     }
 
@@ -64,7 +62,7 @@ const UsersTable = () => {
         setDisplayLoadingOverlay(true);
         requester.delete(`/auth/deleteUser?userId=${e.data._id}`).then(() => {
             setDisplayLoadingOverlay(false);
-            toast("User Deleted Sucessfully")
+            toast("تم حدف حساب المستخدم بنجاح")
             fetchRecords();
         }).catch(errorHandler)
     }
@@ -73,14 +71,15 @@ const UsersTable = () => {
 
     const errorHandler = (e) => {
         setDisplayLoadingOverlay(false);
-        toast.error("Error Occurred");
+        toast("خطأ : لم تتم العملية بنجاح");
         console.log(e)
     }
 
     return (
         <div>
-            Users Table
+            <p>جدول المستخدمين</p>
             <DataGrid
+                rtlEnabled
                 dataSource={newrRecords}
                 allowColumnReordering={true}
                 allowColumnResizing={true}
@@ -94,27 +93,39 @@ const UsersTable = () => {
                 onRowRemoved={onRowRemoved}
             >
                 <HeaderFilter visible={true} />
-                <GroupPanel visible={true} />
-                <SearchPanel visible={true} all />
-                <Grouping autoExpandAll={true} />
-
-
-                <Editing mode="popup" allowDeleting={true} />
-                <Column dataField="role" alignment={"center"} />
-                <Column dataField="name" alignment={"center"} />
-                <Column dataField="phoneNumber" alignment={"center"} />
-                <Column dataField="createdAt" dataType="datetime" alignment={"center"} />
-
-
-                <Paging defaultPageSize={10} />
+                <GroupPanel visible={true} emptyPanelText='اسحب عنوان لهنا' />
+                <SearchPanel visible={true} all placeholder='بحث...' width="100%" />
+                <Paging defaultPageSize={20} />
                 <Pager
                     showPageSizeSelector={true}
                     allowedPageSizes={[5, 10, 20]}
                     showInfo={true}
                     showNavigationButtons={true}
                 />
+                <Grouping autoExpandAll={true} />
 
-                <Export enabled={true} />
+                <Editing
+                    mode="popup"
+                    allowDeleting={true}
+                    useIcons={true}
+                    texts={{
+                        confirmDeleteMessage: 'هل انت متاكد انك تريد المسح ؟',
+                        saveRowChanges: "حفظ",
+                        cancelRowChanges: "إلغاء",
+                        deleteRow: "مسح",
+                        editRow: "تعديل",
+                        addRow: 'اضف جديد',
+
+                    }}
+                />
+
+                <Column dataField="role" caption={"نوع الحساب"} alignment={"center"} />
+                <Column dataField="name" caption={"اسم المستخدم"} alignment={"center"} />
+                <Column dataField="phoneNumber" caption="رقم الموبايل" alignment={"center"} />
+                <Column dataField="createdAt" caption="تاريخ التسجيل" dataType="datetime" alignment={"center"} />
+
+                <Export enabled={true} texts={{ exportAll: 'تنزيل الجدول فى ملف excel' }} />
+
             </DataGrid>
         </div>
     );

@@ -24,7 +24,7 @@ const AdminTables = () => {
                 return <OrdersTable />
                 break;
             case 'Dashboard Home':
-                return <p>Choose Table</p>
+                return <p>قم باختيار الجدول الذى تريد عرضه</p>
                 break;
             default:
                 return null
@@ -40,9 +40,9 @@ const AdminTables = () => {
             <div className={`container`}>
                 <div className={styles.tableButtons}>
                     <PrimaryButton id="Dashboard Home" onClick={tableSelector} >Dashborad Home</PrimaryButton>
-                    <PrimaryButton id="UsersTable" onClick={tableSelector} >Users Table</PrimaryButton>
                     <PrimaryButton id="CategoriesTable" onClick={tableSelector} >Categories Table</PrimaryButton>
                     <PrimaryButton id="ProductsTable" onClick={tableSelector} >Products Table</PrimaryButton>
+                    <PrimaryButton id="UsersTable" onClick={tableSelector} >Users Table</PrimaryButton>
                     <PrimaryButton id="ordersTable" onClick={tableSelector} >Orders Table</PrimaryButton>
                 </div>
                 <div className={styles.tableWrapper}>
