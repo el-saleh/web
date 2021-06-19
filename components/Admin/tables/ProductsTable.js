@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import Link from 'next/link';
 import { DisplayLoadingOverlayHandler } from "../../../utilities/Contexts";
 import { toast } from 'react-toastify';
 import styles from "./dashboard.module.scss";
@@ -9,8 +10,6 @@ import ProductGalleryEditor from "./ProductGalleryEditor";
 import DataGrid, {
     Column,
     Editing,
-    Popup,
-    Position,
     Form,
     Pager,
     Paging,
@@ -24,7 +23,6 @@ import DataGrid, {
 } from 'devextreme-react/data-grid';
 import { Item } from 'devextreme-react/form';
 import 'devextreme-react/text-area';
-
 
 
 const ProductsTable = () => {
@@ -52,9 +50,9 @@ const ProductsTable = () => {
         }).catch(errorHandler)
     }
 
-    const errorHandler = (e, str = "Error Occurred") => {
+    const errorHandler = (e, str = "خطأ : لم تتم العملية بنجاح") => {
         setDisplayLoadingOverlay(false);
-        toast.error(str);
+        toast(str);
         console.log(e)
     }
 
@@ -64,7 +62,7 @@ const ProductsTable = () => {
         let { _id } = e.data;
         requester.delete(`/products/deleteProduct?id=${_id}`).then((res) => {
             setDisplayLoadingOverlay(false);
-            toast.success('Deleted successfully')
+            toast('تم حدف المنتج بنجاح')
         }).catch((e) => {
             fetchProducts();
             errorHandler(e);
@@ -104,16 +102,16 @@ const ProductsTable = () => {
 
                 requester.post('/products/addImageProductGallery', galleryFormData).then(() => {
                     setDisplayLoadingOverlay(false);
-                    toast.success('Added product info & images successfully');
+                    toast('تم إضافة المنتج وصور المنتج بنجاح');
                     fetchProducts();
                 }).catch((e) => {
-                    errorHandler(e, "Error Occurred in uploading images");
+                    errorHandler(e, "خطأ : فشل إضافة صور المنتج");
                     fetchProducts();
                 })
             }
             else {
                 setDisplayLoadingOverlay(false);
-                toast.success('Added product info successfully');
+                toast('تم إضافة المنتج بنجاح');
                 fetchProducts();
             }
 
@@ -160,16 +158,16 @@ const ProductsTable = () => {
 
                 requester.post('/products/addImageProductGallery', galleryFormData).then(() => {
                     setDisplayLoadingOverlay(false);
-                    toast.success('updated product info & images successfully');
+                    toast('تم تحديث ببانات وصور المنتج بنجاح');
                     fetchProducts()
                 }).catch((e) => {
-                    errorHandler(e, "Error Occurred in uploading images");
+                    errorHandler(e, "خطأ : فشل تحديث صور المنتج");
                     fetchProducts();
                 })
             }
             else {
                 setDisplayLoadingOverlay(false);
-                toast.success('updated product info successfully');
+                toast('تم تحديث بيانات وصور المنتج بنجاح');
                 fetchProducts();
             }
 
@@ -179,32 +177,27 @@ const ProductsTable = () => {
         })
     }
 
-    const renderHeroProductColumn = (rowData) => {
-
-        let clickHandler = () => {
-            setDisplayLoadingOverlay(true);
-            console.log("add to hero section data ", rowData.data.productId)
-            requester.patch(`/products/addHeroSecProduct/${rowData.data.productId}`)
-                .then((response) => {
-                    setDisplayLoadingOverlay(false);
-                    toast.success('Updated successfully');
+    const onToolbarPreparing = (e) => {
+        let toolbarItems = e.toolbarOptions.items;
+        // Adds a new item
+        toolbarItems.unshift({
+            widget: 'dxButton',
+            options: {
+                icon: 'refresh',
+                text: "Refresh",
+                onClick: () => {
+                    setDisplayLoadingOverlay(true);
+                    fetchCategories();
                     fetchProducts();
-                })
-                .catch((e) => {
-                    setDisplayLoadingOverlay(false);
-                    errorHandler(e)
-                    fetchProducts();
-                })
-        }
-
-        return (
-            <span className={styles.fakelink} onClick={clickHandler}>{rowData.data.heroSectionItem ? 'Remove' : 'Add'}</span>
-        )
+                }
+            },
+            location: 'before'
+        });
     }
 
     return (
         <div>
-            Products Table
+            <p>جدول المنتجات</p>
             <DataGrid
                 rtlEnabled
                 dataSource={records}
@@ -215,13 +208,14 @@ const ProductsTable = () => {
                 cellHintEnabled={true}
                 wordWrapEnabled={true}
                 rowAlternationEnabled={true}
+                onToolbarPreparing={onToolbarPreparing}
                 onRowRemoved={onRowRemoved}
                 onRowInserted={onRowInserted}
                 onRowUpdated={onRowUpdated}
             >
                 <HeaderFilter visible={true} />
                 <GroupPanel visible={true} emptyPanelText='اسحب عنوان لهنا' />
-                <SearchPanel visible={true} all placeholder='بحث...' />
+                <SearchPanel visible={true} all placeholder='بحث...' width="100%"  />
                 <Grouping autoExpandAll={true} />
                 <Paging defaultPageSize={20} />
                 <Pager
@@ -238,7 +232,7 @@ const ProductsTable = () => {
                     allowAdding={true}
                     useIcons={true}
                     texts={{
-                        confirmDeleteMessage: 'هل انت متاكد انك تريد مسح هذا النص؟',
+                        confirmDeleteMessage: 'هل انت متاكد انك تريد مسح هذا المنتج',
                         saveRowChanges: "حفظ",
                         cancelRowChanges: "إلغاء",
                         deleteRow: "مسح",
@@ -247,39 +241,40 @@ const ProductsTable = () => {
 
                     }}
                 >
-                    <Popup title="Products" showTitle={true} width={700} height={600} maxHeight={'80%'}>
-                        <Position my="center" at="center" of={window} />
-                    </Popup>
+
                     <Form>
-                        <Item colSpan="2" dataField="title" alignment={"center"} >
-                            <RequiredRule message='' />
-                        </Item>
-                        <Item colSpan="2" dataField="price" alignment={"center"} />
-                        <Item colSpan="2" dataField="sale" />
-                        <Item colSpan="2" dataField="category.categoryName" alignment={"center"} />
-                        <Item colSpan="2" dataField="videoUrl" />
-                        <Item dataField="description" editorType="dxTextArea" colSpan={2} editorOptions={{ height: 200 }} />
-                    <Item colSpan="2" dataField="bulletList" />
-                    <Item colSpan="2" dataField="productImage" />
-                    <Item colSpan="2" dataField="gallery" />
+                        <Item colSpan="2" dataField="title" alignment={"center"} ><RequiredRule /></Item>
+                        <Item dataField="description" editorType="dxTextArea" colSpan={2} editorOptions={{ height: 200 }} ></Item>
+                        <Item colSpan="2" dataField="price" alignment={"center"} ><RequiredRule /></Item>
+                        <Item colSpan="2" dataField="sale" ></Item>
+                        <Item colSpan="2" dataField="category.categoryName" alignment={"center"} ><RequiredRule /></Item>
+                        <Item colSpan="2" dataField="videoUrl" ></Item>
+                        <Item colSpan="2" dataField="bulletList" ></Item>
+                        <Item colSpan="2" dataField="productImage" ><RequiredRule /></Item>
+                        <Item colSpan="2" dataField="gallery" ></Item>
                     </Form>
                 </Editing>
 
-            <Column dataField="title" alignment={"center"} caption='اسم المنتج' />
-            <Column dataField="price" alignment={"center"} caption='سعر المنتج' />
-            <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' />
-            <Column dataField="createdAt" dataType='datetime' alignment={"center"} caption='تاريخ المنتج' />
-            <Column dataField="category.categoryName" alignment={"center"} caption='تصنيف المنتج' allowFiltering={false}>
-                <Lookup dataSource={categories} displayExpr="categoryName" />
-            </Column>
+                <Column
+                    dataField="title"
+                    alignment={"center"}
+                    caption='اسم المنتج'
+                    cellRender={e => <Link href={`/product/${e.data._id}`} ><a>{e.data.title}</a></Link>}
+                />
+                <Column dataField="price" alignment={"center"} caption='سعر المنتج' />
+                <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' />
+                <Column dataField="createdAt" dataType='datetime' alignment={"center"} caption='تاريخ إضافة المنتج' />
+                <Column dataField="category.categoryName" alignment={"center"} caption='فئة المنتج' allowFiltering={false}>
+                    <Lookup dataSource={categories} displayExpr="categoryName" />
+                </Column>
 
-            <Column dataField="videoUrl" alignment={"center"} visible={false} caption='فيديو للمنتج' />
-            <Column dataField="description" alignment={"center"} visible={false} caption='وصف المنتج' />
-            <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} caption='مميزات المنتج' />
-            <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} caption='صورة المنتج' />
-            <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} caption='صور للمنتج' />
+                <Column dataField="videoUrl" alignment={"center"} visible={false} caption='فيديو للمنتج' />
+                <Column dataField="description" alignment={"center"} visible={false} caption='وصف المنتج' />
+                <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} caption='مميزات المنتج' />
+                <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} caption='صورة المنتج' />
+                <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} caption='صور للمنتج' />
 
-            <Export enabled={true} texts={{ exportAll: 'تنزيل ملف ايكسيل للمنتجات' }} />
+                <Export enabled={true} texts={{ exportAll: 'تنزيل ملف excel  للمنتجات' }} />
 
             </DataGrid>
         </div >
