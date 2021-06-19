@@ -20,12 +20,12 @@ const SingleProductSection = (props) => {
     useEffect(() => {
         zoom();
     })
-    const gallery = props.gallery.map((img) => {
+    const gallery = props?.gallery?.map((img) => {
         return {
             original: img?.imageUrl,
             thumbnail: img?.imageUrl
         }
-    })
+    }) || [];
 
 
     const updateQty = (e) => {
@@ -117,6 +117,8 @@ const SingleProductSection = (props) => {
         requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=1&pageSize=5`)
             .then((res) => {
                 setRelatedProducts(res.data.model.products)
+            }).catch(()=>{
+                console.log("failed to load related products")
             })
     }, [])
 
@@ -160,7 +162,7 @@ const SingleProductSection = (props) => {
                             {" - "}
                             <Link href={`/category/${props.category._id}`}>
                                 <a>
-                                    <span className={styles.breadCrumb}>{props.category.categoryName}</span>
+                                    <span className={styles.breadCrumb}>{props.category?.categoryName}</span>
                                 </a>
                             </Link>
                         </div>
@@ -179,13 +181,13 @@ const SingleProductSection = (props) => {
                         <p className={styles.description}>{props.description}</p>
 
                         <ul>
-                            {props.bulletList.map((listItem, idx) => {
+                            {props.bulletList?.map((listItem, idx) => {
                                 if (!!listItem) {
                                     return (
                                         <li key={idx}><IoCheckmark />&nbsp;{"مميزات المنتج"}</li>
                                     )
                                 }
-                            })}
+                            }) || []}
                         </ul>
                         <span>
                             <PrimaryButton id={1} onClick={updateQty}>+</PrimaryButton>
@@ -206,7 +208,7 @@ const SingleProductSection = (props) => {
 
                 <div className="container">
                     <iframe
-                        src={parseEmbedLink(props?.videoUrl)}
+                        src={parseEmbedLink(props.videoUrl)}
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
