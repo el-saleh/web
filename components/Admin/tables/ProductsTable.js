@@ -17,7 +17,9 @@ import DataGrid, {
     Grouping,
     GroupPanel,
     SearchPanel,
+    Lookup,
     HeaderFilter,
+    RequiredRule,
     Export,
 } from 'devextreme-react/data-grid';
 import { Item } from 'devextreme-react/form';
@@ -29,34 +31,24 @@ const ProductsTable = () => {
 
     useEffect(() => {
         setDisplayLoadingOverlay(true);
+        fetchCategories();
         fetchProducts();
     }, [])
 
-    const [active, setActive] = useState(true);
-    const [activeProducts, setActiveProducts] = useState([]);
-    const [inactiveProducts, setInactiveProducts] = useState([])
+    const [records, setRecords] = useState([]);
+    const [categories, setCategories] = useState([]);
     const setDisplayLoadingOverlay = useContext(DisplayLoadingOverlayHandler);
-
-    const onToolbarPreparing = (e) => {
-        let toolbarItems = e.toolbarOptions.items;
-        // Adds a new item
-        toolbarItems.unshift({
-            widget: 'dxButton',
-            options: {
-                icon: active ? 'check' : 'check',
-                text: `${active ? 'Show inactive Products ' : 'Show active products'}`,
-                onClick: () => { setActive(!active) }
-            },
-            location: 'after'
-        });
-    }
 
     const fetchProducts = () => {
         requester.get("/products/allProducts").then((res) => {
             setDisplayLoadingOverlay(false);
-            console.table("All products", res.data);
-            setActiveProducts(res.data.model);
+            setRecords(res.data.model);
+        }).catch(errorHandler)
+    }
 
+    const fetchCategories = () => {
+        requester.get("/categories/allCategories").then((res) => {
+            setCategories(res.data.model);
         }).catch(errorHandler)
     }
 
@@ -69,8 +61,8 @@ const ProductsTable = () => {
     const onRowRemoved = (e) => {
         setDisplayLoadingOverlay(true);
         console.log(e);
-        let { productId } = e.data;
-        requester.delete(`/products/deleteProduct/${productId}`).then((res) => {
+        let { _id } = e.data;
+        requester.delete(`/products/deleteProduct?id=${_id}`).then((res) => {
             setDisplayLoadingOverlay(false);
             toast.success('Deleted successfully')
         }).catch((e) => {
@@ -87,7 +79,7 @@ const ProductsTable = () => {
         const productFormData = new FormData();
 
         Object.keys(e.data).forEach(key => {
-            if (key !== "gallery") {
+            if (key !== "gallery" && key !== "category") {
                 if (Array.isArray(e.data[key])) {
                     e.data[key].forEach(item => {
                         productFormData.append(key, item)
@@ -96,14 +88,15 @@ const ProductsTable = () => {
                 else {
                     productFormData.append(key, e.data[key])
                 }
+
             }
         });
-
+        productFormData.append('category', e.data.category?.categoryName?._id)
         requester.post('/products/addProduct', productFormData).then((res) => {
 
             if (e.data["gallery"]) {
                 const galleryFormData = new FormData();
-                galleryFormData.append("productId", e.data.productId);
+                galleryFormData.append("id", res.data.model._id);
 
                 Object.keys(e.data["gallery"]).forEach(key => {
                     galleryFormData.append("images", e.data["gallery"][key])
@@ -138,7 +131,7 @@ const ProductsTable = () => {
         const productFormData = new FormData();
 
         Object.keys(e.data).forEach(key => {
-            if (key !== "gallery") {
+            if (key !== "gallery" && key !== "category") {
                 if (Array.isArray(e.data[key])) {
                     e.data[key].forEach(item => {
                         productFormData.append(key, item)
@@ -149,13 +142,13 @@ const ProductsTable = () => {
                 }
             }
         });
-
+        productFormData.append('category', (e.data.category?.categoryName?._id || e.data.category?._id))
         productFormData.append("id", e.data["_id"]);
         requester.patch('/products/updateProduct', productFormData).then(() => {
 
             if (e.data["gallery"]) {
                 const galleryFormData = new FormData();
-                galleryFormData.append("productId", e.data.productId);
+                galleryFormData.append("id", res.data.model._id);
 
                 Object.keys(e.data["gallery"]).forEach(key => {
                     galleryFormData.append("images", e.data["gallery"][key])
@@ -210,7 +203,7 @@ const ProductsTable = () => {
             Products Table
             <DataGrid
                 rtlEnabled
-                dataSource={active ? activeProducts : inactiveProducts}
+                dataSource={records}
                 allowColumnReordering={true}
                 allowColumnResizing={true}
                 showBorders={true}
@@ -218,14 +211,13 @@ const ProductsTable = () => {
                 cellHintEnabled={true}
                 wordWrapEnabled={true}
                 rowAlternationEnabled={true}
-                onToolbarPreparing={onToolbarPreparing}
                 onRowRemoved={onRowRemoved}
                 onRowInserted={onRowInserted}
                 onRowUpdated={onRowUpdated}
             >
                 <HeaderFilter visible={true} />
-                <GroupPanel visible={true} />
-                <SearchPanel visible={true} all />
+                <GroupPanel visible={true} emptyPanelText='اسحب عنوان لهنا' />
+                <SearchPanel visible={true} all placeholder='بحث...' />
                 <Grouping autoExpandAll={true} />
                 <Paging defaultPageSize={10} />
                 <Pager
@@ -235,47 +227,53 @@ const ProductsTable = () => {
                     showNavigationButtons={true}
                 />
 
-                <Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} useIcons={true}>
-                    <Popup onContentReady={() => { }} onHidden={() => { }} title="Products" showTitle={true} width={700} height={600} maxHeight={'80%'}>
+                <Editing
+                    mode="popup"
+                    allowUpdating={true}
+                    allowDeleting={true}
+                    allowAdding={true}
+                    useIcons={true}
+                    texts={{
+                        confirmDeleteMessage: 'هل انت متاكد انك تريد مسح هذا النص؟',
+                        saveRowChanges: "حفظ",
+                        cancelRowChanges: "إلغاء",
+                        deleteRow: "مسح",
+                        editRow: "تعديل",
+                        addRow: 'اضف جديد',
+
+                    }}
+                >
+                    <Popup title="Products" showTitle={true} width={700} height={600} maxHeight={'80%'}>
                         <Position my="center" at="center" of={window} />
                     </Popup>
                     <Form>
-                        <Item colSpan="2" dataField="title" alignment={"center"} />
-                        <Item colSpan="2" dataField="title_ar" />
-                        <Item colSpan="2" dataField="superTitle" />
-                        <Item colSpan="2" dataField="superTitle_ar" />
-                        {/* // <Item colSpan="2" dataField="subtitle" /> */}
-                        {/* <Item colSpan="2" dataField="subtitle_ar" /> */}
+                        <Item colSpan="2" dataField="title" alignment={"center"} >
+                            <RequiredRule />
+                        </Item>
+                        <Item colSpan="2" dataField="price" alignment={"center"} />
+                        <Item colSpan="2" dataField="sale" />
+                        <Item colSpan="2" dataField="category.categoryName" alignment={"center"} />
                         <Item colSpan="2" dataField="description" />
-                        <Item colSpan="2" dataField="description_ar" />
                         <Item colSpan="2" dataField="bulletList" />
-                        <Item colSpan="2" dataField="bulletList_ar" />
-                        <Item colSpan="2" dataField="active" dataType='boolean' />
-                        <Item colSpan="2" dataField="productId" />
                         <Item colSpan="2" dataField="productImage" />
                         <Item colSpan="2" dataField="gallery" />
                     </Form>
                 </Editing>
 
-                <Column dataField="title" alignment={"center"} />
-                <Column dataField="title_ar" alignment={"center"} />
-                <Column dataField="active" alignment={"center"} dataType='boolean' />
-                <Column dataField="productId" alignment={"center"} />
-                <Column dataField="heroSectionItem" alignment={"center"} caption="Hero Product" cellRender={renderHeroProductColumn} />
-                <Column dataField="superTitle" alignment={"center"} visible={false} />
-                <Column dataField="superTitle_ar" alignment={"center"} visible={false} />
-                {/* <Column dataField="subtitle"        alignment={"center"} visible={false} /> */}
-                {/* <Column dataField="subtitle_ar"     alignment={"center"} visible={false} /> */}
-                <Column dataField="description" alignment={"center"} visible={false} />
-                <Column dataField="description_ar" alignment={"center"} visible={false} />
-                <Column dataField="_id" alignment={"center"} visible={false} />
-                <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} />
-                <Column dataField="bulletList_ar" alignment={"center"} visible={false} editCellComponent={BulletListEditor} />
-                <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} />
-                <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} />
-                <Column type="buttons" width={110} buttons={['edit', 'delete']} />
+                <Column dataField="title" alignment={"center"} caption='اسم المنتج' />
+                <Column dataField="price" alignment={"center"} caption='سعر المنتج' />
+                <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' />
+                <Column dataField="createdAt" dataType='datetime' alignment={"center"} caption='تاريخ المنتج' />
+                <Column dataField="category.categoryName" alignment={"center"} caption='تصنيف المنتج' allowFiltering={false}>
+                    <Lookup dataSource={categories} displayExpr="categoryName" />
+                </Column>
 
-                <Export enabled={true} />
+                <Column dataField="description" alignment={"center"} visible={false} caption='وصف المنتج' />
+                <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} caption='مميزات المنتج' />
+                <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} caption='صورة المنتج' />
+                <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} caption='صور للمنتج' />
+
+                <Export enabled={true} texts={{ exportAll: 'تنزيل ملف ايكسيل للمنتجات' }} />
 
             </DataGrid>
         </div>
