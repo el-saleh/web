@@ -1,11 +1,12 @@
 import { useEffect, useState, Fragment } from 'react';
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import requester from "../utilities/requester";
 import Layout from "../layout/Layout";
 import CartItem from "../components/CartItem/index";
-import dummy from "../utilities/dummy";
 import CartTotalItem from '../components/CartItem/CartTotalItem';
+import OrderInfo from '../components/orders/OrderInfo';
+import { toast } from "react-toastify";
+import requester from "../utilities/requester";
 function orders({ products }) {
     const [ordersList, setOrdersList] = useState(null)
     const [totalPrice, setTotalPrice] = useState(null)
@@ -23,6 +24,15 @@ function orders({ products }) {
         }
     }
 
+    const cancelOrder = (e) => {
+        requester.delete(`/orders/deleteOrder?orderId=${e.target.id}`).then((res) => {
+            toast("تم إلغاء طلب الشراء بنجاح");
+            fetchUserorders();
+        }).catch(()=>{
+            toast("خطأ : فشل إلغاء طلب الشراء")
+        })
+    }
+
     useEffect(() => {
         fetchUserorders()
     }, []);
@@ -35,7 +45,7 @@ function orders({ products }) {
             <Layout>
                 <div className={"container"} dir="auto">
                     <h3>{"طلبات الشراء"}</h3>
-                    <br />
+
                     {ordersList ?
                         <>
                             {ordersList.length ?
@@ -43,7 +53,7 @@ function orders({ products }) {
                                     {ordersList.map((order, index) => {
                                         return (
                                             <Fragment key={order._id}>
-                                                <h5>{`طلب رقم ${index + 1}  - وقت وتاريخ الطلب : `} <span>{new Date(order.createdAt).toLocaleString()}</span></h5>
+                                                <OrderInfo order={order} index={index + 1} cancelOrderCallback={cancelOrder} />
                                                 <div>
                                                     {order.products.map((product) => {
                                                         return (
@@ -69,23 +79,6 @@ function orders({ products }) {
             </Layout>
         </>
     )
-}
-
-export async function getServerSideProps(context) {
-    const products = dummy.products;
-    if (!products) {
-        return {
-            redirect: {
-                destination: '/404',
-                permanent: false,
-            },
-        }
-    }
-
-    // console.log(product);
-    return {
-        props: { products }, // will be passed to the page component as props
-    }
 }
 
 export default orders;

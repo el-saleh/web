@@ -36,11 +36,11 @@ export default function ProductCard(props) {
                     </Link>
                     {props.sale ?
                         <p className={styles.price}>
-                            <del>{props.price} جنيه</del>
+                            <del>{props.price}  <small>جنيه</small></del>
                             &nbsp;
-                            <span>{props.price - (props.price * (0.01 * props.sale))} جنيه</span></p>
+                            <span>{props.price - (props.price * (0.01 * props.sale))}  <small>جنيه</small></span></p>
                         :
-                        <p className={styles.price}><span>{props.price} جنيه</span></p>
+                        <p className={styles.price}><span>{props.price}  <small>جنيه</small></span></p>
                     }
                     <button className={styles.addButton} onClick={addToCart}>{"أضف إلى العربة "} &nbsp;<IoCartOutline /></button>
                 </div>

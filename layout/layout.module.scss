@@ -57,6 +57,8 @@
     }
   }
   .searchBox {
+    position: relative;
+    overflow: visible;
     flex-grow: 1;
     display: flex;
     justify-content: space-between;
@@ -64,7 +66,6 @@
     direction: rtl;
     border: 1px solid $primary;
     border-radius: 0.25rem;
-    overflow: hidden;
     margin: 0rem 5%;
     transition: all 0.5s ease;
     @media (min-width: 768px) and (max-width: 1200px) {
@@ -86,7 +87,7 @@
       font-size: 1rem;
       flex-grow: 1;
       @media (min-width: 601px) and (max-width: 900px) {
-        max-width: 8rem;
+        // max-width: 8rem;
       }
     }
 
@@ -94,6 +95,23 @@
       border-radius: 0;
       @media (max-width: 900px) {
         // display: none;
+      }
+    }
+    .searchResultsBoxWrapper {
+      position: absolute;
+      top: 105%;
+      right: 0;
+      left: 0;
+      width: 100%;
+      background-color: $light-grey;
+      border: 1px solid $mid-grey;
+      border-radius: 0.25rem;
+
+      .searchResultsBox {
+        max-height: 66vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0rem 0.4rem;
       }
     }
   }
@@ -398,7 +416,7 @@
         &:not(:last-child) {
           margin-bottom: 1rem;
         }
-        &:hover{
+        &:hover {
           color: $primary;
         }
       }
@@ -406,9 +424,11 @@
   }
 }
 
-
-
 @keyframes slideFromRight {
-  0% {transform: translateX(100%)}
-  100% {transform: translateX(0%)}
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }

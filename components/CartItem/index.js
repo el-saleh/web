@@ -50,9 +50,9 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
                         <p className={styles.price}>
                             <del>{data.product.price} جنيه</del>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>{data.product.price - (data.product.price * (0.01 * data.product.sale))} جنيه</span></p>
+                            <span>{data.product.price - (data.product.price * (0.01 * data.product.sale))}  <small>جنيه</small></span></p>
                         :
-                        <p className={styles.price}><span>{data.product.price} جنيه</span></p>
+                        <p className={styles.price}><span>{data.product.price}  <small>جنيه</small></span></p>
                     }
 
                 </div>
@@ -63,7 +63,7 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
                         <span className={styles.qty}>{quantity}</span>
                         <PrimaryButton id={-1} onClick={updateQty} disabled={!(quantity - 1) || isButtonsDisabled}>-</PrimaryButton>
                     </div>
-                    <PrimaryButton id="delete" onClick={removeProduct} ><AiFillDelete />{"إزالة"}</PrimaryButton>
+                    <PrimaryButton id="delete" onClick={removeProduct} ><AiFillDelete />&nbsp;{"إزالة"}</PrimaryButton>
                 </div>
                 }
 

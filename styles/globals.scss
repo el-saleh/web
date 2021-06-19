@@ -8,6 +8,25 @@
   src: url("./times.ttf");
 }
 
+::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $mid-grey; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary-dark; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary; 
+}
+
 html {
   font-size: 16px;
   font-family: $mainFontFamily;

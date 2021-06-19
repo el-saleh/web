@@ -8,13 +8,14 @@ import { FaPhoneAlt, FaSearch, FaUserCircle, FaShoppingCart, FaFacebookSquare } 
 import { IoMail, IoMenu } from "react-icons/io5"
 import { Control } from '../utilities/Contexts'
 import requester from "../utilities/requester";
-import dummy from "../utilities/dummy";
+import SearchProductListItem from "./SearchProductListItem";
 
 const Header = () => {
   const router = useRouter();
   const gstate = useContext(Control);
   const [categoriesList, setCategoriesList] = useState([]);
   const [showSidemenu, setShowSidemenu] = useState(false);
+  const [showResultsBox, setShowResultsBox] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   let timeId = useRef(0);
@@ -26,6 +27,7 @@ const Header = () => {
     }).catch((err) => {
       console.log("Header.js : failed to fetch categories", err);
     });
+
   }, [])
 
   const onSignIn = () => {
@@ -59,13 +61,19 @@ const Header = () => {
   }
 
 
-  const searchInputFoucusHandler = () =>{
-    console.log("search input focused")
+  const searchInputFoucusHandler = () => {
+    if (searchResults?.length) {
+      setShowResultsBox(true);
+    }
+  }
+
+  const searchInputBlurHandler = (e) => {
+
   }
 
   useEffect(() => {
     const query = searchQuery.trim();
-    if (query.length > 2) {
+    if (query.length >= 2) {
 
       if (timeId.current) {
         // to debounce the timed out [suggestions and jobs results] fetching function (if any)
@@ -75,15 +83,24 @@ const Header = () => {
 
       // set a new timed out [suggestions and jobs results] fetching function with the new "searcQuery"
       timeId.current = window.setTimeout(() => {
-       requester.get(`/products/search?searchQuery=${query}`).then((res)=>{
-         console.log(res.data.model);
-         setSearchResults(res.data.model);
-       })
+        requester.get(`/products/search?searchQuery=${query}`).then((res) => {
+          if (res.data.model.length) {
+            setSearchResults(res.data.model);
+            setShowResultsBox(true);
+          } else {
+            setSearchResults(null);
+            setShowResultsBox(true);
+          }
+        }).catch((err) => {
+          console.log("search request failed", err)
+        })
       }, 1000)
     }
-    else if (query.length <= 2 && query.length > 0 && timeId.current) {
+    else if (query.length < 2) {
       // to debounce the timed out [suggestions and jobs results] fetching function (if any)
       // console.log("clearing time out : search query length < 3");
+      setSearchResults([]);
+      setShowResultsBox(false);
       window.clearTimeout(timeId.current);
       timeId.current = 0;
     }
@@ -162,17 +179,36 @@ const Header = () => {
 
         {/* normal tap form in desktop screen only */}
         <form
-          onSubmit={(e) => { e.preventDefault(); console.log("search submit") }}
+          onSubmit={(e) => { e.preventDefault() }}
           className={styles.searchBox + " hiddenInMobile"}
         >
           <input
-            type="text"
+            type="search"
             placeholder={"بتدور على ايه؟"}
             value={searchQuery}
             onChange={searchTermHandler}
             onFocus={searchInputFoucusHandler}
+            onBlur={searchInputBlurHandler}
           />
           <PrimaryButton><FaSearch /></PrimaryButton>
+          {showResultsBox && <>
+            <div className={styles.searchResultsBoxWrapper}>
+              <div className={styles.searchResultsBox}>
+                {searchResults ?
+                  <>
+                    {searchResults.map((resultProduct) => {
+                      return (
+                        <SearchProductListItem key={resultProduct._id} resultProduct={resultProduct} />
+                      )
+                    })}
+                  </>
+                  :
+                  <p>{"لا يوجد نتائج"}</p>
+                }
+              </div>
+            </div>
+          </>
+          }
         </form>
 
 
@@ -210,19 +246,38 @@ const Header = () => {
 
       {/* lower tap form in mobile screen only */}
       <form
-        onSubmit={(e) => { e.preventDefault; console.log("search submit") }}
+        onSubmit={(e) => { e.preventDefault() }}
         className={styles.searchBox + " hiddenInDesktop"} style={{
           margin: "0rem 1rem 0.5rem"
         }}
       >
         <input
-          type="text"
+          type="search"
           placeholder={"بتدور على ايه؟"}
           value={searchQuery}
           onChange={searchTermHandler}
           onFocus={searchInputFoucusHandler}
+          onBlur={searchInputBlurHandler}
         />
         <PrimaryButton><FaSearch /></PrimaryButton>
+        {showResultsBox && <>
+          <div className={styles.searchResultsBoxWrapper}>
+            <div className={styles.searchResultsBox}>
+              {searchResults ?
+                <>
+                  {searchResults.map((resultProduct) => {
+                    return (
+                      <SearchProductListItem key={resultProduct._id} resultProduct={resultProduct} />
+                    )
+                  })}
+                </>
+                :
+                <p>{"لا يوجد نتائج"}</p>
+              }
+            </div>
+          </div>
+        </>
+        }
       </form>
 
       {/* side menu in mobile screen only */}

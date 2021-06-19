@@ -38,7 +38,7 @@ const SingleProductSection = (props) => {
             updatdeUserCart(gstate.user._id, props._id, quantity)
             setQuantity(1);
         }
-        else{
+        else {
             toast("ٌقم بتسجيل الدخول أولا")
         }
     }
@@ -165,7 +165,17 @@ const SingleProductSection = (props) => {
                             </Link>
                         </div>
                         <h1 className={styles.title}>{`${props.title}`}</h1>
-                        <p className={styles.price}>{props.price} <small>جنيه</small></p>
+                        <br/>
+                        {props.sale ? <small className={styles.salePatch} >{`خصم ${props.sale}%`}</small> : null}
+                        {props.sale ?
+                            <p className={styles.price}>
+                                <del>{props.price} جنيه</del>
+                                &nbsp;&nbsp;
+                                {props.price - (props.price * (0.01 * props.sale))} <small>جنيه</small>
+                            </p>
+                            :
+                            <p className={styles.price}>{props.price} <small>جنيه</small></p>
+                        }
                         <p className={styles.description}>{props.description}</p>
 
                         <ul>
