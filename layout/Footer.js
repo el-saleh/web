@@ -13,14 +13,7 @@ const Footer = () => {
                 <div className={`container`}>
                     <div className={styles.mainFooterWrapper} dir="auto">
                         <div className={styles.address}>
-                            {/* <div>
-                                <Link href="/">
-                                    <a className={styles.tab}>
-                                        <img className={styles.logoImg} src="/assets/logo2.png" alt="el-saleh" />
-                                    </a>
-                                </Link>
-                            </div> */}
-                            <img className={styles.logoImg} src="/assets/logo2.png" alt="el-saleh" />
+                            {/* <img className={styles.logoImg} src="/assets/logo2.png" alt="el-saleh" /> */}
                             <a className={styles.contactLink} target="_blank" href="https://maps.app.goo.gl/BVpmzwkwmsAthn5B6" rel="noreferrer">
                                 <IoLocationSharp />
                                 &nbsp;
@@ -59,8 +52,7 @@ const Footer = () => {
                         </div>
                         <div className={styles.we + " hiddenInMobile"}>
                             <h4>{"من نحن"}</h4>
-                            <p>{"لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو لابورأس"}</p>
-
+                            <p>{"الصالح لاستيراد وتصدير الادوات المنزلية"}</p>
                         </div>
                     </div>
                 </div>
