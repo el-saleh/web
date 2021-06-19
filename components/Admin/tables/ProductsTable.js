@@ -127,28 +127,32 @@ const ProductsTable = () => {
 
         setDisplayLoadingOverlay(true);
 
-        console.log('edit product', e);
+        console.log('edit product', e.data.productImage?.name);
         const productFormData = new FormData();
 
         Object.keys(e.data).forEach(key => {
-            if (key !== "gallery" && key !== "category") {
+            if (key !== "gallery" && key !== "category" && key !== "productImage") {
                 if (Array.isArray(e.data[key])) {
                     e.data[key].forEach(item => {
                         productFormData.append(key, item)
                     })
                 }
                 else {
-                    productFormData.append(key, e.data[key])
+                    productFormData.append(key, e.data[key]);
                 }
             }
         });
+
+        e.data.productImage?.name && productFormData.append("productImage", e.data.productImage);
         productFormData.append('category', (e.data.category?.categoryName?._id || e.data.category?._id))
         productFormData.append("id", e.data["_id"]);
+
         requester.patch('/products/updateProduct', productFormData).then(() => {
 
             if (e.data["gallery"]) {
+                console.log('edittttttt', e.data);
                 const galleryFormData = new FormData();
-                galleryFormData.append("id", res.data.model._id);
+                galleryFormData.append("id", e.data._id);
 
                 Object.keys(e.data["gallery"]).forEach(key => {
                     galleryFormData.append("images", e.data["gallery"][key])
@@ -248,35 +252,37 @@ const ProductsTable = () => {
                     </Popup>
                     <Form>
                         <Item colSpan="2" dataField="title" alignment={"center"} >
-                            <RequiredRule />
+                            <RequiredRule message='' />
                         </Item>
                         <Item colSpan="2" dataField="price" alignment={"center"} />
                         <Item colSpan="2" dataField="sale" />
                         <Item colSpan="2" dataField="category.categoryName" alignment={"center"} />
-                        <Item colSpan="2" dataField="description" />
-                        <Item colSpan="2" dataField="bulletList" />
-                        <Item colSpan="2" dataField="productImage" />
-                        <Item colSpan="2" dataField="gallery" />
+                        <Item colSpan="2" dataField="videoUrl" />
+                        <Item dataField="description" editorType="dxTextArea" colSpan={2} editorOptions={{ height: 200 }} />
+                    <Item colSpan="2" dataField="bulletList" />
+                    <Item colSpan="2" dataField="productImage" />
+                    <Item colSpan="2" dataField="gallery" />
                     </Form>
                 </Editing>
 
-                <Column dataField="title" alignment={"center"} caption='اسم المنتج' />
-                <Column dataField="price" alignment={"center"} caption='سعر المنتج' />
-                <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' />
-                <Column dataField="createdAt" dataType='datetime' alignment={"center"} caption='تاريخ المنتج' />
-                <Column dataField="category.categoryName" alignment={"center"} caption='تصنيف المنتج' allowFiltering={false}>
-                    <Lookup dataSource={categories} displayExpr="categoryName" />
-                </Column>
+            <Column dataField="title" alignment={"center"} caption='اسم المنتج' />
+            <Column dataField="price" alignment={"center"} caption='سعر المنتج' />
+            <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' />
+            <Column dataField="createdAt" dataType='datetime' alignment={"center"} caption='تاريخ المنتج' />
+            <Column dataField="category.categoryName" alignment={"center"} caption='تصنيف المنتج' allowFiltering={false}>
+                <Lookup dataSource={categories} displayExpr="categoryName" />
+            </Column>
 
-                <Column dataField="description" alignment={"center"} visible={false} caption='وصف المنتج' />
-                <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} caption='مميزات المنتج' />
-                <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} caption='صورة المنتج' />
-                <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} caption='صور للمنتج' />
+            <Column dataField="videoUrl" alignment={"center"} visible={false} caption='فيديو للمنتج' />
+            <Column dataField="description" alignment={"center"} visible={false} caption='وصف المنتج' />
+            <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} caption='مميزات المنتج' />
+            <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} caption='صورة المنتج' />
+            <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} caption='صور للمنتج' />
 
-                <Export enabled={true} texts={{ exportAll: 'تنزيل ملف ايكسيل للمنتجات' }} />
+            <Export enabled={true} texts={{ exportAll: 'تنزيل ملف ايكسيل للمنتجات' }} />
 
             </DataGrid>
-        </div>
+        </div >
     );
 };
 
