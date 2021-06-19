@@ -32,7 +32,7 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
             <div className={styles.imgBox}>
                 <Link href={`/product/${data.product._id}`}>
                     <a>
-                        <img src={data.product.productImage?.imageUrl} alt={data.product.title} />
+                        <img src={data?.product?.productImage?.imageUrl} alt={data?.product?.title} />
                     </a>
                 </Link>
             </div>
@@ -41,12 +41,12 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
                     <h4>
                         <Link href={`/product/${data.product._id}`} >
                             <a>
-                                {data.product.title}
+                                {data?.product?.title}
                             </a>
                         </Link>
                     </h4>
 
-                    {data.product.sale ?
+                    {data?.product.sale ?
                         <p className={styles.price}>
                             <del>{data.product.price} جنيه</del>
                             &nbsp;&nbsp;&nbsp;&nbsp;
