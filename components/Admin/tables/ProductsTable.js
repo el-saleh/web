@@ -219,7 +219,7 @@ const ProductsTable = () => {
                 <GroupPanel visible={true} emptyPanelText='اسحب عنوان لهنا' />
                 <SearchPanel visible={true} all placeholder='بحث...' />
                 <Grouping autoExpandAll={true} />
-                <Paging defaultPageSize={10} />
+                <Paging defaultPageSize={20} />
                 <Pager
                     showPageSizeSelector={true}
                     allowedPageSizes={[5, 10, 20]}
