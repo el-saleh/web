@@ -3,14 +3,11 @@ import { DisplayLoadingOverlayHandler } from "../../../utilities/Contexts";
 import { toast } from 'react-toastify';
 import styles from "./dashboard.module.scss";
 import requester from "../../../utilities/requester";
-import BulletListEditor from "./BulletListEditor";
-import ProductImageEditor from "./ProductImageEditor";
-import ProductGalleryEditor from "./ProductGalleryEditor";
+import CartItem from "../../CartItem/index";
 import DataGrid, {
     Column,
     Editing,
-    Popup,
-    Position,
+    Lookup,
     Form,
     Pager,
     Paging,
@@ -18,6 +15,7 @@ import DataGrid, {
     GroupPanel,
     SearchPanel,
     HeaderFilter,
+    MasterDetail,
     Export,
 } from 'devextreme-react/data-grid';
 import { Item } from 'devextreme-react/form';
@@ -27,14 +25,17 @@ import 'devextreme-react/text-area';
 
 const OrdersTable = () => {
 
+    const [records, setRecords] = useState([]);
+    const [orderStatuses,] = useState([
+        { name: "طلب مسجل ولم يتم التواصل ", id: 1 },
+        { name: "طلب مسجل و تم التواصل", id: 2 },
+    ])
+
     useEffect(() => {
         setDisplayLoadingOverlay(true);
-        fetchProducts();
+        fetchRecords();
     }, [])
 
-    const [active, setActive] = useState(true);
-    const [activeProducts, setActiveProducts] = useState([]);
-    const [inactiveProducts, setInactiveProducts] = useState([])
     const setDisplayLoadingOverlay = useContext(DisplayLoadingOverlayHandler);
 
     const onToolbarPreparing = (e) => {
@@ -43,19 +44,22 @@ const OrdersTable = () => {
         toolbarItems.unshift({
             widget: 'dxButton',
             options: {
-                icon: active ? 'check' : 'check',
-                text: `${active ? 'Show inactive Products ' : 'Show active products'}`,
-                onClick: () => { setActive(!active) }
+                icon: 'refresh',
+                text: 'refresh',
+                onClick: () => {
+                    setDisplayLoadingOverlay(true);
+                    fetchRecords();
+                }
             },
             location: 'after'
         });
     }
 
-    const fetchProducts = () => {
-        requester.get("/products/allProducts").then((res) => {
+    const fetchRecords = () => {
+        requester.get("/orders/getAllOrders").then((res) => {
             setDisplayLoadingOverlay(false);
-            console.table("All products", res.data);
-            setActiveProducts(res.data.model);
+            console.table("All orders", res.data.model);
+            setRecords(res.data.model);
 
         }).catch(errorHandler)
     }
@@ -67,150 +71,60 @@ const OrdersTable = () => {
     }
 
     const onRowRemoved = (e) => {
-        setDisplayLoadingOverlay(true);
         console.log(e);
-        let { productId } = e.data;
-        requester.delete(`/products/deleteProduct/${productId}`).then((res) => {
+        setDisplayLoadingOverlay(true);
+        requester.delete(`/orders/deleteOrder?orderId=${e.data._id}`).then((res) => {
+            fetchRecords();
             setDisplayLoadingOverlay(false);
-            toast.success('Deleted successfully')
+            toast.success('تم حذف طلب الشراء بنجاح')
         }).catch((e) => {
-            fetchProducts();
+            fetchRecords();
             errorHandler(e);
         })
     }
 
-    const onRowInserted = (e) => {
-
-        setDisplayLoadingOverlay(true);
-
-        console.log('add product ', e.data);
-        const productFormData = new FormData();
-
-        Object.keys(e.data).forEach(key => {
-            if (key !== "gallery") {
-                if (Array.isArray(e.data[key])) {
-                    e.data[key].forEach(item => {
-                        productFormData.append(key, item)
-                    })
-                }
-                else {
-                    productFormData.append(key, e.data[key])
-                }
-            }
-        });
-
-        requester.post('/products/addProduct', productFormData).then((res) => {
-
-            if (e.data["gallery"]) {
-                const galleryFormData = new FormData();
-                galleryFormData.append("productId", e.data.productId);
-
-                Object.keys(e.data["gallery"]).forEach(key => {
-                    galleryFormData.append("images", e.data["gallery"][key])
-                });
-
-                requester.post('/products/addImageProductGallery', galleryFormData).then(() => {
-                    setDisplayLoadingOverlay(false);
-                    toast.success('Added product info & images successfully');
-                    fetchProducts();
-                }).catch((e) => {
-                    errorHandler(e, "Error Occurred in uploading images");
-                    fetchProducts();
-                })
-            }
-            else {
-                setDisplayLoadingOverlay(false);
-                toast.success('Added product info successfully');
-                fetchProducts();
-            }
-
-        }).catch((e) => {
-            fetchProducts();
-            errorHandler(e);
-        })
-    }
-
+ 
     const onRowUpdated = (e) => {
-
+        console.log('edit order', e);
         setDisplayLoadingOverlay(true);
 
-        console.log('edit product', e);
-        const productFormData = new FormData();
-
-        Object.keys(e.data).forEach(key => {
-            if (key !== "gallery") {
-                if (Array.isArray(e.data[key])) {
-                    e.data[key].forEach(item => {
-                        productFormData.append(key, item)
-                    })
-                }
-                else {
-                    productFormData.append(key, e.data[key])
-                }
-            }
-        });
-
-        productFormData.append("id", e.data["_id"]);
-        requester.patch('/products/updateProduct', productFormData).then(() => {
-
-            if (e.data["gallery"]) {
-                const galleryFormData = new FormData();
-                galleryFormData.append("productId", e.data.productId);
-
-                Object.keys(e.data["gallery"]).forEach(key => {
-                    galleryFormData.append("images", e.data["gallery"][key])
-                });
-
-                requester.post('/products/addImageProductGallery', galleryFormData).then(() => {
-                    setDisplayLoadingOverlay(false);
-                    toast.success('updated product info & images successfully');
-                    fetchProducts()
-                }).catch((e) => {
-                    errorHandler(e, "Error Occurred in uploading images");
-                    fetchProducts();
-                })
-            }
-            else {
-                setDisplayLoadingOverlay(false);
-                toast.success('updated product info successfully');
-                fetchProducts();
-            }
-
+        requester.patch("/orders/updateOrder", {
+            orderId :  e.data._id,
+            orderStatus : e.data.orderStatus
+        }).then((res)=>{
+            setDisplayLoadingOverlay(false);
+            fetchRecords();
+            toast("تم تحديث طلب الشراء بنجاح");
         }).catch((e) => {
-            fetchProducts();
+            fetchRecords();
             errorHandler(e);
         })
+
     }
 
-    const renderHeroProductColumn = (rowData) => {
 
-        let clickHandler = () => {
-            setDisplayLoadingOverlay(true);
-            console.log("add to hero section data ", rowData.data.productId)
-            requester.patch(`/products/addHeroSecProduct/${rowData.data.productId}`)
-                .then((response) => {
-                    setDisplayLoadingOverlay(false);
-                    toast.success('Updated successfully');
-                    fetchProducts();
-                })
-                .catch((e) => {
-                    setDisplayLoadingOverlay(false);
-                    errorHandler(e)
-                    fetchProducts();
-                })
-        }
-
-        return (
-            <span className={styles.fakelink} onClick={clickHandler}>{rowData.data.heroSectionItem ? 'Remove' : 'Add'}</span>
+    const renderMasterDetail = (e) => {
+        console.log(e);
+        return(
+            <>
+            {e.data.products.map((item)=>{
+                return(
+                    <div key={item.product._id}>
+                       <CartItem data={item} orderItem />
+                    </div>
+                )
+            })}
+            </>
         )
     }
+
 
     return (
         <div>
             Orders Table
             <DataGrid
                 rtlEnabled
-                dataSource={active ? activeProducts : inactiveProducts}
+                dataSource={records}
                 allowColumnReordering={true}
                 allowColumnResizing={true}
                 showBorders={true}
@@ -220,60 +134,34 @@ const OrdersTable = () => {
                 rowAlternationEnabled={true}
                 onToolbarPreparing={onToolbarPreparing}
                 onRowRemoved={onRowRemoved}
-                onRowInserted={onRowInserted}
                 onRowUpdated={onRowUpdated}
             >
                 <HeaderFilter visible={true} />
                 <GroupPanel visible={true} />
                 <SearchPanel visible={true} all />
                 <Grouping autoExpandAll={true} />
-                <Paging defaultPageSize={10} />
+                <Paging defaultPageSize={25} />
                 <Pager
                     showPageSizeSelector={true}
-                    allowedPageSizes={[5, 10, 20]}
+                    allowedPageSizes={[10, 25, 50]}
                     showInfo={true}
                     showNavigationButtons={true}
                 />
 
-                <Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} useIcons={true}>
-                    <Popup onContentReady={() => { }} onHidden={() => { }} title="Products" showTitle={true} width={700} height={600} maxHeight={'80%'}>
-                        <Position my="center" at="center" of={window} />
-                    </Popup>
+                <Editing mode="popup" allowUpdating={true} allowDeleting={true} useIcons={true}>
                     <Form>
-                        <Item colSpan="2" dataField="title" alignment={"center"} />
-                        <Item colSpan="2" dataField="title_ar" />
-                        <Item colSpan="2" dataField="superTitle" />
-                        <Item colSpan="2" dataField="superTitle_ar" />
-                        {/* // <Item colSpan="2" dataField="subtitle" /> */}
-                        {/* <Item colSpan="2" dataField="subtitle_ar" /> */}
-                        <Item colSpan="2" dataField="description" />
-                        <Item colSpan="2" dataField="description_ar" />
-                        <Item colSpan="2" dataField="bulletList" />
-                        <Item colSpan="2" dataField="bulletList_ar" />
-                        <Item colSpan="2" dataField="active" dataType='boolean' />
-                        <Item colSpan="2" dataField="productId" />
-                        <Item colSpan="2" dataField="productImage" />
-                        <Item colSpan="2" dataField="gallery" />
+                        <Item dataField="orderStatus" />
                     </Form>
                 </Editing>
 
-                <Column dataField="title" alignment={"center"} />
-                <Column dataField="title_ar" alignment={"center"} />
-                <Column dataField="active" alignment={"center"} dataType='boolean' />
-                <Column dataField="productId" alignment={"center"} />
-                <Column dataField="heroSectionItem" alignment={"center"} caption="Hero Product" cellRender={renderHeroProductColumn} />
-                <Column dataField="superTitle" alignment={"center"} visible={false} />
-                <Column dataField="superTitle_ar" alignment={"center"} visible={false} />
-                {/* <Column dataField="subtitle"        alignment={"center"} visible={false} /> */}
-                {/* <Column dataField="subtitle_ar"     alignment={"center"} visible={false} /> */}
-                <Column dataField="description" alignment={"center"} visible={false} />
-                <Column dataField="description_ar" alignment={"center"} visible={false} />
-                <Column dataField="_id" alignment={"center"} visible={false} />
-                <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} />
-                <Column dataField="bulletList_ar" alignment={"center"} visible={false} editCellComponent={BulletListEditor} />
-                <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} />
-                <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} />
-                <Column type="buttons" width={110} buttons={['edit', 'delete']} />
+                <Column dataField="user.name" alignment={"center"} />
+                <Column dataField="user.phoneNumber" alignment={"center"} />
+                <Column dataField="createdAt" alignment={"center"} dataType='datetime' />
+                <Column dataField="total" alignment={"center"} />
+                <Column dataField="orderStatus" alignment={"center"}>
+                    <Lookup dataSource={orderStatuses} valueExpr="id" displayExpr="name" />
+                </Column>
+                <MasterDetail enabled={true} render={renderMasterDetail} />
 
                 <Export enabled={true} />
 
