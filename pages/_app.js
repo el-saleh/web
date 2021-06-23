@@ -19,8 +19,7 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 
 //  component and stylign for nprogress bar
-import "nprogress/nprogress.css";
-import { Button } from 'devextreme-react/autocomplete';
+import "../styles/nprogress.css";
 
 const TopProgressBar = dynamic(
   () => {
