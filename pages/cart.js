@@ -9,6 +9,7 @@ import requester from "../utilities/requester";
 import { Control } from '../utilities/Contexts';
 
 function Cart() {
+
     const gstate = useContext(Control);
     const [cart, setCart] = useState(null);
     const [totalPrice, setTotalPrice] = useState(null)
@@ -20,6 +21,8 @@ function Cart() {
             requester.get(`/cart?id=${JSON.parse(userData)._id}`).then((res) => {
                 setCart(res.data.model.cart);
                 setTotalPrice(res.data.model.total)
+            }).catch(() => {
+
             })
         }
         else {
@@ -28,7 +31,7 @@ function Cart() {
     }
 
     const removeProduct = (productId) => {
-        return () => { removeFromUserCart(gstate.user._id, productId, fetchUserCart) }
+        return () => { removeFromUserCart(gstate?.user?._id, productId, fetchUserCart) }
     }
 
 
@@ -50,14 +53,16 @@ function Cart() {
                             {cart.length ?
                                 <div>
                                     {cart.map((item) => {
-                                        return (
-                                            <CartItem
-                                                key={item.product._id}
-                                                data={item}
-                                                removeProduct={removeProduct(item.product._id)}
-                                                fetchUserCart={fetchUserCart}
-                                            />
-                                        )
+                                        if (item?.product) {
+                                            return (
+                                                <CartItem
+                                                    key={item?.product?._id || Math.random()}
+                                                    data={item}
+                                                    removeProduct={removeProduct(item?.product?._id)}
+                                                    fetchUserCart={fetchUserCart}
+                                                />
+                                            )
+                                        }
                                     })}
                                     <CartTotalItem totalPrice={totalPrice} fetchUserCart={fetchUserCart} />
                                 </div>
