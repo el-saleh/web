@@ -27,29 +27,35 @@ const Footer = () => {
                             </iframe>
 
                         </div>
+
+
                         <div className={styles.contacts}>
-                            <h4>{"تواصل معنا"}</h4>
-                            <a className={styles.contactLink} target="_blank" href="tel:+201123796666" rel="noreferrer">
-                                <FaPhoneAlt />
-                                &nbsp;
-                                <span className={"hiddenInMobile"}>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
-                            </a>
-                            <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
-                                <RiWhatsappFill />
-                                &nbsp;
-                                <span className={"hiddenInMobile"}>{router.locale === "ar" ? "WhatsApp" : "WhatsApp"}</span>
-                            </a>
-                            <a className={styles.contactLink} target="_blank" href="https://www.facebook.com" rel="noreferrer">
-                                <FaFacebookSquare />
-                                &nbsp;
-                                <span className={"hiddenInMobile"}>{"Facebook"}</span>
-                            </a>
-                            <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
-                                <IoMail />
-                                &nbsp;
-                                <span className={"hiddenInMobile"}>info@elsaleh.com</span>
-                            </a>
+                            <div>
+                                <h4>{"تواصل معنا"}</h4>
+                                <a className={styles.contactLink} target="_blank" href="tel:+201123796666" rel="noreferrer">
+                                    <FaPhoneAlt />
+                                    &nbsp;
+                                    <span className={"hiddenInMobile"}>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
+                                </a>
+                                <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
+                                    <RiWhatsappFill />
+                                    &nbsp;
+                                    <span className={"hiddenInMobile"}>{router.locale === "ar" ? "WhatsApp" : "WhatsApp"}</span>
+                                </a>
+                                <a className={styles.contactLink} target="_blank" href="https://www.facebook.com" rel="noreferrer">
+                                    <FaFacebookSquare />
+                                    &nbsp;
+                                    <span className={"hiddenInMobile"}>{"Facebook"}</span>
+                                </a>
+                                <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.net" rel="noreferrer">
+                                    <IoMail />
+                                    &nbsp;
+                                    <span className={"hiddenInMobile"}>info@elsaleh.net</span>
+                                </a>
+                            </div>
                         </div>
+
+
                         <div className={styles.we + " hiddenInMobile"}>
                             <h4>{"من نحن"}</h4>
                             <p>{"الصالح لاستيراد وتصدير الادوات المنزلية"}</p>
@@ -59,7 +65,7 @@ const Footer = () => {
             </div>
             <div className={styles.miniFooter}>
                 <div className={`container`}>
-                    <span>{`El-Saleh © Copyrights ${new Date().getFullYear()}. All Rights Reserved.`}</span>
+                    <span>{`ElSaleh © Copyrights ${new Date().getFullYear()}. All Rights Reserved.`}</span>
                 </div>
             </div>
         </footer>
