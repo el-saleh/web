@@ -269,7 +269,7 @@ const ProductsTable = () => {
                 </Column>
 
                 <Column dataField="videoUrl" alignment={"center"} visible={false} caption='فيديو للمنتج' />
-                <Column dataField="description" alignment={"center"} visible={false} caption='وصف المنتج' />
+                <Column dataField="description" alignment={"center"} visible={true} caption='وصف المنتج' />
                 <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} caption='مميزات المنتج' />
                 <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} caption='صورة المنتج' />
                 <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} caption='صور للمنتج' />
