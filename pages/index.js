@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Layout from "../layout/Layout";
 import HeroSection from '../components/HeroSection/HeroSection'
 import HomeCategorySection from "../components/HomeCategorySection/HomeCategorySection";
-import Clients from "../components/Clients/Clients";
+import Brands from "../components/Brands/Brands";
 import dummy from "../utilities/dummy";
 import axios from "axios";
 
@@ -37,7 +37,7 @@ function Home(props) {
             <HomeCategorySection key={item.category._id} products={item.data} category={item.category} />
           )
         })}
-        <Clients />
+        <Brands />
       </Layout>
     </>
   )

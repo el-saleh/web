@@ -130,10 +130,10 @@ const Header = () => {
               </a>
             </span>
             <span>
-              <a className={""} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
+              <a className={""} target="_blank" href="mailto:info@el-saleh.net" rel="noreferrer">
                 <IoMail />
                 &nbsp;
-                <span>info@elsaleh.com</span>
+                <span>info@elsaleh.net</span>
               </a>
             </span>
           </div>
@@ -339,10 +339,10 @@ const Header = () => {
               &nbsp;
               <span>{"Facebook"}</span>
             </a>
-            <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.com" rel="noreferrer">
+            <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.net" rel="noreferrer">
               <IoMail />
               &nbsp;
-              <span>info@elsaleh.com</span>
+              <span>info@elsaleh.net</span>
             </a>
           </div>
         </div>
