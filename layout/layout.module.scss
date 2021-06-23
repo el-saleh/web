@@ -224,7 +224,7 @@
 
     .mainFooterWrapper {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: flex-start;
 
       .address,
@@ -232,7 +232,7 @@
       .we,
       .social {
         position: relative;
-        width: 25%;
+        width: 30%;
         .logoImg {
           position: absolute;
           width: 8rem;
@@ -267,6 +267,11 @@
           color: $off-light;
           margin: 0rem;
         }
+      }
+
+      .contacts {
+        display: flex;
+        justify-content: center;
       }
 
       .contactLink {
