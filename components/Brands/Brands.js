@@ -42,7 +42,7 @@ export default function Brands() {
             <Carousel
                 swipeable
                 draggable={false}
-                showDots
+                showDots={false}
                 responsive={responsive}
                 // means to render carousel on server-side.
                 infinite={true}
