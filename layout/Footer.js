@@ -59,7 +59,11 @@ const Footer = () => {
                         <div className={styles.we + " hiddenInMobile"}>
                             <div>
                                 <h4>{"من نحن"}</h4>
-                                <p>{"الصالح لاستيراد وتصدير الادوات المنزلية"}</p>
+                                <p>
+                                    <span>{"الصالح لاستيراد الأدوات المنزلية و البلاستيكية"}</span>
+                                    <br />
+                                    <span>{"وكلاء كبرى الشركات التركية"}</span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -70,7 +74,7 @@ const Footer = () => {
                     <span>{`ElSaleh © Copyrights ${new Date().getFullYear()}. All Rights Reserved.`}</span>
                 </div>
             </div>
-        </footer>
+        </footer >
     );
 };
 
