@@ -27,13 +27,13 @@ export default function aboutus() {
                     <h1>{"من نحن"}</h1>
                     <p> الصالح لاستيراد الأدوات المنزلية والبلاستيكية - وكلاء كبرى الشركات التركية </p>
                     <p>
-                        <span>العنوان: </span>
+                        <b>العنوان: </b>
                         <a target="_blank" href="https://maps.app.goo.gl/BVpmzwkwmsAthn5B6" rel="noreferrer">
                             مول محمد زيدان - شارع أحمد بدوي - السوق التجاري - أبوالنمرس
                         </a>
                     </p>
                     <p>
-                        <span>هاتف: </span>
+                        <b>هاتف: </b>
                         <a target="_blank" href="tel:+201123796666" rel="noreferrer">01123796666</a>
                     </p>
                 </div>
