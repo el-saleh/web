@@ -18,13 +18,13 @@ function product(props) {
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="product" />
-        <meta property="og:url" content={`https://el-saleh.com/product/${id}`} />
+        <meta property="og:url" content={`https://www.elsaleh.net/product/${id}`} />
         <meta property="og:description" content={props.description} />
         <meta property="og:image" content={props.productImage?.imageUrl} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={`https://el-saleh.com/product/${id}`} />
+        <meta property="twitter:url" content={`https://www.elsaleh.net/product/${id}`} />
         <meta property="twitter:description" content={props.description} />
         <meta property="twitter:image" content={props.productImage?.imageUrl} />
       </Head>
