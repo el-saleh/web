@@ -15,6 +15,7 @@ export default function SignUpForm() {
         name: "",
         phoneNumber: "",
         password: "",
+        password2: "",
     }
     const [formInfo, setFromInfo] = useState(initFormInfo);
     const [errors, setErrors] = useState([]);
@@ -55,6 +56,10 @@ export default function SignUpForm() {
         let errorsList = [];
         if (formInfo.name.trim().length < 6) {
             errorsList.push({ message: "اسم المستخدم على الاقل 6 أحرف" })
+        }
+
+        if (formInfo.password !== formInfo.password2) {
+            errorsList.push({ message: "كلمتى السر غير متطابقتين" })
         }
 
         if (formInfo.password.trim().length < 4) {
@@ -133,6 +138,17 @@ export default function SignUpForm() {
                         required
                         onChange={updateFormInfo}
                         value={formInfo.password}
+                    />
+                    <FaEye className={styles.eyeIcon} onClick={togglePaswwordInputtType} />
+                </div>
+                <div style={{ width: "100%", position: "relative" }}>
+                    <input
+                        id="password2"
+                        type={passwordInputType ? "password" : "text"}
+                        placeholder="إعادة كلمة السر"
+                        required
+                        onChange={updateFormInfo}
+                        value={formInfo.password2}
                     />
                     <FaEye className={styles.eyeIcon} onClick={togglePaswwordInputtType} />
                 </div>

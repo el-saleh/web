@@ -2,7 +2,7 @@ import styles from "./layout.module.scss";
 import Link from 'next/link';
 import { useRouter } from "next/router";
 import { RiWhatsappFill } from "react-icons/ri";
-import { FaPhoneAlt } from 'react-icons/fa';
+import { FaPhoneAlt, FaTelegram } from 'react-icons/fa';
 import { IoMail, IoLocationSharp } from "react-icons/io5"
 import { FaFacebookSquare } from "react-icons/fa";
 const Footer = () => {
@@ -42,6 +42,11 @@ const Footer = () => {
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>{router.locale === "ar" ? "WhatsApp" : "WhatsApp"}</span>
                                 </a>
+                                <a className={styles.contactLink} target="_blank" href="https://t.me/Elsalehforimportandexport" rel="noreferrer">
+                                    <FaTelegram />
+                                    &nbsp;
+                                    <span className={"hiddenInMobile"}>{"Telegram"}</span>
+                                </a>
                                 <a className={styles.contactLink} target="_blank" href="https://www.facebook.com" rel="noreferrer">
                                     <FaFacebookSquare />
                                     &nbsp;
@@ -59,11 +64,7 @@ const Footer = () => {
                         <div className={styles.we + " hiddenInMobile"}>
                             <div>
                                 <h4>{"من نحن"}</h4>
-                                <p>
-                                    <span>{"الصالح لاستيراد الأدوات المنزلية و البلاستيكية"}</span>
-                                    <br />
-                                    <span>{"وكلاء كبرى الشركات التركية"}</span>
-                                </p>
+                                <p> الصالح لاستيراد الأدوات المنزلية والبلاستيكية - وكلاء كبرى الشركات التركية </p>
                             </div>
                         </div>
                     </div>
