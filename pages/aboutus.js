@@ -25,10 +25,16 @@ export default function aboutus() {
             <Layout>
                 <div className={`container`} dir="auto">
                     <h1>{"من نحن"}</h1>
+                    <p> الصالح لاستيراد الأدوات المنزلية والبلاستيكية - وكلاء كبرى الشركات التركية </p>
                     <p>
-                        <span>{"الصالح لاستيراد الأدوات المنزلية و البلاستيكية"}</span>
-                        <br/>
-                        <span>{"وكلاء كبرى الشركات التركية"}</span>
+                        <span>العنوان: </span>
+                        <a target="_blank" href="https://maps.app.goo.gl/BVpmzwkwmsAthn5B6" rel="noreferrer">
+                            مول محمد زيدان - شارع أحمد بدوي - السوق التجاري - أبوالنمرس
+                        </a>
+                    </p>
+                    <p>
+                        <span>هاتف: </span>
+                        <a target="_blank" href="tel:+201123796666" rel="noreferrer">01123796666</a>
                     </p>
                 </div>
             </Layout>
