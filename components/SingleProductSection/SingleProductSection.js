@@ -184,7 +184,7 @@ const SingleProductSection = (props) => {
                             {props.bulletList?.map((listItem, idx) => {
                                 if (!!listItem) {
                                     return (
-                                        <li key={idx}><IoCheckmark />&nbsp;{"مميزات المنتج"}</li>
+                                        <li key={idx}><IoCheckmark />&nbsp;{listItem}</li>
                                     )
                                 }
                             }) || []}
