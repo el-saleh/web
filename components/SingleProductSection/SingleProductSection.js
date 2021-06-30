@@ -171,12 +171,12 @@ const SingleProductSection = (props) => {
                         {props.sale ? <small className={styles.salePatch} >{`خصم ${props.sale}%`}</small> : null}
                         {props.sale ?
                             <p className={styles.price}>
-                                <del>{props.price} جنيه</del>
+                                <del>{props.price.toFixed(2)} جنيه</del>
                                 &nbsp;&nbsp;
-                                {props.price - (props.price * (0.01 * props.sale))} <small>جنيه</small>
+                                {(props.price - (props.price * (0.01 * props.sale)).toFixed(2))} <small>جنيه</small>
                             </p>
                             :
-                            <p className={styles.price}>{props.price} <small>جنيه</small></p>
+                            <p className={styles.price}>{props.price.toFixed(2)} <small>جنيه</small></p>
                         }
                         <p className={styles.description}>{props.description}</p>
 
