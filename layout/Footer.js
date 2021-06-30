@@ -37,7 +37,7 @@ const Footer = () => {
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
                                 </a>
-                                <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
+                                <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201123796666" rel="noreferrer">
                                     <RiWhatsappFill />
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>{router.locale === "ar" ? "WhatsApp" : "WhatsApp"}</span>
@@ -47,7 +47,7 @@ const Footer = () => {
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>{"Telegram"}</span>
                                 </a>
-                                <a className={styles.contactLink} target="_blank" href="https://www.facebook.com" rel="noreferrer">
+                                <a className={styles.contactLink} target="_blank" href="https://www.facebook.com/ElsalehforImportAndExsport/" rel="noreferrer">
                                     <FaFacebookSquare />
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>{"Facebook"}</span>

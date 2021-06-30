@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styles from "./layout.module.scss";
 import PrimaryButton from '../components/Button/PrimaryButton';
 import { RiWhatsappFill, RiCloseLine } from "react-icons/ri/";
-import { FaPhoneAlt, FaSearch, FaUserCircle, FaShoppingCart, FaFacebookSquare } from 'react-icons/fa';
+import { FaPhoneAlt, FaSearch, FaUserCircle, FaShoppingCart, FaFacebookSquare, FaTelegram } from 'react-icons/fa';
 import { IoMail, IoMenu } from "react-icons/io5"
 import { Control } from '../utilities/Contexts'
 import requester from "../utilities/requester";
@@ -329,12 +329,17 @@ const Header = () => {
               &nbsp;
               <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
             </a>
-            <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201099999999" rel="noreferrer">
+            <a className={styles.whatsapp} target="_blank" href="https://api.whatsapp.com/send?phone=201123796666" rel="noreferrer">
               <RiWhatsappFill />
               &nbsp;
               <span>{router.locale === "ar" ? "WhatsApp" : "WhatsApp"}</span>
             </a>
-            <a className={styles.contactLink} target="_blank" href="https://www.facebook.com" rel="noreferrer">
+            <a className={styles.contactLink} target="_blank" href="https://t.me/Elsalehforimportandexport" rel="noreferrer">
+              <FaTelegram />
+              &nbsp;
+              <span>{"Telegram"}</span>
+            </a>
+            <a className={styles.contactLink} target="_blank" href="https://www.facebook.com/ElsalehforImportAndExsport/" rel="noreferrer">
               <FaFacebookSquare />
               &nbsp;
               <span>{"Facebook"}</span>
