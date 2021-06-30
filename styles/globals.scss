@@ -42,7 +42,6 @@ html {
 
 body {
   margin: 0rem;
-  zoom: 90%;
 }
 
 .loader {
@@ -74,6 +73,9 @@ body {
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
+}
+header, footer, main{
+  zoom: 90%;
 }
 
 .main {
