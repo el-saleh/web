@@ -74,7 +74,13 @@ body {
   justify-content: space-between;
   min-height: 100vh;
 }
-header, footer, main{
+header{
+  zoom: 100%;
+}
+footer{
+  zoom: 90%;
+}
+main{
   zoom: 90%;
 }
 
