@@ -4,6 +4,7 @@ import { FaEye } from 'react-icons/fa';
 import { Control } from '../../utilities/Contexts';
 import styles from "./overlay.module.scss";
 import requester from '../../utilities/requester';
+import firebase from "../../utilities/firebase";
 import { toast } from "react-toastify";
 var jwt = require('jsonwebtoken');
 
