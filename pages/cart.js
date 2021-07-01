@@ -43,7 +43,7 @@ function Cart() {
     return (
         <>
             <Head>
-                <title>{"El-Saleh | عربة التسوق"}</title>
+                <title>{"elsaleh | عربة التسوق"}</title>
             </Head>
             <Layout>
                 <div className={"container"} dir="auto">

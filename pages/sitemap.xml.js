@@ -1,30 +1,49 @@
 import React from 'react';
 import requester from "../utilities/requester"
 
-const createSitemap = (products) => `<?xml version="1.0" encoding="UTF-8"?>
+const createSitemap = (categories, products) => {
+    return `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-        ${products
-        .map(({ productId }) => {
-            return `
+        <url>
+            <loc>https://www.elsaleh.net</loc>
+        </url>
+        <url>
+            <loc>https://www.elsaleh.net/aboutus</loc>
+        </url>
+        <url>
+            <loc>https://www.elsaleh.net/cart</loc>
+        </url>
+        <url>
+            <loc>https://www.elsaleh.net/orders</loc>
+        </url>
+        
+        ${categories.map((category) => {
+        return `
+                <url>
+                    <loc>https://www.elsaleh.net/category/${category._id}</loc>
+                </url>
+            `;
+        }).join('')}
+    
+        ${products.map((product) => {
+        return `
                     <url>
-                        <loc>${`https://aboulazm.com/product/${productId}`}</loc>
-                    </url>
-                    <url>
-                        <loc>${`https://aboulazm.com/ar/product/${productId}`}</loc>
+                        <loc>https://www.elsaleh.net/product/${product._id}</loc>
                     </url>
                 `;
-        })
-        .join('')}
-        
+        }).join('')}
+
     </urlset>
-    `;
+    `};
 
 class Sitemap extends React.Component {
     static async getInitialProps({ res }) {
-        const product_en = await requester.get(`/products/activeProducts/en`).catch(() => { });
+        console.log("sitemap")
+        const categories = await requester.get(`/categories/allCategories`).catch(() => { });
+        const products = await requester.get(`/products/allProducts`).catch(() => { });
+
         res.setHeader('Content-Type', 'text/xml');
-        // console.log(product_en.data);
-        res.write(createSitemap(product_en.data));
+        res.write(createSitemap(categories.data.model, products.data.model));
         res.end();
     }
 }
