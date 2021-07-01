@@ -130,7 +130,7 @@ const Header = () => {
               </a>
             </span>
             <span>
-              <a className={""} target="_blank" href="mailto:info@el-saleh.net" rel="noreferrer">
+              <a className={""} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
                 <IoMail />
                 &nbsp;
                 <span>info@elsaleh.net</span>
@@ -146,7 +146,7 @@ const Header = () => {
         <div className={styles.logoWrapper}>
           <Link href="/">
             <a className={styles.tab}>
-              <img className={styles.logoImg} src="/assets/logo2.png" alt="el-saleh" />
+              <img className={styles.logoImg} src="/assets/logo2.png" alt="elsaleh" />
             </a>
           </Link>
           <IoMenu className="hiddenInDesktop" onClick={() => { sidemenuHandler("menu") }} />
@@ -292,7 +292,7 @@ const Header = () => {
 
           <div className={styles.sidemenu_header}>
             <RiCloseLine onClick={() => { sidemenuHandler("close", false) }} />
-            <img className={styles.sidemenu_logo} src="/assets/logo2.png" alt="el-saleh" />
+            <img className={styles.sidemenu_logo} src="/assets/logo2.png" alt="elsaleh" />
           </div>
 
           <div className={styles.sidemenu_section}>
@@ -344,7 +344,7 @@ const Header = () => {
               &nbsp;
               <span>{"Facebook"}</span>
             </a>
-            <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.net" rel="noreferrer">
+            <a className={styles.contactLink} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
               <IoMail />
               &nbsp;
               <span>info@elsaleh.net</span>

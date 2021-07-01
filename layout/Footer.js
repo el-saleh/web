@@ -13,7 +13,7 @@ const Footer = () => {
                 <div className={`container`}>
                     <div className={styles.mainFooterWrapper} dir="auto">
                         <div className={styles.address}>
-                            {/* <img className={styles.logoImg} src="/assets/logo2.png" alt="el-saleh" /> */}
+                            {/* <img className={styles.logoImg} src="/assets/logo2.png" alt="elsaleh" /> */}
                             <a className={styles.contactLink} target="_blank" href="https://maps.app.goo.gl/BVpmzwkwmsAthn5B6" rel="noreferrer">
                                 <IoLocationSharp />
                                 &nbsp;
@@ -52,7 +52,7 @@ const Footer = () => {
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>{"Facebook"}</span>
                                 </a>
-                                <a className={styles.contactLink} target="_blank" href="mailto:info@el-saleh.net" rel="noreferrer">
+                                <a className={styles.contactLink} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
                                     <IoMail />
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>info@elsaleh.net</span>

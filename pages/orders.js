@@ -40,7 +40,7 @@ function orders({ products }) {
     return (
         <>
             <Head>
-                <title>{"El-Saleh | طلبات الشراء"}</title>
+                <title>{"elsaleh | طلبات الشراء"}</title>
             </Head>
             <Layout>
                 <div className={"container"} dir="auto">
