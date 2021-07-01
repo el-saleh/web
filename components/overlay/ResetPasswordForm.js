@@ -36,14 +36,14 @@ export default function ResetPasswordForm() {
         };
     }
 
-    const resetPassowrd = () =>{
+    const resetPassowrd = () => {
         requester.post("/auth/forgetPassword", {
-            phoneNumber : formInfo.phoneNumber,
-            newPassword : formInfo.password
-        }).then(()=>{
+            phoneNumber: formInfo.phoneNumber,
+            newPassword: formInfo.password
+        }).then(() => {
             showSignInForm();
             toast("تمت إعادة تعيين كلمة المرور بنجاح");
-        }).catch(()=>{
+        }).catch(() => {
             setErrors([{ message: "خطأ : فشل تحديث كلمة المرور" }]);
         })
     }
@@ -143,7 +143,9 @@ export default function ResetPasswordForm() {
                     />
                     <FaEye className={styles.eyeIcon} onClick={togglePaswwordInputtType} />
                 </div>
-
+                <br />
+                <div id={"recaptcha"}></div>
+                <br />
                 <PrimaryButton disabled={isButtondisabled} id="submit" type="submit">{"إعادة تعيين"}</PrimaryButton>
                 <div>
                     {errors.map((err, index) => {
@@ -153,7 +155,7 @@ export default function ResetPasswordForm() {
                     })}
                 </div>
                 <p className={styles.alternative}>
-                   {"العودة لتسجيل الدخول"} <span onClick={showSignInForm}>{"تسجيل دخول"}</span>
+                    {"العودة لتسجيل الدخول"} <span onClick={showSignInForm}>{"تسجيل دخول"}</span>
                 </p>
 
             </form>
