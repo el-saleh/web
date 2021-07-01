@@ -232,7 +232,7 @@ const Header = () => {
             :
             <span onClick={onSignIn} tabIndex="0" id="" className={`${styles.dropDownTap}`}>
               <a className={styles.tab}>
-                <span className="hiddenInMobile">تسجيل دخول</span>
+                <span className="">تسجيل دخول</span>
                 &nbsp;
                 {/* <img className={styles.userAvatar} src={"/assets/userAvatar.png"} /> */}
                 <FaUserCircle onClick={() => { console.log("user Icon clicked") }} />

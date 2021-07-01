@@ -44,7 +44,7 @@ export default function SignUpForm() {
         setErrors([]);
         if (vaildateForm()) {
             console.log("form data is valid, starting to verify phone number");
-            authHandler(formInfo.phoneNumber);
+            authHandler(formInfo.phoneNumber, signUp);
         };
     }
 
@@ -79,7 +79,23 @@ export default function SignUpForm() {
         return !errorsList.length
     }
 
-    const authHandler = (phone) => {
+    const signUp = () => {
+        requester.post("/auth/register", formInfo).then((res) => {
+            let { userData } = jwt.decode(res.data.token);
+            console.log(res.data);
+            console.log(userData);
+            gstate.setUser(userData);
+            userData.token = res.data.token;
+            window.localStorage.setItem("userData", JSON.stringify(userData));
+            setIsButtondisabled(false);
+            gstate.setDisplaySignUpForm(false);
+        }).catch((err) => {
+            console.log(err.message);
+            setIsButtondisabled(false);
+        });
+    }
+
+    const authHandler = (phone, callback) => {
         setIsButtondisabled(true);
         let recaptcha = new firebase.auth.RecaptchaVerifier("recaptcha");
         let number = `+2${phone}`;
@@ -90,19 +106,7 @@ export default function SignUpForm() {
                 e.confirm(code).then((res) => {
                     console.log(res);
                     toast("تم التحقق بنجاح من رقم الموبايل");
-                    requester.post("/auth/register", formInfo).then((res) => {
-                        let { userData } = jwt.decode(res.data.token);
-                        console.log(res.data);
-                        console.log(userData);
-                        gstate.setUser(userData);
-                        userData.token = res.data.token;
-                        window.localStorage.setItem("userData", JSON.stringify(userData));
-                        setIsButtondisabled(false);
-                        gstate.setDisplaySignUpForm(false);
-                    }).catch((err) => {
-                        console.log(err.message);
-                        setIsButtondisabled(false);
-                    });
+                    callback();
 
                 }).catch((err) => {
                     console.log(err);
