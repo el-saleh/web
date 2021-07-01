@@ -73,6 +73,11 @@ export default function SignInForm() {
         gstate.setDisplaySignUpForm(true);
     }
 
+    const showResetPasswordForm = () => {
+        gstate.setDisplaySignInForm(false)
+        gstate.setDisplayResetPasswordForm(true);
+    }
+
     const togglePaswwordInputtType = () => {
         setPasswordInputType(!passwordInputType);
     }
@@ -104,6 +109,9 @@ export default function SignInForm() {
                 </div>
                 <p className={styles.alternative}>
                     {"لا تمتلك حساب؟"} <span onClick={showSignUpForm}>{"سـجّـل الأن"}</span>
+                </p>
+                <p className={styles.alternative}>
+                    <span onClick={showResetPasswordForm}>{"نسيت كلمة السر؟"}</span>
                 </p>
             </form>
         </div>
