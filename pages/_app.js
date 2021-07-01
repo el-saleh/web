@@ -5,6 +5,8 @@ import { DisplayLoadingOverlayHandler, Control } from "../utilities/Contexts";
 import AnimationOverlay from '../components/overlay/AnimationOverlay';
 import SignInForm from '../components/overlay/SignInForm';
 import SignUpForm from '../components/overlay/SignUpForm';
+import ResetPasswordForm from '../components/overlay/ResetPasswordForm';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.scss';
@@ -33,11 +35,13 @@ function MyApp({ Component, pageProps }) {
   const [displayLoadingOverlay, setDisplayLoadingOverlay] = useState(false)
   const [displaySignInForm, setDisplaySignInForm] = useState(false)
   const [displaySignUpForm, setDisplaySignUpForm] = useState(false)
+  const [displayResetPasswordForm, setDisplayResetPasswordForm] = useState(false)
   const [user, setUser] = useState(null)
 
   const ControlContextData = {
     setDisplaySignInForm,
     setDisplaySignUpForm,
+    setDisplayResetPasswordForm,
     user,
     setUser
   }
@@ -66,6 +70,7 @@ function MyApp({ Component, pageProps }) {
           </Head>
           {displaySignInForm && <SignInForm />}
           {displaySignUpForm && <SignUpForm />}
+          {displayResetPasswordForm && <ResetPasswordForm />}
           {displayLoadingOverlay && <AnimationOverlay />}
           <TopProgressBar />
           <ToastContainer
