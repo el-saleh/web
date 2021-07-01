@@ -13,7 +13,7 @@ function product(props) {
   return (
     <>
       <Head>
-        <title>{`El-Saleh | ${props.title}`}</title>
+        <title>{`elsaleh | ${props.title}`}</title>
         <meta name="description" content={props.description} />
 
         {/* Open Graph / Facebook */}

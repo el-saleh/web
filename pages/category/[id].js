@@ -63,7 +63,7 @@ function category(props) {
   return (
     <>
       <Head>
-        <title>El-Saleh | {props.category.categoryName}</title>
+        <title>elsaleh | {props.category.categoryName}</title>
         <meta name="description" content={props.category.description} />
 
         {/* Open Graph / Facebook */}
