@@ -170,7 +170,12 @@ const OrdersTable = () => {
                 <Column dataField="user.name" caption="اسم المستخدم" alignment={"center"} />
                 <Column dataField="user.phoneNumber" caption="رقم الموبايل" alignment={"center"} />
                 <Column dataField="createdAt" caption="تاريخ ووقت الطلب" alignment={"center"} dataType='datetime' />
-                <Column dataField="total" caption="المجموع" alignment={"center"} />
+                <Column 
+                    dataField="total" 
+                    caption="المجموع" 
+                    alignment={"center"}
+                    cellRender={e => <>{e.data.total.toFixed(2)}</>} 
+                />
                 <Column dataField="orderStatus" caption="حالة الطلب" alignment={"center"}>
                     <Lookup dataSource={orderStatuses} valueExpr="id" displayExpr="name" />
                 </Column>
