@@ -31,6 +31,7 @@ const items = [
     <div className={styles.imageWrapper}><img src="/assets/brands/brand (7).jpg" /></div>,
     <div className={styles.imageWrapper}><img src="/assets/brands/brand (8).jpg" /></div>,
     <div className={styles.imageWrapper}><img src="/assets/brands/brand (9).jpg" /></div>,
+    <div className={styles.imageWrapper}><img src="/assets/brands/brand (10).jpg" /></div>,
 ]
 
 export default function Brands() {
