@@ -28,7 +28,7 @@ export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetc
         <div className={styles.totalBox}>
             <div>
                 <h4>{"المجموع"}</h4>
-                <p className={styles.price}>{totalPrice.toFixed(2)} <small>{"جنيه"}</small></p>
+                <p className={styles.price}>{totalPrice?.toFixed(2)} <small>{"جنيه"}</small></p>
             </div>
             {!orderItem && <div>
                 <PrimaryButton onClick={placeOrder}>{"إتمام عملية الشراء"}</PrimaryButton>
