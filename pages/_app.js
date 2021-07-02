@@ -58,7 +58,7 @@ function MyApp({ Component, pageProps }) {
       <Control.Provider value={ControlContextData}>
         <div className={"layout"}>
           <Head>
-            {/* <meta name="google-site-verification" content="" /> */}
+            <meta name="google-site-verification" content="uhK_K1ccHxQm1yem5raYFDroWvkMTrfYdSeIkkLQUoM" />
             <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
             <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
             <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
