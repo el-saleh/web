@@ -116,7 +116,11 @@ const CategoriesTable = () => {
     const onRowRemoved = (e) => {
         console.log("delete category ", e);
         setDisplayLoadingOverlay(true);
-        requester.delete(`/categories/deleteCategory/?id=${e.data._id}`).then(() => {
+        requester.delete(`/categories/deleteCategory/?id=${e.data._id}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then(() => {
             setDisplayLoadingOverlay(false);
             toast("category Deleted Sucessfully")
             fetchCategories();

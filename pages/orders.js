@@ -29,7 +29,11 @@ function orders({ products }) {
     }
 
     const cancelOrder = (e) => {
-        requester.delete(`/orders/deleteOrder?orderId=${e.target.id}`).then((res) => {
+        requester.delete(`/orders/deleteOrder?orderId=${e.target.id}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             toast("تم إلغاء طلب الشراء بنجاح");
             fetchUserorders();
         }).catch(() => {

@@ -91,7 +91,11 @@ const ClientMessagesTable = () => {
     const deleteMessage = (e) => {
         console.log("delete message ", e.row.data);
         setDisplayLoadingOverlay(true);
-        requester.delete(`/messages/deleteMessage/${e.row.data._id}`).then(() => {
+        requester.delete(`/messages/deleteMessage/${e.row.data._id}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then(() => {
             setDisplayLoadingOverlay(false);
             toast.success("Deleted Sucessfully")
             fetchMessages();

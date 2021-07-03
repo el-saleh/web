@@ -68,7 +68,11 @@ const ProductsTable = () => {
         setDisplayLoadingOverlay(true);
         console.log(e);
         let { _id } = e.data;
-        requester.delete(`/products/deleteProduct?id=${_id}`).then((res) => {
+        requester.delete(`/products/deleteProduct?id=${_id}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             setDisplayLoadingOverlay(false);
             toast('تم حدف المنتج بنجاح')
         }).catch((e) => {

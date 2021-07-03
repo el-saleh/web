@@ -48,9 +48,9 @@ const UsersTable = () => {
     const fetchRecords = useCallback(() => {
         requester.get("/auth/allUsers", {
             headers: {
-              'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
             }
-          }).then((res) => {
+        }).then((res) => {
             setDisplayLoadingOverlay(false);
             console.table("allCategories", res.data.model);
             setNewRecords(res.data.model);
@@ -64,7 +64,11 @@ const UsersTable = () => {
     const onRowRemoved = (e) => {
         console.log("delete category ", e);
         setDisplayLoadingOverlay(true);
-        requester.delete(`/auth/deleteUser?userId=${e.data._id}`).then(() => {
+        requester.delete(`/auth/deleteUser?userId=${e.data._id}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then(() => {
             setDisplayLoadingOverlay(false);
             toast("تم حدف حساب المستخدم بنجاح")
             fetchRecords();

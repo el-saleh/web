@@ -77,7 +77,11 @@ const OrdersTable = () => {
     const onRowRemoved = (e) => {
         console.log(e);
         setDisplayLoadingOverlay(true);
-        requester.delete(`/orders/deleteOrder?orderId=${e.data._id}`).then((res) => {
+        requester.delete(`/orders/deleteOrder?orderId=${e.data._id}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             fetchRecords();
             setDisplayLoadingOverlay(false);
             toast('تم حذف طلب الشراء بنجاح')
