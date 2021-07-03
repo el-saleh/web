@@ -56,7 +56,11 @@ const OrdersTable = () => {
     }
 
     const fetchRecords = () => {
-        requester.get("/orders/getAllOrders").then((res) => {
+        requester.get("/orders/getAllOrders", {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             setDisplayLoadingOverlay(false);
             console.table("All orders", res.data.model);
             setRecords(res.data.model);
@@ -88,10 +92,18 @@ const OrdersTable = () => {
         console.log('edit order', e);
         setDisplayLoadingOverlay(true);
 
-        requester.patch("/orders/updateOrder", {
-            orderId: e.data._id,
-            orderStatus: e.data.orderStatus
-        }).then((res) => {
+        requester.patch(
+            "/orders/updateOrder",
+            {
+                orderId: e.data._id,
+                orderStatus: e.data.orderStatus
+            },
+            {
+                headers: {
+                    'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                }
+            }
+        ).then((res) => {
             setDisplayLoadingOverlay(false);
             fetchRecords();
             toast("تم تحديث طلب الشراء بنجاح");
@@ -170,11 +182,11 @@ const OrdersTable = () => {
                 <Column dataField="user.name" caption="اسم المستخدم" alignment={"center"} />
                 <Column dataField="user.phoneNumber" caption="رقم الموبايل" alignment={"center"} />
                 <Column dataField="createdAt" caption="تاريخ ووقت الطلب" alignment={"center"} dataType='datetime' />
-                <Column 
-                    dataField="total" 
-                    caption="المجموع" 
+                <Column
+                    dataField="total"
+                    caption="المجموع"
                     alignment={"center"}
-                    cellRender={e => <>{e.data.total.toFixed(2)}</>} 
+                    cellRender={e => <>{e.data.total.toFixed(2)}</>}
                 />
                 <Column dataField="orderStatus" caption="حالة الطلب" alignment={"center"}>
                     <Lookup dataSource={orderStatuses} valueExpr="id" displayExpr="name" />

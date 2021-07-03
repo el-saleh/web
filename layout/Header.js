@@ -21,7 +21,11 @@ const Header = () => {
   let timeId = useRef(0);
 
   useEffect(() => {
-    requester.get("/categories/allCategories").then((res) => {
+    requester.get("/categories/allCategories", {
+      headers: {
+        'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+      }
+    }).then((res) => {
       // console.log(res);
       setCategoriesList(res.data.model);
     }).catch((err) => {
@@ -83,7 +87,11 @@ const Header = () => {
 
       // set a new timed out [suggestions and jobs results] fetching function with the new "searcQuery"
       timeId.current = window.setTimeout(() => {
-        requester.get(`/products/search?searchQuery=${query}`).then((res) => {
+        requester.get(`/products/search?searchQuery=${query}`, {
+          headers: {
+            'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+          }
+        }).then((res) => {
           if (res.data.model.length) {
             setSearchResults(res.data.model);
             setShowResultsBox(true);

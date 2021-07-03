@@ -80,7 +80,11 @@ export default function SignUpForm() {
     }
 
     const signUp = () => {
-        requester.post("/auth/register", formInfo).then((res) => {
+        requester.post("/auth/register", formInfo, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             let { userData } = jwt.decode(res.data.token);
             console.log(res.data);
             console.log(userData);

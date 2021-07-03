@@ -39,26 +39,30 @@ const ConatctUs = () => {
     }
 
 
-    const validateEmailOrPhone =(email, phone)=> {
+    const validateEmailOrPhone = (email, phone) => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const isValidEmail = re.test(String(email).toLowerCase());
         const isValidPhone = phone.length >= 7;
         console.log(isValidEmail, isValidPhone)
-        return (isValidEmail&&isValidPhone)
+        return (isValidEmail && isValidPhone)
     }
 
 
-    const handleSubmit =(e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
         setError(null)
-        if(validateEmailOrPhone(form.email, form.phone)){
-            let payload = {...form, time : Date.now().toString()};
+        if (validateEmailOrPhone(form.email, form.phone)) {
+            let payload = { ...form, time: Date.now().toString() };
             // console.log(payload);
             setDisplayLoadingOverlay(true);
-            requester.post("/messages/sendMessage", payload).then(()=>{
+            requester.post("/messages/sendMessage", payload, {
+                headers: {
+                    'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                }
+            }).then(() => {
                 setDisplayLoadingOverlay(false);
-                toast.success(router.locale === "ar" ? "تم إرسال الرساللة بنجاح"  : "Message Sent Successfully")
-            }).catch(()=>{
+                toast.success(router.locale === "ar" ? "تم إرسال الرساللة بنجاح" : "Message Sent Successfully")
+            }).catch(() => {
                 setDisplayLoadingOverlay(false);
                 toast.error("Error Occurred");
             })
@@ -97,8 +101,8 @@ const ConatctUs = () => {
                             <textarea name="message" required={true} value={form.message} placeholder={router.locale === "ar" ? "رسالتك" : "Your Message"} onChange={inputChangeHandler} />
                         </div>
                         <PrimaryButton>{router.locale === "ar" ? "إرسال" : "Send"}</PrimaryButton>
-                        <br/>
-                        {error&&<span className={styles.error}> {error}</span>}
+                        <br />
+                        {error && <span className={styles.error}> {error}</span>}
                     </form>
 
                 </div>

@@ -114,7 +114,11 @@ const SingleProductSection = (props) => {
     }
 
     useEffect(() => {
-        requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=1&pageSize=5`)
+        requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=1&pageSize=5`, {
+            headers: {
+              'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+          })
             .then((res) => {
                 setRelatedProducts(res.data.model.products)
             }).catch(()=>{

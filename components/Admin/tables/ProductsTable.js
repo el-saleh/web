@@ -38,14 +38,22 @@ const ProductsTable = () => {
     const setDisplayLoadingOverlay = useContext(DisplayLoadingOverlayHandler);
 
     const fetchProducts = () => {
-        requester.get("/products/allProducts").then((res) => {
+        requester.get("/products/allProducts", {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             setDisplayLoadingOverlay(false);
             setRecords(res.data.model);
         }).catch(errorHandler)
     }
 
     const fetchCategories = () => {
-        requester.get("/categories/allCategories").then((res) => {
+        requester.get("/categories/allCategories", {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             setCategories(res.data.model);
         }).catch(errorHandler)
     }
@@ -90,7 +98,11 @@ const ProductsTable = () => {
             }
         });
         productFormData.append('category', e.data.category?.categoryName?._id)
-        requester.post('/products/addProduct', productFormData).then((res) => {
+        requester.post('/products/addProduct', productFormData, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
 
             if (e.data["gallery"]) {
                 const galleryFormData = new FormData();
@@ -100,7 +112,11 @@ const ProductsTable = () => {
                     galleryFormData.append("images", e.data["gallery"][key])
                 });
 
-                requester.post('/products/addImageProductGallery', galleryFormData).then(() => {
+                requester.post('/products/addImageProductGallery', galleryFormData, {
+                    headers: {
+                        'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                    }
+                }).then(() => {
                     setDisplayLoadingOverlay(false);
                     toast('تم إضافة المنتج وصور المنتج بنجاح');
                     fetchProducts();
@@ -145,7 +161,11 @@ const ProductsTable = () => {
         productFormData.append('category', (e.data.category?.categoryName?._id || e.data.category?._id))
         productFormData.append("id", e.data["_id"]);
 
-        requester.patch('/products/updateProduct', productFormData).then(() => {
+        requester.patch('/products/updateProduct', productFormData, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then(() => {
 
             if (e.data["gallery"]) {
                 console.log('edittttttt', e.data);
@@ -156,7 +176,11 @@ const ProductsTable = () => {
                     galleryFormData.append("images", e.data["gallery"][key])
                 });
 
-                requester.post('/products/addImageProductGallery', galleryFormData).then(() => {
+                requester.post('/products/addImageProductGallery', {
+                    headers: {
+                        'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                    }
+                }, galleryFormData).then(() => {
                     setDisplayLoadingOverlay(false);
                     toast('تم تحديث ببانات وصور المنتج بنجاح');
                     fetchProducts()
@@ -215,7 +239,7 @@ const ProductsTable = () => {
             >
                 <HeaderFilter visible={true} />
                 <GroupPanel visible={true} emptyPanelText='اسحب عنوان لهنا' />
-                <SearchPanel visible={true} all placeholder='بحث...' width="100%"  />
+                <SearchPanel visible={true} all placeholder='بحث...' width="100%" />
                 <Grouping autoExpandAll={true} />
                 <Paging defaultPageSize={20} />
                 <Pager

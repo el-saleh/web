@@ -19,7 +19,11 @@ function category(props) {
     setShowLoader(true)
     if (nextPage && nextPage !== lastPage) {
       setLastPage(nextPage);
-      requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=${nextPage}&pageSize=15`).then((res) => {
+      requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=${nextPage}&pageSize=15`, {
+        headers: {
+          'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+        }
+      }).then((res) => {
 
         setShowLoader(false)
         setNewProducts([...newProducts, ...res.data.model.products]);

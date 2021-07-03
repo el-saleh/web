@@ -59,7 +59,11 @@ const ClientMessagesTable = () => {
     }
 
     const fetchMessages = () => {
-        requester.get("/messages/getAllMesages").then((res) => {
+        requester.get("/messages/getAllMesages", {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             setDisplayLoadingOverlay(false);
             console.table("All Messages", res.data);
             var newdata = res.data.map((item) => {
@@ -69,11 +73,15 @@ const ClientMessagesTable = () => {
             setViewedRecords(newdata.filter(record => record.replied));
         }).catch(errorHandler)
     }
-    
+
     const UpdatedMessageState = (e) => {
         console.log(e.row.data);
         setDisplayLoadingOverlay(true);
-        requester.patch(`/messages/replied/${e.row.data._id}`).then(() => {
+        requester.patch(`/messages/replied/${e.row.data._id}`, null, , {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then(() => {
             fetchMessages();
             setDisplayLoadingOverlay(false);
             toast.success("Updated Sucessfully")
@@ -110,7 +118,7 @@ const ClientMessagesTable = () => {
                 rowAlternationEnabled={true}
                 onToolbarPreparing={onToolbarPreparing}
                 columnHidingEnabled
-                
+
             >
                 <HeaderFilter visible={true} />
                 <GroupPanel visible={true} />

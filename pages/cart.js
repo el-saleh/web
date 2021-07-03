@@ -18,7 +18,11 @@ function Cart() {
     const fetchUserCart = () => {
         let userData = window.localStorage.getItem("userData");
         if (userData) {
-            requester.get(`/cart?id=${JSON.parse(userData)._id}`).then((res) => {
+            requester.get(`/cart?id=${JSON.parse(userData)._id}`, {
+                headers: {
+                    'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                }
+            }).then((res) => {
                 setCart(res.data.model.cart);
                 setTotalPrice(res.data.model.total)
             }).catch(() => {

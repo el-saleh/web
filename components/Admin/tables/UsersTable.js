@@ -46,7 +46,11 @@ const UsersTable = () => {
 
 
     const fetchRecords = useCallback(() => {
-        requester.get("/auth/allUsers").then((res) => {
+        requester.get("/auth/allUsers", {
+            headers: {
+              'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+          }).then((res) => {
             setDisplayLoadingOverlay(false);
             console.table("allCategories", res.data.model);
             setNewRecords(res.data.model);

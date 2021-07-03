@@ -5,7 +5,11 @@ import { toast } from 'react-toastify';
 export const updatdeUserCart = (userId, productId, quantity = 1) => {
     if (userId && productId) {
         // fetch the current cart
-        requester.get(`/cart?id=${userId}`)
+        requester.get(`/cart?id=${userId}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        })
             .then((res) => {
 
                 // check if product is already added to user cart
@@ -31,18 +35,26 @@ export const updatdeUserCart = (userId, productId, quantity = 1) => {
                     ]
                 }
 
-                requester.patch("/cart/updateCart", {
-                    id: userId,
-                    cart: newCart
-                }).then(() => {
-                   toast("تم إضافة المنتج بنجاح");
-                    
+                requester.patch(
+                    "/cart/updateCart",
+                    {
+                        id: userId,
+                        cart: newCart
+                    },
+                    {
+                        headers: {
+                            'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                        }
+                    }
+                ).then(() => {
+                    toast("تم إضافة المنتج بنجاح");
+
                 }).catch(() => {
-                   toast("خطأ : فشل إضافة المنتج لعربة التسوق")
+                    toast("خطأ : فشل إضافة المنتج لعربة التسوق")
                 });
 
             }).catch(() => {
-               toast("خطأ : فشل تحميل عربة التسوق")
+                toast("خطأ : فشل تحميل عربة التسوق")
             })
     }
 }
@@ -51,7 +63,11 @@ export const updatdeUserCart = (userId, productId, quantity = 1) => {
 export const removeFromUserCart = (userId, productId, fetchUserCart) => {
     if (userId && productId) {
         // fetch the current cart
-        requester.get(`/cart?id=${userId}`)
+        requester.get(`/cart?id=${userId}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        })
             .then((res) => {
 
                 // then remove the product, usign filter function
@@ -63,15 +79,23 @@ export const removeFromUserCart = (userId, productId, fetchUserCart) => {
                 // console.log(newCart);
 
                 // then set the new cart with the filtered cart
-                requester.patch("/cart/updateCart", {
-                    id: userId,
-                    cart: newCart
-                }).then(() => {
+                requester.patch(
+                    "/cart/updateCart",
+                    {
+                        id: userId,
+                        cart: newCart
+                    },
+                    {
+                        headers: {
+                            'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                        }
+                    }
+                ).then(() => {
                     // then fetch the Cart again , to get the updated cart
                     fetchUserCart()
-                   toast("تم حذف المنتج بنجاح");
+                    toast("تم حذف المنتج بنجاح");
                 }).catch(() => {
-                   toast("خطا : فشل حذف المنتج من عربة التسوق")
+                    toast("خطا : فشل حذف المنتج من عربة التسوق")
                 })
 
             }).catch(() => {
@@ -84,7 +108,11 @@ export const removeFromUserCart = (userId, productId, fetchUserCart) => {
 export const changeCartItemQuantity = (userId, productId, quantity, fetchUserCart) => {
     if (userId && productId) {
         // fetch the current cart
-        requester.get(`/cart?id=${userId}`)
+        requester.get(`/cart?id=${userId}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        })
             .then((res) => {
                 // then remove the product, usign filter function
                 let oldCart = res.data.model.cart;
@@ -94,18 +122,26 @@ export const changeCartItemQuantity = (userId, productId, quantity, fetchUserCar
                     .map((item) => { return { product: item.product._id, quantity: item.quantity } });
                 // console.log(newCart);
                 // then set the new cart with the quantity updated product
-                requester.patch("/cart/updateCart", {
-                    id: userId,
-                    cart: [
-                        ...newCart,
-                        { product: productId, quantity }
-                    ]
-                }).then(() => {
+                requester.patch(
+                    "/cart/updateCart",
+                    {
+                        id: userId,
+                        cart: [
+                            ...newCart,
+                            { product: productId, quantity }
+                        ]
+                    },
+                    {
+                        headers: {
+                            'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                        }
+                    }
+                ).then(() => {
                     //     // then fetch the Cart again , to get the updated cart
                     fetchUserCart()
-                   toast("تم تحديث العدد بنجاح");
+                    toast("تم تحديث العدد بنجاح");
                 }).catch(() => {
-                   toast("خطأ : فشل تعديل العدد")
+                    toast("خطأ : فشل تعديل العدد")
                 })
 
             }).catch(() => {

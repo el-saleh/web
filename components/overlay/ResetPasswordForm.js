@@ -38,10 +38,18 @@ export default function ResetPasswordForm() {
     }
 
     const resetPassowrd = () => {
-        requester.post("/auth/forgetPassword", {
-            phoneNumber: formInfo.phoneNumber,
-            newPassword: formInfo.password
-        }).then(() => {
+        requester.post(
+            "/auth/forgetPassword",
+            {
+                phoneNumber: formInfo.phoneNumber,
+                newPassword: formInfo.password
+            },
+            {
+                headers: {
+                    'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                }
+            }
+        ).then(() => {
             showSignInForm();
             toast("تمت إعادة تعيين كلمة المرور بنجاح");
         }).catch(() => {
