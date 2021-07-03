@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, TextBox } from "devextreme-react/text-box";
-import List from 'devextreme-react/list';
+import List, { ItemDragging } from 'devextreme-react/list';;
+
 
 const BulletListEditor = (props) => {
     // console.log(props);
@@ -22,6 +23,14 @@ const BulletListEditor = (props) => {
         }
     }
 
+    const onReorder = (e) => {
+        console.log(e)
+        let oldList = [...list];
+        let item = oldList.splice(e.fromIndex,1);
+        setList([...oldList.slice(0,e.toIndex),...item, ...oldList.slice(e.toIndex)]);
+        props.data.setValue([...oldList.slice(0,e.toIndex),...item, ...oldList.slice(e.toIndex)]);
+    }
+
     return (
         <>
             <TextBox onValueChanged={(e) => setInput(e.value)} value={input}>
@@ -38,12 +47,17 @@ const BulletListEditor = (props) => {
                 items={list}
                 height={'auto'}
                 allowItemDeleting
-                itemDeleteMode='toggle'
+                itemDeleteMode='static'
                 onItemDeleted={(e) => {
                     setList([...list])
                     props.data.setValue([...list]);
                 }}
-            />
+            >
+                <ItemDragging
+                    allowReordering={true}
+                    onReorder={onReorder}>
+                </ItemDragging>
+            </List>
         </>
     );
 };
