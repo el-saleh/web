@@ -15,7 +15,11 @@ function orders({ products }) {
     const fetchUserorders = () => {
         let userData = window.localStorage.getItem("userData");
         if (userData) {
-            requester.get(`/orders/getUserOrders?userId=${JSON.parse(userData)._id}`).then((res) => {
+            requester.get(`/orders/getUserOrders?userId=${JSON.parse(userData)._id}`, {
+                headers: {
+                    'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                }
+            }).then((res) => {
                 setOrdersList(res.data.model)
             })
         }
@@ -25,10 +29,14 @@ function orders({ products }) {
     }
 
     const cancelOrder = (e) => {
-        requester.delete(`/orders/deleteOrder?orderId=${e.target.id}`).then((res) => {
+        requester.delete(`/orders/deleteOrder?orderId=${e.target.id}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             toast("تم إلغاء طلب الشراء بنجاح");
             fetchUserorders();
-        }).catch(()=>{
+        }).catch(() => {
             toast("خطأ : فشل إلغاء طلب الشراء")
         })
     }

@@ -9,11 +9,15 @@ export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetc
     const placeOrder = () => {
         let userData = window.localStorage.getItem("userData");
         if (userData) {
-            requester.post(`/orders/placeOrder?userId=${JSON.parse(userData)._id}`).then((res) => {
+            requester.post(`/orders/placeOrder?userId=${JSON.parse(userData)._id}`, null, {
+                headers: {
+                    'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                }
+            }).then((res) => {
                 toast("تم نسجيل طلب الشراء بنجاح");
                 router.push("/orders");
                 fetchUserCart()
-            }).catch(()=>{
+            }).catch(() => {
                 toast("خطأ : فشل تسجيل طلب الشراء ")
             })
         }

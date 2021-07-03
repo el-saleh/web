@@ -28,20 +28,24 @@ export default function SignInForm() {
         setErrors([]);
         if (vaildateForm()) {
             setIsButtondisabled(true);
-            requester.post("/auth/login", formInfo)
-            .then((res) => {
-                let { userData } = jwt.decode(res.data.token);
-                console.log(res.data);
-                console.log(userData);
-                userData.token = res.data.token;
-                gstate.setUser(userData);
-                window.localStorage.setItem("userData", JSON.stringify(userData));
-                gstate.setDisplaySignInForm(false);
-            }).catch((err) => {
-                console.log(err.message);
-                setIsButtondisabled(false);
-                setErrors([{ message: "بيانات غير صحيحة" }]);
-            });
+            requester.post("/auth/login", formInfo, {
+                headers: {
+                    'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                }
+            })
+                .then((res) => {
+                    let { userData } = jwt.decode(res.data.token);
+                    console.log(res.data);
+                    console.log(userData);
+                    userData.token = res.data.token;
+                    gstate.setUser(userData);
+                    window.localStorage.setItem("userData", JSON.stringify(userData));
+                    gstate.setDisplaySignInForm(false);
+                }).catch((err) => {
+                    console.log(err.message);
+                    setIsButtondisabled(false);
+                    setErrors([{ message: "بيانات غير صحيحة" }]);
+                });
         }
 
     }

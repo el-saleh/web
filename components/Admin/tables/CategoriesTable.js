@@ -48,7 +48,11 @@ const CategoriesTable = () => {
 
 
     const fetchCategories = useCallback(() => {
-        requester.get("/categories/allCategories").then((res) => {
+        requester.get("/categories/allCategories", {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             setDisplayLoadingOverlay(false);
             console.table("allCategories", res.data.model);
             setNewRecords(res.data.model);
@@ -65,7 +69,11 @@ const CategoriesTable = () => {
             categoryFormData.append(key, e.data[key])
         });
 
-        requester.post('/categories/addCategory', categoryFormData).then((res) => {
+        requester.post('/categories/addCategory', categoryFormData, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then((res) => {
             setDisplayLoadingOverlay(false);
             toast('category Added successfully');
             fetchCategories();
@@ -95,7 +103,11 @@ const CategoriesTable = () => {
             }
         });
 
-        requester.patch(`/categories/updateCategory`, categoryFormData).then(() => {
+        requester.patch(`/categories/updateCategory`, categoryFormData, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then(() => {
             fetchCategories();
             toast("category Updated Sucessfully")
         }).catch(errorHandler)
@@ -104,7 +116,11 @@ const CategoriesTable = () => {
     const onRowRemoved = (e) => {
         console.log("delete category ", e);
         setDisplayLoadingOverlay(true);
-        requester.delete(`/categories/deleteCategory/?id=${e.data._id}`).then(() => {
+        requester.delete(`/categories/deleteCategory/?id=${e.data._id}`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        }).then(() => {
             setDisplayLoadingOverlay(false);
             toast("category Deleted Sucessfully")
             fetchCategories();
