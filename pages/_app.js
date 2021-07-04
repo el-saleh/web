@@ -22,6 +22,7 @@ import 'devextreme/dist/css/dx.light.css';
 
 //  component and stylign for nprogress bar
 import "../styles/nprogress.css";
+import requester from '../utilities/requester';
 
 const TopProgressBar = dynamic(
   () => {
@@ -49,7 +50,15 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     let userData = window.localStorage.getItem("userData");
     if (userData) {
-      setUser(JSON.parse(userData));
+      let token = JSON.parse(userData).token;
+      requester.get("/auth/getUserData").then((res)=>{
+        let freshUserData ={...res.data.model, token};
+        window.localStorage.setItem("userData", JSON.stringify(freshUserData))
+        setUser(freshUserData);
+      }).catch((e)=>{
+        console.log("failed to getUserData", e)
+      });
+      
     }
   }, [])
 
