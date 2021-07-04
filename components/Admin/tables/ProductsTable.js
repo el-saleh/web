@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { DisplayLoadingOverlayHandler } from "../../../utilities/Contexts";
 import { toast } from 'react-toastify';
 import styles from "./dashboard.module.scss";
+import FormatPrice from '../../../utilities/FormatPrice';
 import requester from "../../../utilities/requester";
 import BulletListEditor from "./BulletListEditor";
 import ProductImageEditor from "./ProductImageEditor";
@@ -289,8 +290,8 @@ const ProductsTable = () => {
                     caption='اسم المنتج'
                     cellRender={e => <Link href={`/product/${e.data._id}`} ><a>{e.data.title}</a></Link>}
                 />
-                <Column dataField="price" alignment={"center"} caption='سعر المنتج' />
-                <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' />
+                <Column dataField="price" alignment={"center"} caption='سعر المنتج' cellRender={e => <>{FormatPrice(e.data.price)} جنيه</>} />
+                <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' cellRender={e => <>{e.data.sale}%</>} />
                 <Column dataField="createdAt" dataType='datetime' alignment={"center"} caption='تاريخ إضافة المنتج' />
                 <Column dataField="category.categoryName" alignment={"center"} caption='فئة المنتج' allowFiltering={false}>
                     <Lookup dataSource={categories} displayExpr="categoryName" />

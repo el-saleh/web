@@ -3,6 +3,7 @@ import { DisplayLoadingOverlayHandler } from "../../../utilities/Contexts";
 import { toast } from 'react-toastify';
 import styles from "./dashboard.module.scss";
 import requester from "../../../utilities/requester";
+import FormatPrice from '../../../utilities/FormatPrice';
 import CartItem from "../../CartItem/index";
 import DataGrid, {
     Column,
@@ -190,7 +191,7 @@ const OrdersTable = () => {
                     dataField="total"
                     caption="المجموع"
                     alignment={"center"}
-                    cellRender={e => <>{e.data.total.toFixed(2)}</>}
+                    cellRender={e => <>{FormatPrice(e.data.total)} جنيه</>}
                 />
                 <Column dataField="orderStatus" caption="حالة الطلب" alignment={"center"}>
                     <Lookup dataSource={orderStatuses} valueExpr="id" displayExpr="name" />

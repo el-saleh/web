@@ -5,6 +5,7 @@ import PrimaryButton from '../Button/PrimaryButton';
 import { AiFillDelete } from "react-icons/ai";
 import { Control } from '../../utilities/Contexts';
 import { changeCartItemQuantity } from "../../utilities/shoppingCard";
+import FormatPrice from '../../utilities/FormatPrice';
 
 export default function CartItem({ orderItem, data, fetchUserCart, removeProduct }) {
     const gstate = useContext(Control);
@@ -48,11 +49,11 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
 
                     {data?.product?.sale ?
                         <p className={styles.price}>
-                            <del>{data.product.price} جنيه</del>
+                            <del>{FormatPrice(data.product.price)} جنيه</del>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>{data.product.price - (data.product.price * (0.01 * data.product.sale))}  <small>جنيه</small></span></p>
+                            <span>{FormatPrice(data.product.price, data.product.sale)}  <small>جنيه</small></span></p>
                         :
-                        <p className={styles.price}><span>{data.product.price}  <small>جنيه</small></span></p>
+                        <p className={styles.price}><span>{FormatPrice(data.product.price)}  <small>جنيه</small></span></p>
                     }
 
                 </div>

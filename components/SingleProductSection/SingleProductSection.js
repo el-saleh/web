@@ -7,6 +7,7 @@ import { IoCartOutline, IoCheckmark } from "react-icons/io5";
 import PrimaryButton from '../Button/PrimaryButton';
 import styles from "./SingleProductSection.module.scss";
 import ProductList from '../ProductList/ProductList';
+import FormatPrice from '../../utilities/FormatPrice'
 import requester from '../../utilities/requester';
 import { Control } from '../../utilities/Contexts';
 import { updatdeUserCart } from '../../utilities/shoppingCard';
@@ -17,16 +18,17 @@ const SingleProductSection = (props) => {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const [relatedProducts, setRelatedProducts] = useState([]);
+
     useEffect(() => {
         zoom();
     })
+
     const gallery = props?.gallery?.map((img) => {
         return {
             original: img?.imageUrl,
             thumbnail: img?.imageUrl
         }
     }) || [];
-
 
     const updateQty = (e) => {
         const newQty = (parseInt(e.target.id) + quantity);
@@ -175,12 +177,12 @@ const SingleProductSection = (props) => {
                         {props.sale ? <small className={styles.salePatch} >{`خصم ${props.sale}%`}</small> : null}
                         {props.sale ?
                             <p className={styles.price}>
-                                <del>{props.price.toFixed(2)} جنيه</del>
+                                <del>{FormatPrice(props.price)} جنيه</del>
                                 &nbsp;&nbsp;
-                                {(props.price - (props.price * (0.01 * props.sale)).toFixed(2))} <small>جنيه</small>
+                                {FormatPrice(props.price, props.sale)} <small>جنيه</small>
                             </p>
                             :
-                            <p className={styles.price}>{props.price.toFixed(2)} <small>جنيه</small></p>
+                            <p className={styles.price}>{FormatPrice(props.price)} <small>جنيه</small></p>
                         }
                         <p className={styles.description}>{props.description}</p>
 
