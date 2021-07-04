@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router';
 import PrimaryButton from '../Button/PrimaryButton';
+import { toast } from "react-toastify"
 import styles from "./CartTotalItem.module.scss";
 import requester from '../../utilities/requester';
-import { toast } from "react-toastify"
+import FormatPrice from '../../utilities/FormatPrice';
+
 
 export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetchUserCart }) {
     const router = useRouter();
@@ -32,7 +34,7 @@ export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetc
         <div className={styles.totalBox}>
             <div>
                 <h4>{"المجموع"}</h4>
-                <p className={styles.price}>{totalPrice?.toFixed(2)} <small>{"جنيه"}</small></p>
+                <p className={styles.price}>{FormatPrice(totalPrice)} <small>{"جنيه"}</small></p>
             </div>
             {!orderItem && <div>
                 <PrimaryButton onClick={placeOrder}>{"إتمام عملية الشراء"}</PrimaryButton>
