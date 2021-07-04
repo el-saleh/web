@@ -14,7 +14,7 @@ function Home(props) {
   return (
     <>
       <Head>
-        <title>{"elsaleh | الرئيسية "}</title>
+        <title>{"elsaleh | الرئيسية"}</title>
         <meta name="description" content={"الصالح لاستيراد الأدوات المنزليةوالبلاستيكية ، وكلاء كبرى الشركات التركية"} />
 
         {/* Open Graph / Facebook */}
