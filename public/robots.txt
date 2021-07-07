@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://aboulazm.com/sitemap.xml
+Sitemap: https://elsaleh.net/sitemap.xml
