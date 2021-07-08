@@ -1,10 +1,11 @@
 import styles from "./layout.module.scss";
 import Link from 'next/link';
 import { useRouter } from "next/router";
-import { RiWhatsappFill } from "react-icons/ri";
+import { RiWhatsappFill, RiInstagramFill } from "react-icons/ri";
 import { FaPhoneAlt, FaTelegram } from 'react-icons/fa';
 import { IoMail, IoLocationSharp } from "react-icons/io5"
 import { FaFacebookSquare } from "react-icons/fa";
+
 const Footer = () => {
     const router = useRouter();
     return (
@@ -51,6 +52,11 @@ const Footer = () => {
                                     <FaFacebookSquare />
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>{"Facebook"}</span>
+                                </a>
+                                <a className={styles.contactLink} target="_blank" href="https://www.instagram.com/elsaleh_for_impor_and_export/" rel="noreferrer">
+                                    <RiInstagramFill />
+                                    &nbsp;
+                                    <span className={"hiddenInMobile"}>{"Instagram"}</span>
                                 </a>
                                 <a className={styles.contactLink} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
                                     <IoMail />
