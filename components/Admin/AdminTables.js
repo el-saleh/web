@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PrimaryButton from '../Button/PrimaryButton';
-import CategoriesTable from "./tables/CategoriesTable";
-import ProductsTable from "./tables/ProductsTable";
-import UsersTable from './tables/UsersTable';
-import OrdersTable from "./tables/OrdersTable";
+import CategoriesTable from "./tables/CategoriesTable/CategoriesTable";
+import ProductsTable from "./tables/ProductsTable/ProductsTable";
+import UsersTable from './tables/UsersTable/UsersTable';
+import OrdersTable from "./tables/OrdersTable/OrdersTable";
 import styles from "./adminTables.module.scss";
 
 const AdminTables = () => {
@@ -23,11 +23,9 @@ const AdminTables = () => {
             case 'ordersTable':
                 return <OrdersTable />
                 break;
-            case 'Dashboard Home':
-                return <p>قم باختيار الجدول الذى تريد عرضه</p>
-                break;
             default:
-                return null
+                return <p>قم باختيار الجدول الذى تريد عرضه</p>
+
         }
     }
 
@@ -38,12 +36,11 @@ const AdminTables = () => {
     return (
         <div className={`${styles.adminTables}`}>
             <div className={`container`}>
-                <div className={styles.tableButtons}>
-                    <PrimaryButton id="Dashboard Home" onClick={tableSelector} >Dashborad Home</PrimaryButton>
-                    <PrimaryButton id="CategoriesTable" onClick={tableSelector} >Categories Table</PrimaryButton>
-                    <PrimaryButton id="ProductsTable" onClick={tableSelector} >Products Table</PrimaryButton>
-                    <PrimaryButton id="UsersTable" onClick={tableSelector} >Users Table</PrimaryButton>
-                    <PrimaryButton id="ordersTable" onClick={tableSelector} >Orders Table</PrimaryButton>
+                <div className={styles.tableButtons} dir="auto">
+                    <PrimaryButton id="CategoriesTable" onClick={tableSelector} >الفئات</PrimaryButton>
+                    <PrimaryButton id="ProductsTable" onClick={tableSelector} >المنتجات</PrimaryButton>
+                    <PrimaryButton id="UsersTable" onClick={tableSelector} >المستخدمين</PrimaryButton>
+                    <PrimaryButton id="ordersTable" onClick={tableSelector} >طلبات الشراء</PrimaryButton>
                 </div>
                 <div className={styles.tableWrapper}>
                     {tableRenderer()}

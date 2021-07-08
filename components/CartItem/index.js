@@ -11,6 +11,7 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
     const gstate = useContext(Control);
     const [quantity, setQuantity] = useState(data?.quantity || 1);
     const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
+    const [source, setSource] = useState(data?.product?.productImage?.imageUrl)
 
     useEffect(() => {
         if (data?.quantity) {
@@ -26,14 +27,16 @@ export default function CartItem({ orderItem, data, fetchUserCart, removeProduct
         changeCartItemQuantity(gstate.user._id, data.product._id, newQty, fetchUserCart)
     }
 
-    
+    const loadFallbackImage = () => {
+        setSource("/assets/fallback.png")
+    }
 
     return (
         <div className={styles.CartItem}>
             <div className={styles.imgBox}>
                 <Link href={`/product/${data?.product?._id}`}>
                     <a>
-                        <img src={data?.product?.productImage?.imageUrl} alt={data?.product?.title} />
+                        <img src={source} alt={data?.product?.title} onError={loadFallbackImage} />
                     </a>
                 </Link>
             </div>

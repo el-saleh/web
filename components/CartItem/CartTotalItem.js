@@ -28,7 +28,9 @@ export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetc
 
     const statuses = {
         1: "طلبك تم تسجيله, سيتم التواصل قريبا",
-        2: "تم التواصل, سيتم شحن الطلب قريبا"
+        2: "تم التواصل, سيتم شحن الطلب قريبا",
+        3: "تم شحن الطلب",
+
     }
     return (
         <div className={styles.totalBox}>
