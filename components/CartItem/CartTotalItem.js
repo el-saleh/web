@@ -27,9 +27,9 @@ export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetc
     }
 
     const statuses = {
-        1: "طلبك تم تسجيله, سيتم التواصل قريبا",
-        2: "تم التواصل, سيتم شحن الطلب قريبا",
-        3: "تم شحن الطلب",
+        1: "م تسجيل طلب الشراء وسيتم التواصل معك",
+        2: "تم شحن الطلب",
+        3: "تم التسليم",
 
     }
     return (

@@ -26,9 +26,9 @@ const OrdersTable = () => {
 
     const [records, setRecords] = useState([]);
     const [orderStatuses,] = useState([
-        { name: "طلب مسجل ولم يتم التواصل ", id: 1 },
-        { name: "طلب مسجل و تم التواصل", id: 2 },
-        { name: "تم شحن الطلب", id: 3 },
+        { name: "طلب مسجل ولم يتم التواصل", id: 1 },
+        { name: "تم التواصل وشحن الطلب", id: 2 },
+        { name: "تم التسليم", id: 3 },
     ])
 
     useEffect(() => {

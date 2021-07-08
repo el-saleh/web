@@ -290,7 +290,7 @@ const ProductsTable = () => {
                     cellRender={e => <Link href={`/product/${e.data._id}`} ><a>{e.data.title}</a></Link>}
                 />
                 <Column dataField="price" alignment={"center"} caption='سعر المنتج' cellRender={e => <>{FormatPrice(e.data.price)} جنيه</>} />
-                <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' cellRender={e => <>{e.data.sale}%</>} />
+                <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' cellRender={e => <>{e.data.sale ? `${e.data.sale}%` : null}</>} />
 
                 <Column dataField="createdAt" dataType='datetime' alignment={"center"} caption='تاريخ إضافة المنتج' />
                 <Column dataField="category.categoryName" alignment={"center"} caption='فئة المنتج' allowFiltering={false}>
