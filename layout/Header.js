@@ -137,13 +137,13 @@ const Header = () => {
                 <span>{router.locale === "ar" ? "01123796666" : "01123796666"}</span>
               </a>
             </span>
-            <span>
+            {/* <span>
               <a className={""} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
                 <IoMail />
                 &nbsp;
                 <span>info@elsaleh.net</span>
               </a>
-            </span>
+            </span> */}
           </div>
 
         </div>
@@ -358,11 +358,11 @@ const Header = () => {
               <span>{"Instagram"}</span>
             </a>
             
-            <a className={styles.contactLink} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
+            {/* <a className={styles.contactLink} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
               <IoMail />
               &nbsp;
               <span>info@elsaleh.net</span>
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

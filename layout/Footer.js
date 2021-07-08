@@ -58,11 +58,11 @@ const Footer = () => {
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>{"Instagram"}</span>
                                 </a>
-                                <a className={styles.contactLink} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
+                                {/* <a className={styles.contactLink} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
                                     <IoMail />
                                     &nbsp;
                                     <span className={"hiddenInMobile"}>info@elsaleh.net</span>
-                                </a>
+                                </a> */}
                             </div>
                         </div>
 
