@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Link from 'next/link';
 import styles from "./layout.module.scss";
 import PrimaryButton from '../components/Button/PrimaryButton';
-import { RiWhatsappFill, RiCloseLine } from "react-icons/ri/";
+import { RiWhatsappFill, RiCloseLine, RiInstagramFill } from "react-icons/ri/";
 import { FaPhoneAlt, FaSearch, FaUserCircle, FaShoppingCart, FaFacebookSquare, FaTelegram } from 'react-icons/fa';
 import { IoMail, IoMenu } from "react-icons/io5"
 import { Control } from '../utilities/Contexts'
@@ -352,6 +352,12 @@ const Header = () => {
               &nbsp;
               <span>{"Facebook"}</span>
             </a>
+            <a className={styles.contactLink} target="_blank" href="https://www.instagram.com/elsaleh_for_impor_and_export/" rel="noreferrer">
+              <RiInstagramFill />
+              &nbsp;
+              <span>{"Instagram"}</span>
+            </a>
+            
             <a className={styles.contactLink} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
               <IoMail />
               &nbsp;
