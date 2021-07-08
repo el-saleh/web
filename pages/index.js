@@ -15,7 +15,7 @@ function Home(props) {
     <>
       <Head>
         <title>{"elsaleh | الرئيسية"}</title>
-        <meta name="description" content={"الصالح لاستيراد الأدوات المنزليةوالبلاستيكية ، وكلاء كبرى الشركات التركية"} />
+        <meta name="description" content={"الصالح لاستيراد الأدوات المنزلية والبلاستيكية ، وكلاء كبرى الشركات التركية"} />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
