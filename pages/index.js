@@ -20,13 +20,13 @@ function Home(props) {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://elsaleh.com" />
-        <meta property="og:description" content={"الصالح لاستيراد الأدوات المنزليةوالبلاستيكية ، وكلاء كبرى الشركات التركية"} />
+        <meta property="og:description" content={"الصالح لاستيراد الأدوات المنزلية والبلاستيكية ، وكلاء كبرى الشركات التركية"} />
         <meta property="og:image" content="/assets/logo2.png" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://elsaleh.com" />
-        <meta property="twitter:description" content={"الصالح لاستيراد الأدوات المنزليةوالبلاستيكية ، وكلاء كبرى الشركات التركية"} />
+        <meta property="twitter:description" content={"الصالح لاستيراد الأدوات المنزلية والبلاستيكية ، وكلاء كبرى الشركات التركية"} />
         <meta property="twitter:image" content="/assets/logo2.png" />
 
       </Head>
