@@ -162,9 +162,9 @@
     align-items: center;
     justify-content: flex-start;
     position: relative;
-    margin: 0rem 1rem;
+    margin: 0rem 0.25rem;
     @media (max-width: 768px) {
-      margin: 0rem 0.66rem;
+      margin: 0rem 1rem;
     }
     &:hover {
       .dropDownMenu {
