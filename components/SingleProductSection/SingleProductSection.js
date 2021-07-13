@@ -115,18 +115,48 @@ const SingleProductSection = (props) => {
 
     }
 
+
     useEffect(() => {
-        requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=1&pageSize=5`, {
+        let products = []
+        requester.get(`/products/search?searchQuery=${props.title.split(" ")[0]}`, {
             headers: {
-              'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
             }
-          })
+        })
             .then((res) => {
-                setRelatedProducts(res.data.model.products)
-            }).catch(()=>{
+                // to not preview the same product as related product.
+                let filteredPrdoucts = res.data.model.filter(prod => prod._id !== props._id)
+                getRelatedProducts(filteredPrdoucts);
+            }).catch(() => {
+                console.log("failed to load related products")
+                getRelatedProducts([]);
+            });
+    }, [props._id])
+
+
+    const getRelatedProducts = (searchRelatedProductsArray) => {
+        requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=1&pageSize=10`, {
+            headers: {
+                'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
+            }
+        })
+            .then((res) => {
+
+                // to not preview the same product as related product.
+                let filteredPrdoucts = res.data.model.products.filter(prod => prod._id !== props._id)
+
+                // to not preview duplicate products from "serachr related prodcuts" and "category related prodcuts"
+                let uniquePrdoucts = filteredPrdoucts.filter(product => {
+                    console.log(!searchRelatedProductsArray.find(alreadylistedProdcut => alreadylistedProdcut._id === product._id))
+                    return (!searchRelatedProductsArray.find(alreadylistedProdcut => alreadylistedProdcut._id === product._id))
+                })
+
+                setRelatedProducts([...searchRelatedProductsArray, ...uniquePrdoucts])
+            }).catch(() => {
                 console.log("failed to load related products")
             })
-    }, [])
+    }
+
 
     return (
         <>
