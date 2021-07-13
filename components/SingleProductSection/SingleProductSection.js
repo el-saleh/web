@@ -117,35 +117,44 @@ const SingleProductSection = (props) => {
 
 
     useEffect(() => {
-        let products = []
+        // serach for/fetch products with the same first name
         requester.get(`/products/search?searchQuery=${props.title.split(" ")[0]}`, {
             headers: {
                 'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
             }
         })
             .then((res) => {
-                // to not preview the same product as related product.
+                
+                // to not preview the same product as related product (filtering function).
                 let filteredPrdoucts = res.data.model.filter(prod => prod._id !== props._id)
+                
+                // fetch products from the same category to complete the related product list 
+                // to be at least 5 products, then merge the two lists into one list and preveiw it 
                 getRelatedProducts(filteredPrdoucts);
+
             }).catch(() => {
                 console.log("failed to load related products")
                 getRelatedProducts([]);
             });
     }, [props._id])
 
-
+    // function that takes the already fetched "search Related Products Array", then adds some 
+    // products to it from the same category, to be at least 5 products
     const getRelatedProducts = (searchRelatedProductsArray) => {
-        requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=1&pageSize=10`, {
+
+        // fetch 6 products : just in cast the same product is retreived as a relatede product from the "produc by category" api,
+        // it will be removed at the filtering function, to make sure we always have at least 5 category related product.
+        requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=1&pageSize=6`, {
             headers: {
                 'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
             }
         })
             .then((res) => {
 
-                // to not preview the same product as related product.
+                // to not preview the same product as related product (filtering function).
                 let filteredPrdoucts = res.data.model.products.filter(prod => prod._id !== props._id)
 
-                // to not preview duplicate products from "serachr related prodcuts" and "category related prodcuts"
+                // to not preview duplicate products from "serachr related prodcuts" and "category related prodcuts" (filtering function).
                 let uniquePrdoucts = filteredPrdoucts.filter(product => {
                     console.log(!searchRelatedProductsArray.find(alreadylistedProdcut => alreadylistedProdcut._id === product._id))
                     return (!searchRelatedProductsArray.find(alreadylistedProdcut => alreadylistedProdcut._id === product._id))
