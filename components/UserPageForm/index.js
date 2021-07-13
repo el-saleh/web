@@ -63,7 +63,18 @@ export default function index() {
         }
         requester.patch("/auth/updateUserData", data).then(() => {
             toast("ثم تعديل/اضافة رقم الموبايل بنجاح");
-            updateUserData();
+            let userData = window.localStorage.getItem("userData");
+            if (userData) {
+                let token = JSON.parse(userData).token;
+                requester.get("/auth/getUserData").then((res) => {
+                    let freshUserData = { ...res.data.model, token };
+                    window.localStorage.setItem("userData", JSON.stringify(freshUserData))
+                    gstate.setUser(freshUserData);
+                    updateUserData()
+                }).catch((e) => {
+                    console.log("failed to getUserData", e)
+                });
+            }
         }).catch(() => {
             toast("خطأ : فشل تعديل/اضافة رقم الموبايل ")
         })
