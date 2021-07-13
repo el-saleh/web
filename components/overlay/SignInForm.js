@@ -51,6 +51,26 @@ export default function SignInForm() {
 
     }
 
+    const googleLoginHandler = (token) => {
+        setErrors([]);
+
+        setIsButtondisabled(true);
+        requester.post("/auth/googleLogin", { token })
+            .then((res) => {
+                let { userData } = jwt.decode(res.data.token);
+                console.log(res.data);
+                console.log(userData);
+                userData.token = res.data.token;
+                gstate.setUser(userData);
+                window.localStorage.setItem("userData", JSON.stringify(userData));
+                gstate.setDisplaySignInForm(false);
+            }).catch((err) => {
+                console.log(err.message);
+                setIsButtondisabled(false);
+                setErrors([{ message: "خدث خطا ما اثناء تسجيل الدخول" }]);
+            });
+    }
+
     const vaildateForm = () => {
         let errorsList = [];
 
@@ -116,9 +136,10 @@ export default function SignInForm() {
                 <GoogleLogin
                     clientId="290675524922-8qa4skrg10ccqrf6lcdu96o6gqui3coc.apps.googleusercontent.com"
                     buttonText="تسجيل الدخول عبر جوجل"
-                    onSuccess={(data) => { "goggle login success ", console.log(data) }}
+                    onSuccess={(data) => { "goggle login success ", console.log(data), googleLoginHandler(data?.tokenId) }}
                     onFailure={(data) => { "goggle login failure ", console.log(data) }}
                     cookiePolicy={'single_host_origin'}
+                    className={styles.googleButton}
                 />
                 <p className={styles.alternative}>
                     {"لا تمتلك حساب؟"} <span onClick={showSignUpForm}>{"سـجّـل الأن"}</span>
@@ -126,6 +147,7 @@ export default function SignInForm() {
                 <p className={styles.alternative}>
                     <span onClick={showResetPasswordForm}>{"نسيت كلمة السر؟"}</span>
                 </p>
+
             </form>
         </div>
     )
