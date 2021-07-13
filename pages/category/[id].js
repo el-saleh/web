@@ -8,8 +8,8 @@ import PrimaryButton from '../../components/Button/PrimaryButton';
 function category(props) {
   const [ssrProducts, setSsrProducts] = useState(props.products);
   const [newProducts, setNewProducts] = useState([]);
-  const [lastPage, setLastPage] = useState(props.products.length < 15 ? 0 : 1);
-  const [nextPage, setNextPage] = useState(props.products.length < 15 ? 1 : 2);
+  const [lastPage, setLastPage] = useState(props.products.length < 20 ? 0 : 1);
+  const [nextPage, setNextPage] = useState(props.products.length < 20 ? 1 : 2);
   const [showLoader, setShowLoader] = useState(false);
   const buttonRef = React.createRef();
 
@@ -19,7 +19,7 @@ function category(props) {
     setShowLoader(true)
     if (nextPage && nextPage !== lastPage) {
       setLastPage(nextPage);
-      requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=${nextPage}&pageSize=15`, {
+      requester.get(`/products/productByCategoryId?CategoryId=${props.category._id}&usePaging=true&pageNumber=${nextPage}&pageSize=20`, {
         headers: {
           'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
         }
@@ -47,21 +47,12 @@ function category(props) {
 
   }, [lastPage, nextPage, props.category._id])
 
-  useEffect(() => {
-    // window.addEventListener("scroll", () => {
-    //   // fire the "load more" function just a little bit before reaching the page bottom
-    //   if (window.document.body.getBoundingClientRect().bottom - window.innerHeight < 100) {
-    //     buttonRef.current?.click();
-    //   }
-    // });
-  }, [])
-
   // to be fired ecah time the route change.
   useEffect(() => {
     setSsrProducts(props.products)
     setNewProducts([]);
-    setLastPage(props.products.length < 15 ? 0 : 1)
-    setNextPage(props.products.length < 15 ? 1 : 2)
+    setLastPage(props.products.length < 20 ? 0 : 1)
+    setNextPage(props.products.length < 20 ? 1 : 2)
   }, [props])
 
   return (
@@ -115,7 +106,7 @@ function category(props) {
 }
 
 export async function getServerSideProps(context) {
-  return await requester.get(`/products/productByCategoryId?CategoryId=${context.params.id}&usePaging=true&pageNumber=1&pageSize=15`).then((res) => {
+  return await requester.get(`/products/productByCategoryId?CategoryId=${context.params.id}&usePaging=true&pageNumber=1&pageSize=20`).then((res) => {
     return {
       props: { ...res.data.model }, // will be passed to the page component as props
     }
