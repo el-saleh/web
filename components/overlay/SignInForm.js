@@ -4,6 +4,7 @@ import { FaEye } from 'react-icons/fa';
 import { Control } from '../../utilities/Contexts';
 import styles from "./overlay.module.scss";
 import requester from '../../utilities/requester';
+import { GoogleLogin } from 'react-google-login';
 var jwt = require('jsonwebtoken');
 
 export default function SignInForm() {
@@ -111,6 +112,14 @@ export default function SignInForm() {
                         </React.Fragment>
                     })}
                 </div>
+                <br />
+                <GoogleLogin
+                    clientId="290675524922-8qa4skrg10ccqrf6lcdu96o6gqui3coc.apps.googleusercontent.com"
+                    buttonText="تسجيل الدخول عبر جوجل"
+                    onSuccess={(data) => { "goggle login success ", console.log(data) }}
+                    onFailure={(data) => { "goggle login failure ", console.log(data) }}
+                    cookiePolicy={'single_host_origin'}
+                />
                 <p className={styles.alternative}>
                     {"لا تمتلك حساب؟"} <span onClick={showSignUpForm}>{"سـجّـل الأن"}</span>
                 </p>
