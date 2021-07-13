@@ -42,6 +42,7 @@ const Header = () => {
   const signOut = () => {
     gstate.setUser(null);
     window.localStorage.removeItem("userData");
+    window.location.reload();
   }
 
 
