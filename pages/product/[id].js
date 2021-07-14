@@ -10,27 +10,22 @@ function product(props) {
   const router = useRouter()
   const { id } = router.query;
 
-  let descriptionDiv = document.createElement('div');
-  descriptionDiv.innerHTML=props.description;
-  
-  let descriptionText = descriptionDiv.innerText;
-
   return (
     <>
       <Head>
         <title>{`elsaleh | ${props.title}`}</title>
-        <meta name="description" content={descriptionText} />
+        <meta name="description" content={props?.description?.replace(/<[^>]+>/g, '')} />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="product" />
         <meta property="og:url" content={`https://www.elsaleh.net/product/${id}`} />
-        <meta property="og:description" content={descriptionText} />
+        <meta property="og:description" content={props?.description?.replace(/<[^>]+>/g, '')} />
         <meta property="og:image" content={props.productImage?.imageUrl} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={`https://www.elsaleh.net/product/${id}`} />
-        <meta property="twitter:description" content={descriptionText} />
+        <meta property="twitter:description" content={props?.description?.replace(/<[^>]+>/g, '')} />
         <meta property="twitter:image" content={props.productImage?.imageUrl} />
       </Head>
       <Layout>
