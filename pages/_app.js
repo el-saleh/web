@@ -56,7 +56,8 @@ function MyApp({ Component, pageProps }) {
         window.localStorage.setItem("userData", JSON.stringify(freshUserData))
         setUser(freshUserData);
       }).catch((e)=>{
-        console.log("failed to getUserData", e)
+        console.log("failed to getUserData", e);
+        window.localStorage.removeItem("userData");
       });
       
     }

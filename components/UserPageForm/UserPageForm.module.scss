@@ -1,0 +1,53 @@
+@import "../../styles/varibles";
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+  margin: 25px auto;
+  background-color: $light;
+
+  fieldset {
+    width: 30rem;
+    border: none;
+  }
+  img {
+    width: 10rem;
+    margin: 0 auto;
+  }
+  border: none;
+  h4 {
+    font-weight: 200;
+    margin-top: 0;
+    text-align: center;
+  }
+  p {
+    text-align: center;
+  }
+  label {
+    align-self: flex-start;
+    // color : $primary
+  }
+  input,
+  select {
+    width: 100%;
+    padding: 12px 5px;
+    margin: 0 0 20px 0;
+    display: inline-block;
+    border: 1px solid $light-grey;
+    box-sizing: border-box;
+    &:focus {
+      outline: none;
+      background-color: $off-light;
+    }
+  }
+  .error {
+    color: $error;
+  }
+
+  button {
+    width: 100%;
+  }
+}

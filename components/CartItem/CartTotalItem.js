@@ -9,9 +9,9 @@ import FormatPrice from '../../utilities/FormatPrice';
 export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetchUserCart }) {
     const router = useRouter();
     const placeOrder = () => {
-        let userData = window.localStorage.getItem("userData");
-        if (userData) {
-            requester.post(`/orders/placeOrder?userId=${JSON.parse(userData)._id}`, null, {
+        let userData = JSON.parse(window.localStorage.getItem("userData"));
+        if (userData?.phoneNumber) {
+            requester.post(`/orders/placeOrder?userId=${userData._id}`, null, {
                 headers: {
                     'Authorization': `bearer ${JSON.parse(window.localStorage.getItem("userData"))?.token}`
                 }
@@ -23,7 +23,10 @@ export default function CartTotalItem({ totalPrice, orderItem, orderStatus, fetc
                 toast("خطأ : فشل تسجيل طلب الشراء ")
             })
         }
-
+        else{
+            toast("يجب إضافة رقم موبايل الى حسابك أولا");
+            router.push("/user");
+        }
     }
 
     const statuses = {

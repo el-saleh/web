@@ -82,7 +82,12 @@
     }
   }
 
-  button{
+  button {
     width: 100%;
   }
+}
+
+.googleButton {
+  justify-content: center;
+  box-shadow: rgb(0, 0, 0, 0.24) 0px 0px 5px 0px !important;
 }

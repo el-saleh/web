@@ -7,6 +7,7 @@ import requester from "../../../../utilities/requester";
 import BulletListEditor from "./BulletListEditor";
 import ProductImageEditor from "./ProductImageEditor";
 import ProductGalleryEditor from "./ProductGalleryEditor";
+import HtmlEditorComponent from './HtmlEditorComponent'
 import DataGrid, {
     Column,
     Editing,
@@ -272,7 +273,7 @@ const ProductsTable = () => {
 
                     <Form>
                         <Item colSpan="2" dataField="title" alignment={"center"} ><RequiredRule /></Item>
-                        <Item dataField="description" editorType="dxTextArea" colSpan={2} editorOptions={{ height: 200 }} ></Item>
+                        <Item colSpan="2" dataField="description" ></Item>
                         <Item colSpan="2" dataField="price" alignment={"center"} ><RequiredRule /></Item>
                         <Item colSpan="2" dataField="sale" ></Item>
                         <Item colSpan="2" dataField="category.categoryName" alignment={"center"} ><RequiredRule /></Item>
@@ -289,16 +290,25 @@ const ProductsTable = () => {
                     caption='اسم المنتج'
                     cellRender={e => <Link href={`/product/${e.data._id}`} ><a>{e.data.title}</a></Link>}
                 />
+
                 <Column dataField="price" alignment={"center"} caption='سعر المنتج' cellRender={e => <>{FormatPrice(e.data.price)} جنيه</>} />
                 <Column dataField="sale" alignment={"center"} caption='نسبة الخصم' cellRender={e => <>{e.data.sale ? `${e.data.sale}%` : null}</>} />
-
                 <Column dataField="createdAt" dataType='datetime' alignment={"center"} caption='تاريخ إضافة المنتج' />
+
                 <Column dataField="category.categoryName" alignment={"center"} caption='فئة المنتج' allowFiltering={false}>
                     <Lookup dataSource={categories} displayExpr="categoryName" />
                 </Column>
 
+                <Column
+                    dataField="description"
+                    alignment={"center"}
+                    visible={true}
+                    editCellComponent={HtmlEditorComponent}
+                    caption='وصف المنتج'
+                    cellRender={e => <div dangerouslySetInnerHTML={{ __html: e.data.description }}></div>}
+                />
+
                 <Column dataField="videoUrl" alignment={"center"} visible={false} caption='فيديو للمنتج' />
-                <Column dataField="description" alignment={"center"} visible={true} caption='وصف المنتج' />
                 <Column dataField="bulletList" alignment={"center"} visible={false} editCellComponent={BulletListEditor} caption='مميزات المنتج' />
                 <Column dataField="productImage" alignment={"center"} visible={false} editCellComponent={ProductImageEditor} caption='صورة المنتج' />
                 <Column dataField="gallery" alignment={"center"} visible={false} editCellComponent={ProductGalleryEditor} caption='صور للمنتج' />

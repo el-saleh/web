@@ -42,6 +42,7 @@ const Header = () => {
   const signOut = () => {
     gstate.setUser(null);
     window.localStorage.removeItem("userData");
+    window.location.reload();
   }
 
 
@@ -166,6 +167,8 @@ const Header = () => {
             <a className={styles.tab} id="">{router.locale === "ar" ? "من نحن" : "About Us"}</a>
           </Link>
 
+          &nbsp;
+
           <span tabIndex="0" id="products" className={`${styles.dropDownTap}`}>
             <span >{router.locale === "ar" ? "المنتجات" : "Products"}</span>
             <div className={styles.dropDownMenu} style={{ right: "10%" }}>
@@ -178,6 +181,8 @@ const Header = () => {
               </ul>
             </div>
           </span>
+
+          &nbsp;
 
           <Link href="/">
             <a className={styles.tab} id="">{router.locale === "ar" ? "الرئيسية" : "Home"}</a>
@@ -219,24 +224,26 @@ const Header = () => {
           }
         </form>
 
+        &nbsp;
 
         <div className={styles.navLinks}>
           {gstate.user ?
-            <span tabIndex="0" id="" className={`${styles.dropDownTap}`}>
-              <a className={styles.tab}>
-                {/* <img className={styles.userAvatar} src={"/assets/cart.png"} /> */}
-                <FaShoppingCart onClick={() => { sidemenuHandler("cart") }} />
-                &nbsp;
-                <span title={gstate.user.name} dir="auto">{parseUserName(gstate.user.name)}</span>
-              </a>
-              <div className={styles.dropDownMenu + " hiddenInMobile"} style={{ left: "10%" }}>
-                <ul dir="auto">
-                  <li className={styles.tab}><Link href="/cart">{"عربة التسوق"}</Link></li>
-                  <li className={styles.tab}><Link href="/orders">{"طلبات الشراء"}</Link></li>
-                  <li className={styles.tab} onClick={signOut}>{"خروج"}</li>
-                </ul>
+            <>
+              <div tabIndex="0" id="" className={`${styles.dropDownTap}`} onClick={() => { sidemenuHandler("name", true) }}>
+                <div className={styles.tab}>
+                  &nbsp;
+                  <span title={gstate.user.name} dir="auto">{parseUserName(gstate.user.name)}</span>
+                </div>
+                <div className={styles.dropDownMenu + " hiddenInMobile"} style={{ left: "10%" }}>
+                  <ul dir="auto">
+                    <li className={styles.tab}><Link href="/cart">{"عربة التسوق"}</Link></li>
+                    <li className={styles.tab}><Link href="/orders">{"طلبات الشراء"}</Link></li>
+                    <li className={styles.tab} onClick={signOut}>{"خروج"}</li>
+                  </ul>
+                </div>
               </div>
-            </span>
+              <FaShoppingCart onClick={() => { router.push("/cart") }} />
+            </>
             :
             <span onClick={onSignIn} tabIndex="0" id="" className={`${styles.dropDownTap}`}>
               <a className={styles.tab}>
@@ -357,7 +364,7 @@ const Header = () => {
               &nbsp;
               <span>{"Instagram"}</span>
             </a>
-            
+
             {/* <a className={styles.contactLink} target="_blank" href="mailto:info@elsaleh.net" rel="noreferrer">
               <IoMail />
               &nbsp;
