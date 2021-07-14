@@ -140,7 +140,7 @@ const SingleProductSection = (props) => {
 
     // function that takes the already fetched "search Related Products Array", then adds some 
     // products to it from the same category, to be at least 5 products
-    const getRelatedProducts = (searchRelatedProductsArray) => {
+    const getRelatedProducts = (searchRelatedProductsArray=[]) => {
 
         // fetch 6 products : just in cast the same product is retreived as a relatede product from the "produc by category" api,
         // it will be removed at the filtering function, to make sure we always have at least 5 category related product.
@@ -160,7 +160,7 @@ const SingleProductSection = (props) => {
                     return (!searchRelatedProductsArray.find(alreadylistedProdcut => alreadylistedProdcut._id === product._id))
                 })
 
-                setRelatedProducts([...searchRelatedProductsArray, ...uniquePrdoucts])
+                setRelatedProducts([...searchRelatedProductsArray.reverse(), ...uniquePrdoucts])
             }).catch(() => {
                 console.log("failed to load related products")
             })
