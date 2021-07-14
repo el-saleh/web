@@ -16,7 +16,7 @@ const HtmlEditorComponent = (props) => {
                     <Item formatName="undo" />
                     <Item formatName="redo" />
                     <Item formatName="separator" />
-                    <Item formatName="size" formatValues={['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']} />
+                    {/* <Item formatName="size" formatValues={['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']} /> */}
                     <Item formatName="font" formatValues={['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']} />
                     <Item formatName="separator" />
                     <Item formatName="bold" />
