@@ -124,10 +124,10 @@ const SingleProductSection = (props) => {
             }
         })
             .then((res) => {
-                
+
                 // to not preview the same product as related product (filtering function).
                 let filteredPrdoucts = res.data.model.filter(prod => prod._id !== props._id)
-                
+
                 // fetch products from the same category to complete the related product list 
                 // to be at least 5 products, then merge the two lists into one list and preveiw it 
                 getRelatedProducts(filteredPrdoucts);
@@ -223,7 +223,7 @@ const SingleProductSection = (props) => {
                             :
                             <p className={styles.price}>{FormatPrice(props.price)} <small>جنيه</small></p>
                         }
-                        <p className={styles.description}>{props.description}</p>
+                        <div className={styles.description} dangerouslySetInnerHTML={{ __html: props.description }}></div>
 
                         <ul>
                             {props.bulletList?.map((listItem, idx) => {
