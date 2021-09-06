@@ -64,6 +64,7 @@ export default function SignInForm() {
                 gstate.setUser(userData);
                 window.localStorage.setItem("userData", JSON.stringify(userData));
                 gstate.setDisplaySignInForm(false);
+                window.location.reload();
             }).catch((err) => {
                 console.log(err.message);
                 setIsButtondisabled(false);
@@ -133,14 +134,14 @@ export default function SignInForm() {
                     })}
                 </div>
                 <br />
-                {/* <GoogleLogin
+                <GoogleLogin
                     clientId="290675524922-8qa4skrg10ccqrf6lcdu96o6gqui3coc.apps.googleusercontent.com"
                     buttonText="تسجيل الدخول عبر جوجل"
                     onSuccess={(data) => { "goggle login success ", console.log(data), googleLoginHandler(data?.tokenId) }}
                     onFailure={(data) => { "goggle login failure ", console.log(data) }}
                     cookiePolicy={'single_host_origin'}
                     className={styles.googleButton}
-                /> */}
+                />
                 <p className={styles.alternative}>
                     {"لا تمتلك حساب؟"} <span onClick={showSignUpForm}>{"سـجّـل الأن"}</span>
                 </p>
